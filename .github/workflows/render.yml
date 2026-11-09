@@ -1,0 +1,63 @@
+# تصدير سحابي ببلاش على GitHub Actions (مستودع عام): الفيديو بينقسم قطع على كذا جهاز بنفس الوقت،
+# وكل قطعة معها صوتها pcm (بلا ضياع)، والدمج بيحوّل الصوت aac مرة وحدة وبيعلّق final.mp4 على الـ release.
+# أدوات/cloud-render.mjs بيرفع المواد (job.tar)، وبيشغّل هالملف، وبينزّل final.mp4، وبيمسح الـ release.
+name: render
+on:
+  workflow_dispatch:
+    inputs:
+      job: {description: "release tag holding job.tar", required: true}
+      comp: {description: "composition id", required: true}
+      chunks: {description: "number of machines", required: true}
+      list: {description: "JSON list of chunk indexes", required: true}
+      crf: {description: "crf", required: false, default: "20"}
+permissions:
+  contents: write
+concurrency: {group: "${{ inputs.job }}"}
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  video:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix: {chunk: "${{ fromJson(inputs.list) }}"}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: gh release download "${{ inputs.job }}" -p job.tar -R "$GITHUB_REPOSITORY" && tar -xf job.tar && rm job.tar
+      - name: emoji font
+        run: fc-list | grep -qi "color emoji" || (sudo apt-get update -q && sudo apt-get install -yq fonts-noto-color-emoji)
+      - run: npx remotion browser ensure
+      - name: render chunk
+        run: |
+          npx remotion bundle src/index.ts --out-dir=build --log=error
+          C="${{ inputs.comp }}"; N=${{ inputs.chunks }}; i=${{ matrix.chunk }}
+          F=$(npx remotion compositions build --log=error | sed 's/\x1b\[[0-9;]*m//g' | awk -v c="$C" '$1==c {print $4; exit}')
+          [ -n "$F" ] || { echo "composition $C not found"; exit 1; }
+          a=$(( i * F / N )); b=$(( (i + 1) * F / N - 1 ))
+          echo "frames $F · chunk $i: $a-$b"
+          mkdir -p out && echo "$F" > out/frames
+          npx remotion render build "$C" "out/part-$(printf %03d $i).mkv" --frames=$a-$b --codec=h264-mkv --audio-codec=pcm-16 --enforce-audio-track --crf=${{ inputs.crf }} --concurrency=100% --log=error
+      - uses: actions/upload-artifact@v4
+        with: {name: "part-${{ matrix.chunk }}", path: out/, retention-days: 1}
+
+  merge:
+    needs: video
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: {path: parts, merge-multiple: true}
+      - run: |
+          which ffmpeg || (sudo apt-get update -q && sudo apt-get install -yq ffmpeg)
+          F=$(cat parts/frames)
+          for f in $(ls parts/part-*.mkv | sort); do echo "file '$PWD/$f'"; done > list.txt
+          [ "$(wc -l < list.txt)" = "${{ inputs.chunks }}" ] || { echo "missing chunks"; exit 1; }
+          ffmpeg -v error -f concat -safe 0 -i list.txt -c:v copy -c:a aac -b:a 320k -movflags +faststart final.mp4
+          got=$(ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 final.mp4)
+          echo "frames expected $F · got $got"
+          [ "$got" = "$F" ] || exit 1
+          echo "$F" > frames.json
+          gh release upload "${{ inputs.job }}" final.mp4 frames.json -R "$GITHUB_REPOSITORY" --clobber

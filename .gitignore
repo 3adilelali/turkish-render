@@ -1,0 +1,49 @@
+# التصدير السحابي: كود المحرك بس بيطلع على GitHub (مستودع عام). ممنوع أي مفتاح أو مادة أو تسجيل.
+node_modules/
+/public/
+/.check/
+/build/
+/out/
+dist/
+
+# مفاتيح وكلمات سر
+.env
+.env*
+*.env
+*مفتاح*
+*.key
+*.pem
+*.p12
+*secret*
+*token*
+*password*
+credentials*
+
+# ملفات نصية وسجلات ومؤقتات المتصفح
+*.txt
+*.log
+*.tmp
+.tmp/
+*.csv
+.DS_Store
+Thumbs.db
+
+# تسجيلات ومواد (صوت وفيديو وصور)
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.ogg
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.gif
+*.psd
+*.zip
+*.tar
