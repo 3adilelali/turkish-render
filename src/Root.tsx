@@ -18,9 +18,7 @@ import { K5_12_SECONDS, K5Video12 } from "./videos/k5-12/Video";
 import { K5_13_SECONDS, K5Video13 } from "./videos/k5-13/Video";
 import { K5_14_SECONDS, K5Video14 } from "./videos/k5-14/Video";
 import { K5_15_SECONDS, K5Video15 } from "./videos/k5-15/Video";
-import { K6_01_SECONDS, K6Video01 } from "./videos/k6-01/K6Video";
-import { K6_02_SECONDS, K6Video02 } from "./videos/k6-02/K6Video";
-import { K6_03_SECONDS, K6Video03 } from "./videos/k6-03/K6Video";
+import { K6_04_SECONDS, K6Video04 } from "./videos/k6-04/K6Video";
 import { S3_01_SECONDS, S3Short01 } from "./videos/s3-01/S3Short";
 import { S3_02_SECONDS, S3Short02 } from "./videos/s3-02/Short";
 import { S3_03_SECONDS, S3Short03 } from "./videos/s3-03/Short";
@@ -57,9 +55,7 @@ export const RemotionRoot: React.FC = () => (
     {video("K5Video13", K5Video13, K5_13_SECONDS)}
     {video("K5Video14", K5Video14, K5_14_SECONDS)}
     {video("K5Video15", K5Video15, K5_15_SECONDS)}
-    {video("K6Video01", K6Video01, K6_01_SECONDS)}
-    {video("K6Video02", K6Video02, K6_02_SECONDS)}
-    {video("K6Video03", K6Video03, K6_03_SECONDS)}
+    {video("K6Video04", K6Video04, K6_04_SECONDS)}
     <Composition id="S3Short01" component={S3Short01} durationInFrames={Math.round(S3_01_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     <Composition id="S3Short02" component={S3Short02} durationInFrames={Math.round(S3_02_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     <Composition id="S3Short03" component={S3Short03} durationInFrames={Math.round(S3_03_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
