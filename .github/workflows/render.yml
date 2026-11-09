@@ -35,7 +35,7 @@ jobs:
         run: |
           npx remotion bundle src/index.ts --out-dir=build --log=error
           C="${{ inputs.comp }}"; N=${{ inputs.chunks }}; i=${{ matrix.chunk }}
-          F=$(npx remotion compositions build --log=error | sed 's/\x1b\[[0-9;]*m//g' | awk -v c="$C" '$1==c {print $4; exit}')
+          F=$(node -e "require('@remotion/renderer').selectComposition({serveUrl:'build',id:process.argv[1],logLevel:'error'}).then(c=>console.log(c.durationInFrames))" "$C" | tail -1)
           [ -n "$F" ] || { echo "composition $C not found"; exit 1; }
           a=$(( i * F / N )); b=$(( (i + 1) * F / N - 1 ))
           echo "frames $F · chunk $i: $a-$b"
