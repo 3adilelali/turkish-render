@@ -245,3 +245,20 @@ export const Muhur: React.FC<{ k: number; text: string; y?: number }> = ({ k, te
   const s = 2.4 - 1.4 * ez(e);
   return <div style={{ position: "absolute", top: y, left: 0, right: 0, textAlign: "center", opacity: e > 0 ? 1 : 0, transform: `scale(${s}) rotate(-9deg)` }}><span style={{ display: "inline-block", border: "12px solid #C4161C", color: "#C4161C", fontFamily: FONT, fontWeight: 700, fontSize: 150, padding: "6px 50px", borderRadius: 18, background: "rgba(247,235,207,.18)", textShadow: "0 0 2px #7a0d10", boxShadow: "inset 0 0 0 6px rgba(196,22,28,.4)" }}>{text}</span></div>;
 };
+
+// ───────── حلقة نسبة (Halka): دايرة بتتعبّى لحد نسبة، ونص بالنص ─────────
+export const Halka: React.FC<{ k: number; oran: number; text: string; alt?: string; y?: number }> = ({ k, oran, text, alt, y = 420 }) => {
+  const e = ez(rmp(k, 0.05, 0.6));
+  const R = 300, C = 2 * Math.PI * R;
+  const o = ez(rmp(k, 0, 0.15));
+  return (
+    <div style={{ position: "absolute", left: 0, right: 0, top: y, display: "flex", flexDirection: "column", alignItems: "center", opacity: o, transform: `scale(${0.8 + 0.2 * o})` }}>
+      <svg width={760} height={760} viewBox="-380 -380 760 760">
+        <circle r={R} fill="rgba(14,9,5,.75)" stroke="#3A2A18" strokeWidth={60} />
+        <circle r={R} fill="none" stroke="#E0B252" strokeWidth={60} strokeDasharray={`${C * oran * e} ${C}`} transform="rotate(-90)" style={{ filter: "drop-shadow(0 0 18px rgba(242,196,106,.8))" }} />
+        <text y={40} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={150} fill="#F7EBCF">{text}</text>
+      </svg>
+      {alt && <div style={{ marginTop: 10, fontFamily: FONT, fontWeight: 700, fontSize: 64, color: "#F2D58A", WebkitTextStroke: "10px #120A04", paintOrder: "stroke fill" }}>{alt}</div>}
+    </div>
+  );
+};
