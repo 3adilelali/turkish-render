@@ -216,3 +216,32 @@ export const Kafes: React.FC<{ close: number; open?: number; op?: number }> = ({
     </AbsoluteFill>
   );
 };
+
+// ───────── الستارة (Perde): مخمل أحمر بيتسكّر (close) وبينفتح (open) ─────────
+export const Perde: React.FC<{ close: number; open?: number }> = ({ close, open = 0 }) => {
+  const c = ez(clamp(close)) * (1 - ez(clamp(open)));
+  if (c <= 0.001) return null;
+  const velvet = (d: string) => `repeating-linear-gradient(90deg, rgba(0,0,0,.35) 0 18px, rgba(255,255,255,.06) 30px, rgba(0,0,0,.3) 60px), linear-gradient(${d}, #3A0508, #8E1520 55%, #4A070C)`;
+  const half = (W / 2 + 60) * c;
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      <div style={{ position: "absolute", top: 0, left: 0, width: half, height: HH, background: velvet("90deg"), boxShadow: "20px 0 50px rgba(0,0,0,.7)", borderRight: "8px solid #C9A04A" }} />
+      <div style={{ position: "absolute", top: 0, right: 0, width: half, height: HH, background: velvet("270deg"), boxShadow: "-20px 0 50px rgba(0,0,0,.7)", borderLeft: "8px solid #C9A04A" }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 120, background: "linear-gradient(#2A0306,#7A101A)", borderBottom: "8px solid #C9A04A" }} />
+    </AbsoluteFill>
+  );
+};
+
+// ───────── سنة كبيرة بتعدّ (Yil): الرقم بيلفّ لحد السنة ─────────
+export const Yil: React.FC<{ k: number; yil: number; y?: number; c?: string }> = ({ k, yil, y = 300, c = "#F2D58A" }) => {
+  const e = ez(rmp(k, 0, 0.3));
+  const n = Math.round(yil - (1 - e) * 40);
+  return <div style={{ position: "absolute", left: 0, right: 0, top: y, textAlign: "center", opacity: rmp(k, 0, 0.08) * (1 - rmp(k, 0.85, 1)) }}><span style={{ fontFamily: "Georgia, serif", fontWeight: 700, fontSize: 210, color: c, WebkitTextStroke: "10px #120A04", paintOrder: "stroke fill", letterSpacing: 6, textShadow: "0 0 40px rgba(242,196,106,.5), 0 14px 30px rgba(0,0,0,.8)" }}>{n}</span></div>;
+};
+
+// ───────── ختم أحمر بيدقّ عالشاشة (Muhur) ─────────
+export const Muhur: React.FC<{ k: number; text: string; y?: number }> = ({ k, text, y = 520 }) => {
+  const e = rmp(k, 0.15, 0.3);
+  const s = 2.4 - 1.4 * ez(e);
+  return <div style={{ position: "absolute", top: y, left: 0, right: 0, textAlign: "center", opacity: e > 0 ? 1 : 0, transform: `scale(${s}) rotate(-9deg)` }}><span style={{ display: "inline-block", border: "12px solid #C4161C", color: "#C4161C", fontFamily: FONT, fontWeight: 700, fontSize: 150, padding: "6px 50px", borderRadius: 18, background: "rgba(247,235,207,.18)", textShadow: "0 0 2px #7a0d10", boxShadow: "inset 0 0 0 6px rgba(196,22,28,.4)" }}>{text}</span></div>;
+};
