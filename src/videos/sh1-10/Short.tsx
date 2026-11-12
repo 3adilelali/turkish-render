@@ -14,7 +14,7 @@ const I = {
   montagu: { src: D + "montagu.jpg", w: 2400, h: 1820 },
   jervas: { src: D + "jervas.jpg", cut: D + "jervas_cut.png", w: 789, h: 1422 },
   highmore: { src: D + "highmore.jpg", w: 1942, h: 2400 },
-  vrouw: { src: "img/sh1-02/vrouw.jpg", cut: "img/sh1-02/vrouw_cut.png", w: 1784, h: 2400 },
+  asseki: { src: "img/sh1-02/asseki.jpg", w: 1578, h: 2400 },
   kraam: { src: "img/sh1-02/kraam.jpg", w: 2400, h: 1473 },
   borduur: { src: "img/sh1-02/borduur.jpg", w: 1868, h: 2400 },
   panorama: { src: "img/sh1-02/panorama.jpg", w: 2400, h: 714 },
@@ -55,18 +55,18 @@ const SOZ = "Türk kadınlarını, imparatorluğun tek özgür insanları olarak
 
 const SHOTS: Shot[] = [
   // ── الشائعة ──
-  { at: 0, ton: "kan", mum: [540, 800], fx: "duman", sfx: "boom", r: (t, k) => <><Tablo im={I.vrouw} a={[1.6, 0.48, 0.2]} b={[1.4, 0.48, 0.24]} k={k} depth={0.1} /><Perde close={0.5 * rmp(k, 0.2, 0.9)} /></> },
+  { at: 0, ton: "kan", fx: "duman", sfx: "boom", r: (t, k) => <><Tablo im={I.asseki} a={[1.5, 0.5, 0.25]} b={[1.3, 0.5, 0.3]} k={k} /><Perde close={0.5 * rmp(k, 0.2, 0.9)} /></> },
   { at: 2.8, ton: "gece", fx: "duman", sfx: "whoosh", r: (t, k) => <><Tablo im={I.pazar} a={[1.2, 0.5, 0.45]} b={[1.4, 0.55, 0.4]} k={k} /><Muhur k={k} text="YASAK" y={180} /></> },
-  { at: 4.4, ton: "gece", fx: "toz", sfx: "whoosh", r: (t, k) => <Tablo im={I.panorama} a={[1.0, 0.15, 0.5]} b={[1.0, 0.5, 0.5]} k={k} /> },
-  { at: 7.6, ton: "gece", mum: [540, 900], fx: "duman", r: (t, k) => <Tablo im={I.borduur} a={[1.3, 0.5, 0.5]} b={[1.5, 0.5, 0.45]} k={k} /> },
+  { at: 4.4, ton: "gece", fx: "toz", sfx: "whoosh", r: (t, k) => <Tablo im={I.panorama} a={[1.4, 0.2, 0.85]} b={[1.4, 0.5, 0.85]} k={k} /> },
+  { at: 7.6, ton: "gece", fx: "toz", r: (t, k) => <Tablo im={I.borduur} a={[1.3, 0.5, 0.5]} b={[1.5, 0.5, 0.45]} k={k} /> },
   // ── الكسر ──
-  { at: 9.2, ton: "sicak", mum: [540, 900], fx: "toz", sfx: "boom", r: (t, k) => <><Tablo im={I.montagu} a={[1.3, 0.45, 0.5]} b={[1.1, 0.45, 0.5]} k={k} /><Yil k={k} yil={1717} y={180} /><Etiket k={k} text="LADY MONTAGU İSTANBUL'DA · VANMOUR" /></> },
+  { at: 9.2, ton: "sicak", fx: "toz", sfx: "boom", r: (t, k) => <><Tablo im={I.montagu} a={[1.3, 0.45, 0.5]} b={[1.1, 0.45, 0.5]} k={k} /><Yil k={k} yil={1717} y={180} /><Etiket k={k} text="LADY MONTAGU İSTANBUL'DA · VANMOUR" /></> },
   { at: 13.5, ton: "sicak", fx: "toz", sfx: "whoosh", r: (t, k) => <><Tablo im={I.jervas} a={[1.1, 0.5, 0.5]} b={[1.4, 0.5, 0.25]} k={k} depth={0.1} /><Etiket k={k} text="LADY MARY WORTLEY MONTAGU · C. JERVAS" /></> },
   { at: 15.9, ton: "belge", fx: "toz", sfx: "whoosh", r: (t, k) => <><Tablo im={I.highmore} a={[1.2, 0.5, 0.4]} b={[1.3, 0.5, 0.4]} k={k} bgBlur={8} /><AbsoluteFill style={{ background: "rgba(10,6,3,.45)" }} /><Mektup k={rmp(t, 15.9, 19.2)} text="İstanbul, 1717…" /></> },
   { at: 19.2, ton: "sicak", fx: "toz", sfx: "whoosh", r: (t, k) => <Tablo im={I.pazar} a={[1.7, 0.72, 0.35]} b={[1.9, 0.72, 0.3]} k={k} /> },
   { at: 23.8, ton: "sicak", mum: [540, 900], fx: "toz", sfx: "whoosh", r: (t, k) => <><Tablo im={I.kadinkahve} a={[1.3, 0.35, 0.55]} b={[1.5, 0.5, 0.55]} k={k} /><Etiket k={k} text="KAHVE İÇEN KADINLAR · VANMOUR" /></> },
   { at: 26.4, ton: "sicak", fx: "toz", sfx: "ding", r: (t, k) => <Tablo im={I.maaltijd} a={[1.2, 0.3, 0.5]} b={[1.4, 0.45, 0.5]} k={k} /> },
-  { at: 29.1, ton: "belge", mum: [540, 900], fx: "toz", sfx: "boom", r: (t, k) => <><Tablo im={I.montagu} a={[1.5, 0.5, 0.45]} b={[1.6, 0.5, 0.45]} k={k} /><AbsoluteFill style={{ background: "rgba(10,6,3,.5)" }} /><Belge k={rmp(t, 29.1, 36.5)} text={SOZ} src="Lady M. W. Montagu, Mektup, Edirne, 1 Nisan 1717" typed={rmp(t, 31.4, 36.2)} tag="📜 MONTAGU'NUN MEKTUBU" /></> },
+  { at: 29.1, ton: "belge", fx: "toz", sfx: "boom", r: (t, k) => <><Tablo im={I.montagu} a={[1.5, 0.5, 0.45]} b={[1.6, 0.5, 0.45]} k={k} /><AbsoluteFill style={{ background: "rgba(10,6,3,.5)" }} /><Belge k={rmp(t, 29.1, 36.5)} text={SOZ} src="Lady M. W. Montagu, Mektup, Edirne, 1 Nisan 1717" typed={rmp(t, 31.4, 36.2)} tag="📜 MONTAGU'NUN MEKTUBU" /></> },
   // ── سؤال الفريقين ──
   { at: 36.5, ton: "sicak", sfx: "boom", noCap: true, r: (t, k) => <Ikili k={k} /> },
   { at: 40.4, ton: "sicak", fx: "toz", sfx: "pop", r: (t, k) => <><Tablo im={I.montagu} a={[1.2, 0.45, 0.5]} b={[1.3, 0.45, 0.5]} k={k} /><Abone k={rmp(t, 41.9, 42.7)} /></> },
