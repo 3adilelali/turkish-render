@@ -357,3 +357,20 @@ export const Harita: React.FC<{ k: number }> = ({ k }) => {
     </AbsoluteFill>
   );
 };
+
+// ───────── ظرف مكتوب بينفتح (Mektup): الختم بينكسر، والغطا بينفتح، والورقة بتطلع ─────────
+export const Mektup: React.FC<{ k: number; text: string; src?: string }> = ({ k, text, src }) => {
+  const a = ez(rmp(k, 0, 0.15)), f = ez(rmp(k, 0.15, 0.35)), p = ez(rmp(k, 0.35, 0.6));
+  const n = Math.round(text.length * rmp(k, 0.55, 0.95));
+  return (
+    <div style={{ position: "absolute", left: 90, width: 900, top: 760, height: 560, opacity: a, transform: `translateY(${(1 - a) * 200}px)` }}>
+      <div style={{ position: "absolute", left: 40, right: 40, top: -p * 620, height: 600, background: "linear-gradient(170deg,#FBF3DE,#EBD9AE)", borderRadius: 8, boxShadow: "0 10px 30px rgba(0,0,0,.4)", padding: "40px 46px", fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 50, lineHeight: 1.3, color: "#2A1A0C", zIndex: p > 0.05 ? 1 : 0 }}>
+        {text.slice(0, n)}
+        {src && n >= text.length && <div style={{ marginTop: 18, fontFamily: FONT, fontStyle: "normal", fontSize: 30, color: "#6A4A24" }}>— {src}</div>}
+      </div>
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg,#C9A46A,#9C7642)", borderRadius: 10, boxShadow: "0 30px 70px rgba(0,0,0,.6)", zIndex: 2 }} />
+      <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: 320, transformOrigin: "top", transform: `rotateX(${f * 180}deg)`, background: "linear-gradient(180deg,#B48D55,#8E6834)", clipPath: "polygon(0 0,100% 0,50% 100%)", zIndex: f < 0.5 ? 3 : 0 }} />
+      <div style={{ position: "absolute", left: 410, top: 250, width: 80, height: 80, borderRadius: 40, background: "radial-gradient(circle at 35% 35%,#D23A3A,#7A1010)", boxShadow: "0 4px 10px rgba(0,0,0,.5)", zIndex: 4, opacity: 1 - f, transform: `scale(${1 + f}) rotate(${f * 40}deg)` }} />
+    </div>
+  );
+};
