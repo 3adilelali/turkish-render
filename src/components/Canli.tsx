@@ -318,3 +318,16 @@ export const Ciz: React.FC<{ k: number; text: string; y?: number; c?: string }> 
     </div>
   );
 };
+
+// ───────── حبر بينكتب (Murekkep): كلمة بتنكشف كأنها عم تنكتب بالحبر، مع خط ذهبي ─────────
+export const Murekkep: React.FC<{ k: number; text: string; y?: number }> = ({ k, text, y = 200 }) => {
+  const e = ez(rmp(k, 0.05, 0.6));
+  return (
+    <div style={{ position: "absolute", left: 0, right: 0, top: y, textAlign: "center" }}>
+      <span style={{ display: "inline-block", position: "relative", clipPath: `inset(0 ${(1 - e) * 100}% 0 0)`, fontFamily: "Georgia, serif", fontStyle: "italic", fontWeight: 700, fontSize: 180, color: "#1A0E06", background: "linear-gradient(160deg,#F7EBCF,#E3C98F)", padding: "10px 60px", borderRadius: 14, boxShadow: "0 20px 50px rgba(0,0,0,.6)" }}>
+        {text}
+        <span style={{ position: "absolute", left: 40, right: 40, bottom: 18, height: 10, background: "linear-gradient(90deg,#7A5A1E,#F2D58A,#7A5A1E)", borderRadius: 6 }} />
+      </span>
+    </div>
+  );
+};

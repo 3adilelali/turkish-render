@@ -12,6 +12,7 @@ import { SH1_04_SECONDS, Sh1Short04 } from "./videos/sh1-04/Short";
 import { SH1_05_SECONDS, Sh1Short05 } from "./videos/sh1-05/Short";
 import { SH1_06_SECONDS, Sh1Short06 } from "./videos/sh1-06/Short";
 import { SH1_07_SECONDS, Sh1Short07 } from "./videos/sh1-07/Short";
+import { SH1_08_SECONDS, Sh1Short08 } from "./videos/sh1-08/Short";
 
 const FPS = 30;
 const ready = async () => {
@@ -33,6 +34,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Sh1Short05" component={Sh1Short05} durationInFrames={Math.round(SH1_05_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     <Composition id="Sh1Short06" component={Sh1Short06} durationInFrames={Math.round(SH1_06_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     <Composition id="Sh1Short07" component={Sh1Short07} durationInFrames={Math.round(SH1_07_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh1Short08" component={Sh1Short08} durationInFrames={Math.round(SH1_08_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     {/* الشورت الجاي: نفس السطر فوق (أداة السحابة بتدوّر على id="..." component={...}) */}
   </>
 );
