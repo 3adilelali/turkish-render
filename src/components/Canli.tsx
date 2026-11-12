@@ -304,3 +304,17 @@ export const Grafik: React.FC<{ k: number; label?: string; crash?: number }> = (
     </AbsoluteFill>
   );
 };
+
+// ───────── كلمة بتنشطب (Ciz): كلمة كبيرة وخط أحمر بينرسم فوقها ─────────
+export const Ciz: React.FC<{ k: number; text: string; y?: number; c?: string }> = ({ k, text, y = 520, c = "#F7EBCF" }) => {
+  const o = ez(rmp(k, 0, 0.12));
+  const l = ez(rmp(k, 0.2, 0.45));
+  return (
+    <div style={{ position: "absolute", left: 0, right: 0, top: y, textAlign: "center", opacity: o }}>
+      <span style={{ position: "relative", display: "inline-block", fontFamily: FONT, fontWeight: 700, fontSize: 170, color: c, WebkitTextStroke: "18px #120A04", paintOrder: "stroke fill" }}>
+        {text}
+        <span style={{ position: "absolute", left: -20, top: "48%", height: 26, width: `calc(${l * 100}% + ${l * 40}px)`, background: "#E0141C", borderRadius: 14, transform: "rotate(-6deg)", boxShadow: "0 0 20px rgba(224,20,28,.8)" }} />
+      </span>
+    </div>
+  );
+};
