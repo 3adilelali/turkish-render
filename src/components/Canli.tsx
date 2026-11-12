@@ -262,3 +262,20 @@ export const Halka: React.FC<{ k: number; oran: number; text: string; alt?: stri
     </div>
   );
 };
+
+// ───────── نار (Ates): وهج برتقالي بيرجف من تحت وشرار طالع ─────────
+export const Ates: React.FC<{ t: number; k?: number }> = ({ t, k = 1 }) => {
+  const f = 0.75 + 0.25 * Math.sin(t * 13) * Math.sin(t * 7.3);
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none", opacity: clamp(k) }}>
+      <AbsoluteFill style={{ background: `radial-gradient(ellipse 120% 60% at 50% 105%, rgba(255,120,20,${0.75 * f}), rgba(200,40,0,${0.35 * f}) 45%, transparent 75%)`, mixBlendMode: "screen" }} />
+      {Array.from({ length: 40 }).map((_, i) => {
+        const sp = 0.25 + ((i * 37) % 10) / 20;
+        const y = HH - (((t * 300 * sp) + i * 173) % (HH * 0.9));
+        const x = ((i * 271) % W) + Math.sin(t * 2 + i) * 40;
+        const a = clamp((y - HH * 0.1) / (HH * 0.5));
+        return <div key={i} style={{ position: "absolute", left: x, top: y, width: 6 + (i % 3) * 3, height: 6 + (i % 3) * 3, borderRadius: 9, background: "#FFB347", boxShadow: "0 0 12px #FF7A00", opacity: a * 0.9 }} />;
+      })}
+    </AbsoluteFill>
+  );
+};
