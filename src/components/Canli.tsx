@@ -142,14 +142,14 @@ export const Sizinti: React.FC<{ k: number }> = ({ k }) => {
 };
 
 // ───────── كرت الوثيقة BELGE ─────────
-export const Belge: React.FC<{ k: number; text: string; src: string; y?: number; typed?: number }> = ({ k, text, src, y = 380, typed = 1 }) => {
+export const Belge: React.FC<{ k: number; text: string; src: string; y?: number; typed?: number; quote?: boolean; tag?: string }> = ({ k, text, src, y = 380, typed = 1, quote = true, tag = "📜 BELGE" }) => {
   const e = ez(rmp(k, 0, 0.25));
   const n = Math.round(text.length * clamp(typed));
   return (
     <div style={{ position: "absolute", left: 70, right: 70, top: y, transform: `translateY(${(1 - e) * 120}px) rotate(${-2 + (1 - e) * -6}deg)`, opacity: e }}>
       <div style={{ background: "linear-gradient(160deg,#F7EBCF,#E9D3A6)", borderRadius: 10, padding: "46px 54px 38px", boxShadow: "0 30px 70px rgba(0,0,0,.6), inset 0 0 60px rgba(120,80,30,.35)", border: "2px solid #B08A4A", position: "relative" }}>
-        <div style={{ position: "absolute", top: -34, left: 40, background: "#8E1F2A", color: "#F7EBCF", fontFamily: FONT, fontWeight: 700, fontSize: 40, padding: "6px 26px", borderRadius: 8, letterSpacing: 4 }}>📜 BELGE</div>
-        <div style={{ fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 58, lineHeight: 1.25, color: "#2A1A0C" }}>“{text.slice(0, n)}{n < text.length ? "▍" : "”"}</div>
+        <div style={{ position: "absolute", top: -34, left: 40, background: "#8E1F2A", color: "#F7EBCF", fontFamily: FONT, fontWeight: 700, fontSize: 40, padding: "6px 26px", borderRadius: 8, letterSpacing: 4 }}>{tag}</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 58, lineHeight: 1.25, color: "#2A1A0C", fontStyle: quote ? "italic" : "normal" }}>{quote ? "“" : ""}{text.slice(0, n)}{n < text.length ? "▍" : quote ? "”" : ""}</div>
         <div style={{ marginTop: 24, fontFamily: FONT, fontWeight: 600, fontSize: 34, color: "#6A4A24" }}>— {src}</div>
       </div>
     </div>
@@ -193,5 +193,26 @@ export const Altyazi: React.FC<{ t: number; ch: ReturnType<typeof chunk>; hot?: 
         return <span key={i} style={{ display: "inline-block", margin: "0 10px", fontFamily: FONT, fontWeight: 700, fontSize: fs * (now ? 1.06 : 1), color: col, WebkitTextStroke: "16px #120A04", paintOrder: "stroke fill", textShadow: isHot ? "0 0 30px rgba(255,60,40,.7), 0 8px 18px rgba(0,0,0,.6)" : "0 8px 18px rgba(0,0,0,.6)", textTransform: "uppercase", opacity: on ? 1 : 0.5 }}>{w.text.replace(/[.,:!?]$/, "")}</span>;
       })}
     </div>
+  );
+};
+
+// ───────── القفص (Kafes): قضبان خشب مشبّكة بتنزل عالشاشة، وبتنكسر بـ open ─────────
+// close: 0→1 (نزول القضبان)، open: 0→1 (انكسار وتطاير لبرّا). quote=false بكرت Belge = نص وصفي مش اقتباس.
+export const Kafes: React.FC<{ close: number; open?: number; op?: number }> = ({ close, open = 0, op = 0.92 }) => {
+  const c = ez(clamp(close)), o = ez(clamp(open));
+  if (c <= 0 || o >= 1) return null;
+  const bars = 7, gap = W / bars;
+  const wood = "linear-gradient(90deg,#2A1607,#6B3E17 35%,#A7672A 50%,#6B3E17 65%,#2A1607)";
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none", opacity: op * (1 - o * 0.6) }}>
+      {Array.from({ length: bars + 1 }).map((_, i) => {
+        const side = i < bars / 2 ? -1 : 1;
+        const fall = (1 - c) * -HH * (1 + (i % 3) * 0.15);
+        return <div key={"v" + i} style={{ position: "absolute", top: 0, left: i * gap - 16, width: 32, height: HH, background: wood, boxShadow: "8px 0 24px rgba(0,0,0,.65)", transform: `translate(${side * o * 900}px, ${fall + o * 300}px) rotate(${side * o * 25}deg)` }} />;
+      })}
+      {[0.18, 0.5, 0.82].map((y, j) => (
+        <div key={"h" + j} style={{ position: "absolute", left: 0, top: y * HH - 14, width: W, height: 28, background: wood.replace("90deg", "180deg"), boxShadow: "0 8px 24px rgba(0,0,0,.65)", transform: `translate(${(j % 2 ? 1 : -1) * o * 1200}px, ${(1 - c) * -HH * 1.3}px) rotate(${(j % 2 ? 1 : -1) * o * 12}deg)` }} />
+      ))}
+    </AbsoluteFill>
   );
 };
