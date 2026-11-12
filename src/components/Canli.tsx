@@ -331,3 +331,29 @@ export const Murekkep: React.FC<{ k: number; text: string; y?: number }> = ({ k,
     </div>
   );
 };
+
+// ───────── خريطة القرن الذهبي (Harita): الماء والسلسلة وطريق السفن عالبرّ ─────────
+export const Harita: React.FC<{ k: number }> = ({ k }) => {
+  const o = ez(rmp(k, 0, 0.12));
+  const p = ez(rmp(k, 0.15, 0.85));
+  const path = "M 960 980 C 900 760, 760 640, 600 700 S 380 860, 330 860";
+  return (
+    <AbsoluteFill style={{ opacity: o, background: "linear-gradient(160deg,#EAD9B0,#CFB27A)" }}>
+      <svg width={W} height={HH} viewBox={`0 0 ${W} ${HH}`}>
+        <path d="M 900 0 L 1080 0 L 1080 1920 L 980 1920 C 990 1500, 960 1200, 1000 1000 C 1010 900, 940 600, 900 0 Z" fill="#5E8FA8" opacity={0.85} />
+        <path d="M 1000 1000 C 820 1010, 620 960, 420 1000 C 300 1020, 160 1000, 40 1060 L 40 1110 C 200 1070, 330 1080, 440 1060 C 640 1030, 840 1080, 1000 1090 Z" fill="#5E8FA8" opacity={0.85} />
+        <line x1={985} y1={1000} x2={985} y2={1092} stroke="#C4161C" strokeWidth={14} strokeDasharray="18 10" />
+        <path d={path} fill="none" stroke="#7A2E10" strokeWidth={10} pathLength={1} strokeDasharray={`${p} 1`} />
+        <text x={560} y={1180} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={58} fill="#1F3A4A">HALİÇ</text>
+        <text x={860} y={1160} textAnchor="end" fontFamily={FONT} fontWeight={700} fontSize={40} fill="#C4161C">ZİNCİR</text>
+        <text x={520} y={560} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={48} fill="#4A2E12">GALATA TEPELERİ</text>
+        <text x={540} y={1720} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={64} fill="#4A2E12">KONSTANTİNİYYE</text>
+      </svg>
+      {[0, 0.12, 0.24].map((d, i) => {
+        const q = clamp(p - d);
+        const x = 960 - (960 - 330) * q, y = 980 - Math.sin(q * Math.PI) * 300 - q * 120;
+        return <div key={i} style={{ position: "absolute", left: x - 45, top: y - 70, fontSize: 130, opacity: p > d ? 1 : 0 }}>⛵</div>;
+      })}
+    </AbsoluteFill>
+  );
+};
