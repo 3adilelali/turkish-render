@@ -279,3 +279,28 @@ export const Ates: React.FC<{ t: number; k?: number }> = ({ t, k = 1 }) => {
     </AbsoluteFill>
   );
 };
+
+// ───────── خط بيطلع وبينهار (Grafik): فقاعة سعر ─────────
+export const Grafik: React.FC<{ k: number; label?: string; crash?: number }> = ({ k, label, crash = 0.72 }) => {
+  const pts: [number, number][] = [];
+  const N = 60;
+  for (let i = 0; i <= N; i++) {
+    const x = i / N;
+    const y = x < crash ? Math.pow(x / crash, 3) : Math.max(0.05, 1 - (x - crash) / (1 - crash) * 1.6);
+    pts.push([80 + x * 920, 1100 - y * 700]);
+  }
+  const shown = Math.max(2, Math.round(N * ez(rmp(k, 0.05, 0.85))));
+  const d = pts.slice(0, shown).map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+  const last = pts[shown - 1];
+  const down = shown / N > crash;
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      <svg width={W} height={HH} style={{ position: "absolute", left: 0, top: 0 }}>
+        <rect x={50} y={330} width={980} height={820} rx={20} fill="rgba(14,9,5,.72)" stroke="#B8892E" strokeWidth={3} />
+        <path d={d} fill="none" stroke={down ? "#FF3B30" : "#5BE37D"} strokeWidth={14} strokeLinejoin="round" style={{ filter: `drop-shadow(0 0 14px ${down ? "#FF3B30" : "#5BE37D"})` }} />
+        <circle cx={last[0]} cy={last[1]} r={18} fill="#fff" />
+      </svg>
+      {label && <div style={{ position: "absolute", top: 360, left: 90, fontFamily: FONT, fontWeight: 700, fontSize: 52, color: "#F2D58A" }}>{label}</div>}
+    </AbsoluteFill>
+  );
+};
