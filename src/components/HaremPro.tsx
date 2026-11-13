@@ -191,7 +191,7 @@ export type PKind = "girl" | "prince" | "valide" | "kalfa" | "sultan";
 export type PFace = "normal" | "smile" | "shy" | "sad" | "worried" | "shock" | "closed";
 type PFigP = {
   x: number; y: number; s?: number; kind?: PKind; t?: number; seed?: number; face?: PFace;
-  look?: number; bow?: number; walk?: Walk; hands?: "fold" | "tray" | "down" | "belly" | "baby"; belly?: number; baby?: React.ReactNode; plain?: boolean; reach?: number; reachDir?: 1 | -1; item?: React.ReactNode; trayItem?: React.ReactNode;
+  look?: number; bow?: number; walk?: Walk; hands?: "fold" | "tray" | "down" | "belly" | "baby"; belly?: number; baby?: React.ReactNode; plain?: boolean; fes?: boolean; reach?: number; reachDir?: 1 | -1; item?: React.ReactNode; trayItem?: React.ReactNode;
   sit?: boolean; light?: 1 | -1; robe?: string; robe2?: string; scarf?: string; talk?: number; op?: number; blur?: number;
 };
 
@@ -229,7 +229,7 @@ const Eyes2: React.FC<{ cx: number; cy: number; face: PFace; blink: boolean; loo
 
 export const PFig: React.FC<PFigP> = ({
   x, y, s = 1, kind = "girl", t = 0, seed = 0, face = "normal", look = 0, bow = 0, walk, hands = "fold", reach = 0, reachDir, item, trayItem,
-  sit = false, light = 1, robe, robe2, scarf, talk = 0, op = 1, blur = 0, belly = 0, baby, plain = false,
+  sit = false, light = 1, robe, robe2, scarf, talk = 0, op = 1, blur = 0, belly = 0, baby, plain = false, fes = false,
 }) => {
   const male = kind === "prince" || kind === "sultan";
   const fem = !male;
@@ -449,7 +449,19 @@ export const PFig: React.FC<PFigP> = ({
               <path d={`M-30,${faceCy - 130} q30,20 60,0`} stroke={P.pearl} strokeWidth={6} strokeDasharray="0.1 10" strokeLinecap="round" fill="none" />
             </>
           )}
-          {male && (
+          {male && fes && (
+            <g>
+              {/* fes (1900'ler İstanbul): kırmızı kesik koni + siyah püskül */}
+              <path d={`M-50,${faceCy - 44} L-42,${faceCy - 128} Q0,${faceCy - 138} 42,${faceCy - 128} L50,${faceCy - 44} Q0,${faceCy - 30} -50,${faceCy - 44}Z`} fill="#A8202A" stroke={LN} strokeWidth={LW} />
+              <path d={`M-50,${faceCy - 44} L-42,${faceCy - 128} Q0,${faceCy - 138} 42,${faceCy - 128} L50,${faceCy - 44} Q0,${faceCy - 30} -50,${faceCy - 44}Z`} fill={shade} />
+              <ellipse cx={0} cy={faceCy - 130} rx={42} ry={8} fill="#8A1820" stroke={LN} strokeWidth={2} />
+              <g transform={`rotate(${Math.sin(t * 2.4 + seed) * 6},0,${faceCy - 132})`}>
+                <path d={`M0,${faceCy - 132} C30,${faceCy - 128} 44,${faceCy - 110} 46,${faceCy - 84}`} stroke="#1A1410" strokeWidth={4} fill="none" />
+                <path d={`M40,${faceCy - 88} l-6,26 M46,${faceCy - 86} l0,28 M52,${faceCy - 88} l6,26`} stroke="#1A1410" strokeWidth={3.2} strokeLinecap="round" />
+              </g>
+            </g>
+          )}
+          {male && !fes && (
             <g transform={kind === "sultan" ? `translate(0,${faceCy - 60}) scale(1.22) translate(0,${-(faceCy - 60)})` : undefined}>
               {/* kavuk-sarık: kırmızı tepelik, beyaz sarma, mücevherli sorguç + tüy */}
               <path d={`M-30,${faceCy - 100} C-34,${faceCy - 150} 34,${faceCy - 150} 30,${faceCy - 100}Z`} fill="#B8242C" stroke={LN} strokeWidth={2.4} />

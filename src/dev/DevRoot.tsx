@@ -4,6 +4,7 @@ import { PFrame, PFig, ValideOda, Sedir2, NightVeil, Bebek, Samdan } from "../co
 import { DogumSandalye, Saksi, SerbetTepsi, Nazarlik, Kurdele } from "../components/HaremHamile";
 import { Ates, GulKutu, KafesIc, Gul } from "../components/HaremPrenses";
 import { Yayla } from "../components/Eras";
+import { Kuma } from "./Kuma";
 
 // Yeni figür/nesne fikstürleri (her saniye bir sahne)
 const Figs: React.FC = () => {
@@ -25,6 +26,7 @@ const Figs: React.FC = () => {
 
 export const DevRoot: React.FC = () => (
   <>
+    <Composition id="DevKuma" component={Kuma} durationInFrames={300} fps={30} width={1920} height={1080} />
     <Composition id="DevFigs" component={Figs} durationInFrames={150} fps={30} width={1920} height={1080} />
   </>
 );
