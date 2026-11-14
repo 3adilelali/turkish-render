@@ -17,7 +17,17 @@ import { BalikEkmek, Basamak, Camasir, CayMasa, Guvercin, HesapMak, Izlenme, Kir
 // Sen (isimsiz, 19, Fatih, hamal). Annen. Kemal Abi (50, hamal). Nermin Teyze. Kasap Sedat. Tekin Bey (müteahhit). Çaycı Rıza. Hakem.
 // Görsel imza: elin üstünde turkuaz çarpan (Carpan). Yeni kit: components/Guc.tsx + GucEk.tsx.
 
-const ALT: Record<string, string[]> = {};
+const ALT: Record<string, string[]> = {
+  "Elli yaşında. Kolları": ["50 yaşında. Kolları"], "Bir koli yumurtayı kırmadan": ["Bir kol yumurtayı kırmadan"], "Kapının kolu elinde kaldı": ["Kapanın kolu elinde kaldı"],
+  "Ve sen bir şeyi fark ettin": ["Ve sen bir şey fark ettin"], "Dördüncü gün, Mahmutpaşa'daki çay": ["4. gün Mahmud Paşa'daki çay", "4. gün Mahmut Paşa'daki çay"],
+  "Ödül, yüz bin lira": ["Ödül 100 bin lira"], "Yüz bin lira. Dershanenin": ["100 bin lira. Dersanenin", "100 bin lira. Dershanenin"], "Eminönü'nden Mahmutpaşa yokuşunun": ["Eminönü'nden Mahmud Paşa yokuşunun"],
+  "Sokağın ağzına biri arabasını": ["Sokağın ağzında biri arabasını"], "Sen arabanın altından tuttun": ["Sen de arabanın altından tuttun"],
+  "Ve yedinci gün, çarpı yüz": ["Ve yedinci gün, çarpı 128"], "Sen geldin. Çarpı iki yüz": ["Sen geldin. Çarpı 256"], "Ve onuncu gün, çarpı bin": ["Ve onuncu gün çarpı 1024"],
+  "Sen iki saatte bitirirsin": ["Sen 2 saatte bitirirsin"], "On bin lira. Bir gecede": ["10 bin lira. Bir gecede"], "Ve Kemal Abi'yi gördün": ["Ve Kemal ağabeyi gördün"],
+  "On beşinci gün. Çarpı otuz iki bin": ["Onbaşıncı gün, çarpı otuz iki bin"], "Yirmi yedinci gün": ["27. gün"], "Ve yirmi dokuzuncu akşam": ["Ve 29. akşam"],
+  "Kemal Abi koliyi açtı": ["Kemal abi kolyeyi açtı"], "Otuzuncu gün geldi": ["30. gün geldi"], "Yirmi üç gün sonra ilk kez": ["23 gün sonra ilk kez"],
+  "Otuz birinci günün sabahı": ["Otuz birinci günün sabaha"], "Ve Kemal Abi yirmi yıldır": ["Ve Kemal abi yirmi yıldır"],
+};
 const ramp = (t: number, a: number, b: number) => (b - a > 0.01 ? rampRaw(t, a, b) : t >= b ? 1 : 0);
 const cueRaw = makeCue(words as { text: string; start: number; end: number }[]);
 const VAR: [RegExp, string][] = [[/â/g, "a"], [/î/g, "i"], [/û/g, "u"]];
@@ -138,8 +148,8 @@ const SHOTS: Sh[] = [
   { c: "Meğer evrenin kulakları", sfx: "ding", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.15]}><rect width={1920} height={1080} fill="#0B1220" />{Array.from({ length: 60 }, (_, i) => <circle key={i} cx={(i * 211) % 1920} cy={(i * 137) % 1080} r={2 + (i % 3)} fill="#FFFFFF" opacity={0.4 + 0.4 * Math.sin(t * 3 + i)} />)}<Isil x={960} y={540} t={t} r={160} k={ramp(t, a + 0.5, b)} /></TCam> },
 
   // ── GÜN BİR ──
-  { c: "Sabah alarm çaldı", sfx: "buzz", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.8, 2]} c0={[960, 860]}>{ev(t)}{yatan(t, 960, 1000, { eyes: t < a + 0.8 ? "closed" : "open" })}<g transform="translate(1260,960)"><PhoneP s={2} ring={1} /></g></TCam> },
-  { c: "Telefona uzandın", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.06]}><Carpan t={t} n="×2" k={ramp(t, a + 0.6, a + 1.6)} bg="#E9D9C0" /></TCam> },
+  { c: "Ve elinin üstünde bir şey gördün", sfx: "ding", tone: "warm", r: (t, a, b) => t < a + 1.4 ? <TCam t={t} a={a} b={b} z={[1.8, 2]} c0={[960, 860]}>{ev(t)}{yatan(t, 960, 1000, { eyes: "open", mouth: "o" })}</TCam> : <TCam t={t} a={a} b={b} z={[1, 1.06]}><Carpan t={t} n="×2" k={ramp(t, a + 1.4, a + 2.2)} bg="#E9D9C0" /></TCam>,
+    html: tg("1. GÜN · SABAH", T.yellow, 0.3) },
   { c: "İnce, turkuaz, ışıklı", sfx: "ding", r: cp("×2", "ÇARPI İKİ") },
   { c: "Elini yıkadın. Gitmedi", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.15]}><Carpan t={t} n="×2" bg="#9FC4D0" shake={0.3} /></TCam>,
     html: (t, a, b) => <><Tag t={t} at={a + 0.4} text="SU · GİTMEDİ" c={T.blue} /><Tag t={t} at={a + (b - a) * 0.5} text="SABUN · GİTMEDİ" c={T.pink} y={140} /></> },
@@ -177,7 +187,7 @@ const SHOTS: Sh[] = [
     html: tg("NERMİN TEYZE · YENİ BUZDOLABI", NERMIN.top) },
   { c: "Biri merdivende oturmuş", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2, 2.2]} c0={[900, 760]}><Basamak t={t} />{nakli(t, 900, 0.85, { pose: P.sit, mouth: "flat", eyes: "squint", holdR: <g><rect x={-2} y={-4} width={30} height={6} fill="#F4F4F2" /><circle cx={28} cy={-1} r={4} fill={T.orange} /></g> }, stairY(900) + 40)}{Array.from({ length: 3 }, (_, i) => <circle key={i} cx={960 + i * 14} cy={HY(0.85, stairY(900)) + 120 - ((t * 40 + i * 30) % 120)} r={10 + i * 4} fill="#D9DCDF" opacity={0.4} />)}</TCam> },
   { c: "Sen buzdolabını tek elinle", sfx: "whoosh", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.4, 1.5]} c0={[600, 600]}><Basamak t={t} />{kaldir(t, SEN, 520, 0.9, <Buzdolabi x={0} y={0} s={0.7} />, 1, { pose: P.wave }, stairY(520))}{nakli(t, 820, 0.85, { pose: P.shock, mouth: "o", eyes: "wide", look: -0.6 }, stairY(820))}</TCam> },
-  { c: "Merdivenleri çıktın", tone: "gold", r: (t, a, b) => { const w = toonWalk(t, a, b, 400, 1400, 0.85); return <TCam t={t} a={a} b={b} z={[1.1, 1.15]} c0={[960, 560]}><Basamak t={t} /><g transform={`translate(${w.x},${HY(0.85, stairY(w.x)) - 10})`}><Buzdolabi x={0} y={0} s={0.6} /></g><TFig x={w.x} y={stairY(w.x)} s={0.85} o={SEN} t={t} dir={w.dir} walk={w.walk} pose={P.wave} rim={0.4} mouth="grin" /></TCam>; },
+  { c: "Merdivenleri çıktın", tone: "gold", r: (t, a, b) => { const w = toonWalk(t, a, b, 400, 1050, 0.85); return <TCam t={t} a={a} b={b} z={[1.1, 1.15]} c0={[960, 600]}><Basamak t={t} /><g transform={`translate(${w.x},${HY(0.85, stairY(w.x)) - 10})`}><Buzdolabi x={0} y={0} s={0.6} /></g><TFig x={w.x} y={stairY(w.x)} s={0.85} o={SEN} t={t} dir={w.dir} walk={w.walk} pose={P.wave} rim={0.4} mouth="grin" /></TCam>; },
     html: tg("4. KAT · TEK EL", T.hero) },
   { c: "Fişini bile taktın", sfx: "ding", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.6, 1.8]} c0={[960, 640]}>{mutfak(t)}<Buzdolabi x={1200} y={G} s={1.1} />{sen(t, 900, 1, { pose: P.point, mouth: "grin", look: 0.5 })}</TCam> },
   { c: "Nermin Teyze bir buzdolabına", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.2, 2.4]} c0={[960, HY(1) + 160]}>{mutfak(t)}{nermin(t, 960, 1, { mouth: "o", eyes: "wide", look: t < a + 1 ? 0.8 : -0.8 })}</TCam> },
@@ -206,6 +216,7 @@ const SHOTS: Sh[] = [
   // ── YARIŞ ──
   { c: "Dördüncü gün, Mahmutpaşa'daki çay", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.1]}><Ilan t={t} k={ramp(t, a + 0.3, a + 1)} /></TCam> },
   { c: "Esnaf derneğinin geleneksel", r: (t, a, b) => keep("Dördüncü gün, Mahmutpaşa'daki çay", t, b) },
+  { c: "Eminönü'nden Mahmutpaşa yokuşunun", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.15]} c0={[960, 560]} c1={[1500, 520]}><Mahmutpasa t={t} finish={1} /></TCam>, html: tg("SIRTTA 150 KİLO · 11 GÜN SONRA", T.orange, 0.8) },
   { c: "Ödül, yüz bin lira", sfx: "ding", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.9, 2.1]} c0={[960, 720]}><Ilan t={t} /></TCam> },
   { c: "Yüz bin lira. Dershanenin", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.04]}><Hesap t={t} a={a} rows={[["ÖDÜL", "100.000 ₺"], ["DERSHANE · 1 SENE", "✓"], ["ANNENİN BİLEZİKLERİ", "✓"]]} step={1.3} /></TCam> },
   { c: "Kemal Abi kâğıdın önünde", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.1, 1.2]} c0={[960, 600]}><g transform="translate(960,420) scale(0.45) translate(-960,-560)"><Ilan t={t} /></g><rect y={900} width={1920} height={180} fill="#8A7458" />{kemal(t, 960, 1.1, { dir: -1, mouth: "flat", lookY: -0.3 })}</TCam> },
@@ -269,6 +280,8 @@ const SHOTS: Sh[] = [
   { c: "Ağır bir şey istediğinde", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.06]}><Lif t={t} active={Math.round(lerp(3, 18, ramp(t, a, a + 1)))} label="AĞIR = DAHA FAZLA LİF" /></TCam> },
   { c: "Beynin, kaslarına biraz", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.08]}><Lif t={t} active={3} boost={ramp(t, a + 2, a + 3)} label={t > a + 2 ? "HER LİF ×128" : "19 YILDA ÖĞRENDİ: “BİRAZ”"} /></TCam>,
     html: (t, a, b) => <Txt t={t} at={a + (b - a) * 0.7} text="“BİRAZ” = BALYOZ" y={80} size={90} color="#F6C445" /> },
+  { c: "Ama artık her lif", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.35]}><Lif t={t} active={3} boost={1} label="HER LİF ×128" /></TCam>,
+    html: (t, a, b) => <Txt t={t} at={a + (b - a) * 0.5} text="“BİRAZ” = BALYOZ" y={80} size={90} color="#F6C445" /> },
   { c: "Gücün her sabah ikiye", tone: "gold", r: kart("#14203A"),
     html: (t, a) => <><Txt t={t} at={a + 0.3} text="GÜÇ: ×128" y={340} size={110} color="#2EE6D0" /><Txt t={t} at={a + 1.6} text="KONTROL: 1. GÜN" y={560} size={110} color="#F05A4A" /></> },
 
@@ -287,6 +300,7 @@ const SHOTS: Sh[] = [
   { c: "Sen otobüsü ittiğinde", r: (t, a, b) => keep("İşte o an öğrendin", t, b), html: q("AYNI GÜÇLE SENİ İTER", 70, 0.4, 960) },
   { c: "Ve sen hâlâ yetmiş kiloydun", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.8, 2]} c0={[960, 640]}><YokusCadde t={t} />{sen(t, 960, 1, { pose: P.shrug, mouth: "flat" })}</TCam>,
     html: big("HÂLÂ 70 KİLO") },
+  { c: "Ayakkabılarının yere tutunabileceği", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.1, 1.2]}><Bordur t={t} push={Math.sin((t - a) * 3) * 6} /></TCam>, html: tg("SÜRTÜNME SINIRI", T.red, 0.6) },
   { c: "Bir milyar kat güçlü de olsan", r: cp("×1.073.741.824", "YİNE KAYARDIN", true) },
   { c: "Sonra gözün kaldırımın", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.3, 1.1]} c0={[960, 700]}><Bordur t={t} push={0} /></TCam>, html: tg("TAŞ BORDÜR", T.yellow) },
   { c: "Ayağını bordüre dayadın", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.5, 1.6]} c0={[620, 760]}><YokusCadde t={t} /><Otobus x={1000} y={880} s={0.85} t={0} tilt={-5.4} /><rect x={260} y={1000} width={260} height={50} fill="#C9C2B4" stroke="#1A1A22" strokeWidth={4} />{sen(t, 470, 1, { pose: P.reach, mouth: "flat", brow: "angry" }, 1000)}</TCam> },
@@ -328,6 +342,7 @@ const SHOTS: Sh[] = [
   { c: "Kemal Abi'nin belinde iki fıtık", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.08]} c0={[960, 600]}><Omurga t={t} k={ramp(t, a + 0.6, a + 1.2)} /></TCam>,
     html: tg("DOKTOR: AMELİYAT", T.red, 1.6) },
   { c: "Ameliyat parası yoktu", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.04]}><Hesap t={t} a={a} rows={[["AMELİYAT PARASI", "YOK"], ["EVDE", "3 ÇOCUK"], ["20 YILDA YARIŞ", "0 ZAFER"]]} red={0} step={1.5} /></TCam> },
+  { c: "Ve Kemal Abi yirmi yıldır", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.3, 1.45]} c0={[960, 600]}>{pazar(t, (t - a) * 20, 0.6)}{walk(t, a, b, KEMAL, 1400, 700, 1, { mouth: "frown", sweat: true, brow: "worried" }, flat, 3)}</TCam>, html: tg("20 YIL · 0 ZAFER", T.blue, 0.8) },
   { c: "Bu sene, onun son şansıydı", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.4, 1.6]} c0={[960, 560]}>{pazar(t, 0, 0)}{yuklu(t, KEMAL, 960, 1, 3, { dir: -1, mouth: "frown", sweat: true, brow: "worried" })}</TCam>,
     html: q("BELİNİN SON ŞANSI", 84, 0.5) },
   { c: "Ve bu sene, karşısında", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.35]} c0={[960, 520]}>{pazar(t, 0, 0)}{kaldir(t, SEN, 960, 1, <Otobus x={0} y={0} s={0.35} t={0} />, 1, { mouth: "flat" })}</TCam> },
@@ -336,6 +351,7 @@ const SHOTS: Sh[] = [
     html: tg("DEFALARCA", T.blue, 1.4) },
 
   // ── YARIŞ GÜNÜ ──
+  { c: "Defalarca", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.4, 2.6]} c0={[960, HY(1) + 150]}>{ev(t, true)}{sen(t, 960, 1, { mouth: "flat", brow: "worried", eyes: "squint", lookY: 0.4 })}</TCam> },
   { c: "On beşinci gün. Çarpı otuz iki bin", sfx: "ding", r: cp("×32.768", "1.638 TON") },
   { c: "Eminönü meydanı tıklım", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.15]} c0={[960, 560]}>{rih(t, { drift: 1, dusk: 0, crowd: 1 })}<Telefonlar t={t} n={9} /></TCam>,
     html: tg("YARIŞ GÜNÜ", T.red) },
@@ -352,6 +368,7 @@ const SHOTS: Sh[] = [
   { c: "Ve arkana baktın", sfx: "drone", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.6, 2.8]} c0={[1400, HY(0.8, mah(1400)) + 120]}><Mahmutpasa t={t} finish={1} />{yuklu(t, SEN, 1400, 0.8, 2, { dir: t > a + 0.6 ? -1 : 1, mouth: "flat", eyes: "wide" }, mah(1400))}</TCam> },
   { c: "Kemal Abi, yokuşun ortasında", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.6, 1.8]} c0={[700, 760]}><Mahmutpasa t={t} finish={1} /><g transform={`translate(0,40)`}>{yuklu(t, KEMAL, 700, 0.8, 2, { pose: P.sit, mouth: "frown", eyes: "closed", sweat: true, brow: "worried" }, mah(700) - 30)}</g></TCam>,
     html: tg("DİZLERİNİN ÜSTÜNDE", T.red, 1) },
+  { c: "Yüzü, kepengin önündeki", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.8, 3]} c0={[700, HY(0.8, mah(700) - 30) + 160]}><Mahmutpasa t={t} finish={1} /><g transform="translate(0,40)">{yuklu(t, KEMAL, 700, 0.8, 2, { pose: P.sit, mouth: "frown", eyes: "closed", sweat: true, brow: "worried" }, mah(700) - 30)}</g></TCam>, html: tg("BEMBEYAZ", "#9AA4AE", 0.6) },
   { c: "Yüz bin lira, on metre", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.2, 2.4]} c0={[1700, 600]}><Mahmutpasa t={t} finish={1} /></TCam>,
     html: big("100.000 ₺ · 10 METRE ÖNÜNDE") },
   { c: "Döndün", sfx: "whoosh", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.4, 2.2]} c0={[1400, HY(0.8, mah(1400)) + 140]}><Mahmutpasa t={t} finish={1} />{yuklu(t, SEN, 1400, 0.8, 2, { dir: -1, mouth: "flat", brow: "angry" }, mah(1400))}</TCam> },
@@ -382,6 +399,7 @@ const SHOTS: Sh[] = [
     html: q("“SEN BENİM AMELİYATIMI VERDİN.”", 84) },
   { c: "Güçlü adam çoktur, oğlum", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.6, 2.8]} c0={[1200, HY(1) + 150]}>{kahve(t)}{kemal(t, 1200, 1, { pose: P.point, mouth: "open", talk: true, look: -0.5 })}</TCam>,
     html: q("“GÜÇLÜ ADAM YÜKÜ SIKAR. SIKINCA KIRAR.”", 74) },
+  { c: "Yük düşmesin diye sıkar", sfx: "knock", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.08]}><rect width={1920} height={1080} fill="#8A6A4A" /><YumurtaKoli x={960} y={560} s={1.3} t={t} broken={Math.min(12, Math.floor((t - a) * 5))} /></TCam>, html: big("SIKAR → KIRAR", "#F05A4A") },
   { c: "Usta yükü sıkmaz", sfx: "ding", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.06]}><rect width={1920} height={1080} fill="#2A2420" /><YumurtaKoli x={960} y={700} s={0.8} t={t} glow={1} /></TCam>,
     html: (t, a) => <Txt t={t} at={a + 0.3} text="USTA YÜKÜ SIKMAZ. YÜKE YASLANIR." y={140} size={84} color="#F6C445" /> },
   { c: "Ve on beş gün boyunca", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[960, 600]}>{pazar(t, (t - a) * 30, 0.5)}{walk(t, a, b, SEN, 500, 1300, 1, { pose: P.hold, mouth: "flat", eyes: "squint", holdR: <g transform="translate(-40,-10)"><YumurtaKoli x={0} y={0} s={0.18} t={t} /></g> })}</TCam>,
@@ -417,6 +435,7 @@ const SHOTS: Sh[] = [
     html: tg("ÇATIRTI", T.red, 0.6) },
   { c: "Karaköy'den gelen akşam", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.06]} c0={[960, 540]}>{rih(t, { drift: lerp(0.8, 0.2, ramp(t, a, b)), panic: 1 })}</TCam>,
     html: tg("AKINTI → GALATA KÖPRÜSÜ", T.red) },
+  { c: "Akıntı, vapuru yan yan", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.5, 1.7]} c0={[1500, 560]} c1={[1600, 560]}>{rih(t, { drift: lerp(0.2, 0, ramp(t, a, b)), panic: 1 })}</TCam>, html: tg("GALATA KÖPRÜSÜ'NE DOĞRU", T.red, 0.5) },
   { c: "İçinde üç yüz kişi", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2, 2.2]} c0={[1450, 560]}>{rih(t, { drift: 0.2, panic: 1 })}</TCam>, html: big("300 KİŞİ", "#F05A4A", 110) },
   { c: "Kopan halatın ucu", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.3, 1.4]} c0={[800, 700]}>{rih(t, { drift: 0.2, rope: 1, ropeTo: [lerp(1000, 760, ramp(t, a, b)), lerp(860, 830, ramp(t, a, b))], panic: 1 })}{run(t, a, b, SEN, 300, 700, 0.8, { mouth: "open", brow: "angry" }, () => 900)}</TCam> },
   { c: "Ve işte oradaydın", sfx: "whoosh", r: (t, a, b) => again("Ve kayıyorsun", t, a, b, 0) },
@@ -435,6 +454,7 @@ const SHOTS: Sh[] = [
   { c: "Gözlerini kapattın", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.8, 3]} c0={[960, HY(1) + 140]}><rect width={1920} height={1080} fill="#2A2420" />{sen(t, 960, 1, { eyes: "closed", mouth: "flat" })}<g opacity={0.35}><YumurtaKoli x={960} y={300} s={0.6} t={t} glow={1} /></g></TCam>,
     html: q("SIKMA. YASLAN.", 90, 0.5) },
   { c: "Halatı, bir koli yumurta", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.1, 1]}><HalatEl t={t} grip={0.15} soft={ramp(t, a + 0.4, a + 1.4)} /></TCam> },
+  { c: "Ve vapura doğru, çok hafifçe", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.2, 2.4]} c0={[640, 720]}>{rih(t, { drift: 0.3, rope: 1, tense: 0.6, ropeTo: [700, 690] })}{sen(t, 620, 0.8, { pose: P.reach, mouth: "smile", eyes: "closed" }, 860)}</TCam>, html: tg("YASLAN", T.hero, 0.6) },
   { c: "Vapur yavaşladı", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.08]} c0={[960, 560]}>{rih(t, { drift: lerp(0.3, 0.9, ramp(t, a, b)), rope: 1, tense: 0.8, ropeTo: [700, 690] })}{sen(t, 620, 0.8, { pose: P.reach, mouth: "flat", eyes: "closed" }, 860)}</TCam> },
   { c: "Ve iskeleye, bir kedinin", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.8, 2]} c0={[900, 700]}>{rih(t, { drift: lerp(0.9, 1, ramp(t, a, b)), rope: 1, tense: 0.5, ropeTo: [700, 690] })}</TCam>,
     html: tg("YUMUŞACIK", T.hero, 1) },
@@ -461,11 +481,13 @@ const SHOTS: Sh[] = [
     html: tg("23 GÜN SONRA İLK KEZ", T.hero, 0.4) },
   { c: "Annen hiçbir şey demedi", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.8, 3]} c0={[960, HY(1) + 200]}>{mutfak(t)}{anne(t, 910, 1, { pose: P.hold, mouth: "smile", eyes: "closed" })}{sen(t, 1010, 1, { pose: P.hold, mouth: "smile", eyes: "closed", dir: -1 })}</TCam>,
     html: tg("TIP · TIP", T.pink, 1.4) },
+  { c: "Tıpkı sen küçükken", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[3.2, 3.4]} c0={[960, HY(1) + 200]}>{mutfak(t)}{anne(t, 910, 1, { pose: P.hold, mouth: "smile", eyes: "closed" })}{sen(t, 1010, 1, { pose: P.hold, mouth: "smile", eyes: "closed", dir: -1 })}<Isil x={960} y={HY(1) + 200} t={t} r={260} k={0.7} /></TCam> },
   { c: "Dünyanın en güçlü insanıydın", tone: "gold", r: kart("#14203A"),
     html: (t, a) => <><Txt t={t} at={a + 0.3} text="DÜNYANIN EN GÜÇLÜ İNSANI" y={300} size={90} color="#2EE6D0" /><Txt t={t} at={a + 2.2} text="EN ZOR İŞİ: ANNESİNE YAVAŞÇA SARILMAK" y={500} size={74} color="#F6C445" /></> },
   { c: "Ertesi sabah dershaneden", sfx: "ding", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.06]}><rect width={1920} height={1080} fill="#E9D9C0" /><g transform="translate(960,560)"><PhoneP s={7} ring={1} /></g></TCam>,
     html: q("“BU SENENİN PARASI BİZDEN.”", 90, 0.5) },
-  { c: "Tek bir şartı vardı", tone: "warm", r: (t, a, b) => { const w = toonWalk(t, a, b, 400, 1300, 0.85); return <TCam t={t} a={a} b={b} z={[1.1, 1.2]} c0={[960, 560]}><Basamak t={t} /><SirtYuk x={w.x} y={stairY(w.x)} s={0.85} n={4} dir={w.dir} t={t} labels={["SIRA", "SIRA", "SIRA", "SIRA"]} /><TFig x={w.x} y={stairY(w.x)} s={0.85} o={SEN} t={t} dir={w.dir} walk={w.walk} pose={P.hold} rim={0.4} mouth="grin" /></TCam>; },
+  { c: "Tek bir şartı vardı", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.1]}><rect width={1920} height={1080} fill="#E9D9C0" /><g transform="translate(960,560)"><PhoneP s={7} /></g></TCam>, html: big("TEK BİR ŞART", "#FFFFFF") },
+  { c: "Yeni gelen sıraları", tone: "warm", r: (t, a, b) => { const w = toonWalk(t, a, b, 400, 1050, 0.85); return <TCam t={t} a={a} b={b} z={[1.1, 1.2]} c0={[960, 560]}><Basamak t={t} /><SirtYuk x={w.x} y={stairY(w.x)} s={0.85} n={4} dir={w.dir} t={t} labels={["SIRA", "SIRA", "SIRA", "SIRA"]} /><TFig x={w.x} y={stairY(w.x)} s={0.85} o={SEN} t={t} dir={w.dir} walk={w.walk} pose={P.hold} rim={0.4} mouth="grin" /></TCam>; },
     html: tg("YENİ SIRALAR · 4. KAT", T.yellow, 0.8) },
 
   // ── OTUZ BİRİNCİ GÜN ──
@@ -480,6 +502,7 @@ const SHOTS: Sh[] = [
   { c: "Yorumlara yaz", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.6, 1.8]} c0={[1650, 600]}><Mahmutpasa t={t} finish={1} broke={1} /></TCam>, html: big("YORUMLARA YAZ ↓", "#FFFFFF", 90) },
   { c: "Ve sayının sıfıra vardığında", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.1]}><Carpan t={t} n="×268.435.456" down bg="#0B1220" /></TCam>,
     html: (t, a) => <Abone t={t} at={a + 0.3} /> },
+  { c: "Çünkü elinin üstündeki sayı", sfx: "buzz", tone: "night", r: (t, a, b) => { const k = Math.min(3, Math.floor((t - a) / 1.2)); return <TCam t={t} a={a} b={b} z={[1.1, 1.25]}><Carpan t={t} n={["×268.435.456", "×134.217.728", "×67.108.864", "×33.554.432"][k]} down bg="#0B1220" sub="YARIYA İNMEYE DEVAM EDİYOR" /></TCam>; } },
 ];
 
 type Timed = Sh & { from: number; to: number };

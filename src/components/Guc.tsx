@@ -150,7 +150,7 @@ export const Bordur: React.FC<{ t: number; crack?: number; push?: number }> = ({
       {crack > 0 && <path d={`M40,-90 L10,-30 L60,10 L20,50 L50,90`} stroke={LN} strokeWidth={8 * crack} fill="none" />}
       {crack > 0.5 && Array.from({ length: 8 }, (_, i) => <rect key={i} x={20 + (rnd(i) - 0.5) * 200 * crack} y={-120 - rnd(i + 4) * 160 * crack} width={18} height={14} fill="#C9C2B4" stroke={LN} strokeWidth={2} />)}
     </g>
-    <g transform={`translate(${900 - push * 20},540) rotate(-8)`}>
+    <g transform={`translate(${900 - push * 20},575) rotate(-6)`}>
       <path d="M-260,-30 L60,-30 C120,-30 160,10 160,70 L-260,70Z" fill="#FFFFFF" stroke={LN} strokeWidth={7} />
       <rect x={-260} y={60} width={420} height={22} rx={8} fill="#C9C9C9" stroke={LN} strokeWidth={5} />
       <rect x={-560} y={-60} width={320} height={80} rx={30} fill={LN} />
