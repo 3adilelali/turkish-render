@@ -20,6 +20,15 @@ import { SH1_08_SECONDS, Sh1Short08 } from "./videos/sh1-08/Short";
 import { SH1_09_SECONDS, Sh1Short09 } from "./videos/sh1-09/Short";
 import { SH1_10_SECONDS, Sh1Short10 } from "./videos/sh1-10/Short";
 import { SH2_01_SECONDS, Sh2Short01 } from "./videos/sh2-01/Short";
+import { SH2_02_SECONDS, Sh2Short02 } from "./videos/sh2-02/Short";
+import { SH2_10_SECONDS, Sh2Short10 } from "./videos/sh2-10/Short";
+import { SH2_09_SECONDS, Sh2Short09 } from "./videos/sh2-09/Short";
+import { SH2_08_SECONDS, Sh2Short08 } from "./videos/sh2-08/Short";
+import { SH2_07_SECONDS, Sh2Short07 } from "./videos/sh2-07/Short";
+import { SH2_06_SECONDS, Sh2Short06 } from "./videos/sh2-06/Short";
+import { SH2_05_SECONDS, Sh2Short05 } from "./videos/sh2-05/Short";
+import { SH2_04_SECONDS, Sh2Short04 } from "./videos/sh2-04/Short";
+import { SH2_03_SECONDS, Sh2Short03 } from "./videos/sh2-03/Short";
 
 const FPS = 30;
 const ready = async () => {
@@ -49,6 +58,15 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Sh1Short09" component={Sh1Short09} durationInFrames={Math.round(SH1_09_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     <Composition id="Sh1Short10" component={Sh1Short10} durationInFrames={Math.round(SH1_10_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     <Composition id="Sh2Short01" component={Sh2Short01} durationInFrames={Math.round(SH2_01_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short02" component={Sh2Short02} durationInFrames={Math.round(SH2_02_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short10" component={Sh2Short10} durationInFrames={Math.round(SH2_10_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short09" component={Sh2Short09} durationInFrames={Math.round(SH2_09_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short08" component={Sh2Short08} durationInFrames={Math.round(SH2_08_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short07" component={Sh2Short07} durationInFrames={Math.round(SH2_07_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short06" component={Sh2Short06} durationInFrames={Math.round(SH2_06_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short05" component={Sh2Short05} durationInFrames={Math.round(SH2_05_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short04" component={Sh2Short04} durationInFrames={Math.round(SH2_04_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
+    <Composition id="Sh2Short03" component={Sh2Short03} durationInFrames={Math.round(SH2_03_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     {/* الشورت الجاي: نفس السطر فوق (أداة السحابة بتدوّر على id="..." component={...}) */}
   </>
 );

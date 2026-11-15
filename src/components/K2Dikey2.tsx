@@ -273,7 +273,7 @@ export const Saat: React.FC<{ x?: number; y?: number; s?: number; h: number; lab
     <path d="M0,0 V-100" transform={`rotate(${h * 30})`} stroke="#141414" strokeWidth={14} strokeLinecap="round" />
     <path d="M0,0 V-150" transform={`rotate(${h * 360})`} stroke={T.red} strokeWidth={8} strokeLinecap="round" />
     <circle r={14} fill="#141414" />
-    {label && <text y={290} textAnchor="middle" fontFamily="Poppins" fontWeight={900} fontSize={80} fill="#FFFFFF" stroke="#0B1426" strokeWidth={14} paintOrder="stroke">{label}</text>}
+    {label && <text y={-250} textAnchor="middle" fontFamily="Poppins" fontWeight={900} fontSize={80} fill="#FFFFFF" stroke="#0B1426" strokeWidth={14} paintOrder="stroke">{label}</text>}
   </g>
 );
 
