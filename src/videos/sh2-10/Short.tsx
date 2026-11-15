@@ -62,7 +62,7 @@ export const { SECONDS: SH2_10_SECONDS, Comp: Sh2Short10 } = makeShort2({
       { c: "Ama bir sır", sfx: "whoosh", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.6, 1.4]} c0={[960, 540]}><BogazHarita t={t} k={0} /></TCam>,
         html: (t, a) => <VT t={t} at={a + 0.3} text="AMA BİR SIR VAR 🤫" y={330} /> },
       { c: "Yarış kuzeyden", sfx: "whoosh", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.1]} c0={[960, 540]}><BogazHarita t={t} k={ramp(t, a + 0.4, b)} flow={ramp(t, a + 2.2, a + 3)} /></TCam>,
-        html: (t, a) => <><VT t={t} at={a + 0.4} text="KUZEY → GÜNEY" y={300} size={80} /><Damga t={t} at={a + 2.4} text="AKINTI GÜNEYE ↓" y={1040} c="#2EE6D0" rot={-4} /></> },
+        html: (t, a) => <><VT t={t} at={a + 0.4} text="KUZEY → GÜNEY" y={300} size={80} /><Damga t={t} at={a + 2.4} text="AKINTI ↓ GÜNEY" y={1040} c="#2EE6D0" rot={-4} size={80} /></> },
       { c: "Akıntı seni", sfx: "pop", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.3, 1.4]} c0={[960, 640]}><Deniz t={t} push={1} /><Yuzucu x={lerp(860, 1060, ramp(t, a, b))} y={640} s={1.4} t={t} cap={TQ} /></TCam>,
         html: (t, a) => <Damga t={t} at={a + 1.4} text="BELKİ 3 SİMİT" y={330} c="#F6C445" rot={-4} /> },
       // uyarı

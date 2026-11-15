@@ -81,7 +81,7 @@ export const { SECONDS: SH2_08_SECONDS, Comp: Sh2Short08 } = makeShort2({
       { c: "Birinci saat", sfx: "buzz", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.3, 1.4]} c0={[960, 640]}><Kabin t={t} floor="--" dark={0.7} /><TFig x={960} y={990} s={0.9} o={{ ...DAD }} t={t} pose={P.shrug} mouth="frown" brow="worried" /></TCam>,
         html: (t, a) => <><Damga t={t} at={a + 0.1} text="1. SAAT" y={330} c="#F6C445" rot={-4} /><VT t={t} at={a + 1} text="ASANSÖR DURDU" y={1040} size={76} /></> },
       { c: "On beşinci", sfx: "pop", tone: "night", r: (t, a, b) => { const k = ramp(t, a, b); const x = lerp(760, 1000, k); return <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[960, 620]}>{merdiven(t)}<TFig x={x} y={lerp(880, 700, k)} s={0.75} o={TEYZE} t={t} pose={P.hold} mouth="o" brow="worried" sweat /></TCam>; },
-        html: (t, a) => <Sayi t={t} at={a + 0.1} to={15} dur={0.8} unit="KATTAKİ TEYZE" y={330} c="#F6C445" /> },
+        html: (t, a) => <Sayi t={t} at={a + 0.1} to={15} dur={0.8} unit="KATTAKİ TEYZE" y={880} c="#F6C445" /> },
       { c: "İkinci saat", sfx: "splash", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.4, 1.5]} c0={[960, 520]}><Musluk t={t} flow={1 - ramp(t, a + 0.7, a + 1.5)} /></TCam>,
         html: (t, a) => <><Damga t={t} at={a + 0.1} text="2. SAAT" y={330} c="#F6C445" rot={4} /><VT t={t} at={a + 1.2} text="MUSLUK KURUDU" y={1040} size={76} /></> },
       { c: "Çünkü yüksek", sfx: "whoosh", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.1]} c0={[1000, 560]}><Pompa t={t} k={1 - ramp(t, a + 1.8, a + 2.6)} /></TCam>,
@@ -95,7 +95,7 @@ export const { SECONDS: SH2_08_SECONDS, Comp: Sh2Short08 } = makeShort2({
       { c: "Baz", sfx: "drone", tone: "cool", bg: "#14294A", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.06]} c0={[960, 540]}><Baz t={t} bat={1 - ramp(t, a + 0.4, tCek)} /></TCam>,
         html: (t) => <Damga t={t} at={tCek} text="ÇEKMİYOR ✗" y={330} c="#E0393E" rot={-5} /> },
       // gece ve yıldızlar
-      { c: "Gece", sfx: "whoosh", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.1]} c0={[960, 700]} c1={[960, 420]}><GeceSehir t={t} off={1} stars={ramp(t, tYil - 0.3, tYil + 1)} /></TCam>,
+      { c: "Gece", sfx: "whoosh", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.1]} c0={[960, 700]} c1={[960, 540]}><GeceSehir t={t} off={1} stars={ramp(t, tYil - 0.3, tYil + 1)} /></TCam>,
         html: (t) => <VT t={t} at={tYil + 0.4} text="YILDIZLAR ✨" y={1040} c="#F6C445" /> },
       { c: "Balkonlar", sfx: "pop", tone: "night", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.4, 1.6]} c0={[960, 640]}><GeceSehir t={t} off={1} stars={1} balk={ramp(t, a, a + 1.2)} /></TCam>,
         html: (t, a) => <VT t={t} at={a + 1.3} text="KOMŞULAR KONUŞUYOR" y={330} size={80} /> },

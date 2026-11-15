@@ -203,22 +203,22 @@ export const BogazKesit: React.FC<{ t: number; water?: number; flow?: number; ru
 };
 
 // ── Boğaz haritası (üstten, dikey): Kanlıca kuzeyde, Kuruçeşme güneyde. k: yüzücünün ilerlemesi, flow: akıntı okları
-const BOGAZ_PATH = "M860,40 C900,200 820,300 880,420 C940,540 1080,560 1040,700 C1000,820 900,880 940,1060";
 export const BogazHarita: React.FC<{ t: number; k?: number; flow?: number; labels?: boolean }> = ({ t, k = 0, flow = 0, labels = true }) => {
   const pt = (u: number) => { // yaklaşık yol: kübik bezier örneği yerine basit eğri
     const y = lerp(150, 900, u); const x = 900 + Math.sin(u * Math.PI * 1.4 - 0.4) * 90; return [x, y];
   };
   const [sx, sy] = pt(k);
+  const RIV = `M${pt(-0.25)[0]},${pt(-0.25)[1]} ` + Array.from({ length: 39 }, (_, i) => { const [x, y] = pt(-0.25 + i * 0.04); return `L${x},${y}`; }).join(" ");
   return (
     <g>
       <rect width={1920} height={1080} fill="#E9DFC8" />
       {Array.from({ length: 40 }, (_, i) => <rect key={i} x={md(i * 173, 1920)} y={md(i * 97, 1080)} width={30} height={22} fill="#D9C9A8" />)}
-      <path d={BOGAZ_PATH} stroke="#2F7FC1" strokeWidth={170} fill="none" strokeLinecap="round" />
-      <path d={BOGAZ_PATH} stroke="#4E9AD6" strokeWidth={120} fill="none" strokeLinecap="round" />
+      <path d={RIV} stroke="#2F7FC1" strokeWidth={170} fill="none" strokeLinecap="round" />
+      <path d={RIV} stroke="#4E9AD6" strokeWidth={120} fill="none" strokeLinecap="round" />
       {flow > 0 && Array.from({ length: 6 }, (_, i) => { const u = md(t * 0.15 + i / 6, 1); const [x, y] = pt(u); return <path key={i} d={`M${x},${y - 20} v40 m-14,-14 l14,14 l14,-14`} stroke="#FFFFFF" strokeWidth={6} fill="none" opacity={flow * 0.8} strokeLinecap="round" />; })}
       {labels && <>
         <circle cx={pt(0)[0] + 90} cy={pt(0)[1]} r={14} fill={T.red} /><text x={pt(0)[0] + 110} y={pt(0)[1] + 12} fontFamily="Poppins" fontWeight={800} fontSize={40} fill="#2A2E36">KANLICA</text>
-        <circle cx={pt(1)[0] - 90} cy={pt(1)[1]} r={14} fill={T.red} /><text x={pt(1)[0] - 110} y={pt(1)[1] + 12} textAnchor="end" fontFamily="Poppins" fontWeight={800} fontSize={40} fill="#2A2E36">KURUÇEŞME</text>
+        <circle cx={pt(1)[0] + 90} cy={pt(1)[1]} r={14} fill={T.red} /><text x={pt(1)[0] + 110} y={pt(1)[1] + 12} fontFamily="Poppins" fontWeight={800} fontSize={40} fill="#2A2E36">KURUÇEŞME</text>
       </>}
       {k > 0 && <path d={`M${pt(0)[0]},${pt(0)[1]} ${Array.from({ length: 20 }, (_, i) => { const [x, y] = pt((i + 1) / 20 * k); return `L${x},${y}`; }).join(" ")}`} stroke="#F6C445" strokeWidth={10} strokeDasharray="20 14" fill="none" />}
       {k > 0 && <g transform={`translate(${sx},${sy})`}><circle r={26} fill={TQ} stroke="#FFFFFF" strokeWidth={6} /><circle r={40 + 8 * Math.sin(t * 6)} fill={TQ} opacity={0.25} /></g>}
@@ -245,7 +245,7 @@ export const Yuzucu: React.FC<{ x: number; y: number; s?: number; t: number; cap
 export const GeceSehir: React.FC<{ t: number; off?: number; stars?: number; balk?: number }> = ({ t, off = 0, stars = 0, balk = 0 }) => (
   <g>
     <rect width={1920} height={1080} fill="url(#tSkyNight)" />
-    {stars > 0 && Array.from({ length: 90 }, (_, i) => <circle key={i} cx={md(i * 211, 1920)} cy={md(i * 97, 520)} r={1.5 + (i % 4)} fill="#FFFFFF" opacity={stars * (0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * 2 + i)))} />)}
+    {stars > 0 && Array.from({ length: 240 }, (_, i) => <circle key={i} cx={md(i * 211, 1920)} cy={md(i * 97, 560)} r={2 + (i % 4)} fill="#FFFFFF" opacity={stars * (0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * 2 + i)))} />)}
     {stars > 0.5 && <path d={`M700,${120} q260,-60 560,40`} stroke="#E6EEFF" strokeWidth={40} opacity={0.08 * stars} fill="none" />}
     {[0, 1, 2].map((b) => {
       const x = 640 + b * 210, h = 560 + (b % 2) * 160, w = 200;
