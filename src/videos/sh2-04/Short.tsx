@@ -39,20 +39,20 @@ export const { SECONDS: SH2_04_SECONDS, Comp: Sh2Short04 } = makeShort2({
     const tUst = cue("üstü kalsın");
     const S: Sh[] = [
       // 0 · soru
-      { c: "Neden", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.35]} c0={[960, 560]}><Raf t={t} />{kart(t, 620, "99", ",90₺", 0, 1.1)}</TCam> },
-      { c: "Çünkü", sfx: "whoosh", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.1]} c0={[960, 560]}><Raf t={t} />{kart(t, 600, "99", ",90₺", ramp(t, a + 1.4, a + 2), 1.1)}{goz(t, a + 1.3, 820)}</TCam>,
+      { c: "Neden", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.35]} c0={[960, 560]}><Raf t={t} />{kart(t, 560, "99", ",90₺", 0, 0.75)}</TCam> },
+      { c: "Çünkü", sfx: "whoosh", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.05, 1.1]} c0={[960, 560]}><Raf t={t} />{kart(t, 560, "99", ",90₺", ramp(t, a + 1.4, a + 2), 0.75)}{goz(t, a + 1.3, 820)}</TCam>,
         html: (t, a) => <VT t={t} at={a + 1.6} text="BEYİN SOLDAN OKUR" y={360} /> },
       // iki ürün
-      { c: "Rafta", sfx: "pop", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.1, 1.2]} c0={[960, 560]}><Raf t={t} hl={1} />{t > a + 1.4 && kart(t, 380, "100", "₺", 0, 0.8, "#FFFFFF")}{t > a + 2.4 && kart(t, 720, "99", ",90₺", 0, 0.8)}</TCam> },
+      { c: "Rafta", sfx: "pop", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.1, 1.2]} c0={[960, 560]}><Raf t={t} hl={1} />{t > a + 1.4 && kart(t, 330, "100", "₺", 0, 0.7, "#FFFFFF")}{t > a + 2.4 && kart(t, 590, "99", ",90₺", 0, 0.7)}</TCam> },
       { c: "Aradaki", sfx: "ding", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.05]} c0={[960, 540]}><rect width={1920} height={1080} fill="#F6EBD2" /><Lira x={960} y={560} s={3} spin={(t - a) * 6} /></TCam>,
         html: (t, a) => <VT t={t} at={a + 0.6} text="FARK: 10 KURUŞ" y={330} /> },
       // ilk rakam
-      { c: "Ama beynin", sfx: "whoosh", tone: "cool", bg: "#14294A", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.05]} c0={[960, 540]}><rect width={1920} height={1080} fill="#14294A" />{kart(t, 360, "100", "₺", ramp(t, a + 1.4, a + 1.9), 0.8, "#FFFFFF")}{kart(t, 720, "99", ",90₺", ramp(t, tDok, tDok + 0.4), 0.8)}</TCam>,
-        html: (t, a) => <><Damga t={t} at={a + 3} text="1" y={260} size={160} c="#FFFFFF" /><Damga t={t} at={tDok} text="9" y={1060} size={160} c="#F6C445" /></> },
+      { c: "Ama beynin", sfx: "whoosh", tone: "cool", bg: "#14294A", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.05]} c0={[960, 540]}><rect width={1920} height={1080} fill="#14294A" />{kart(t, 330, "100", "₺", ramp(t, a + 1.4, a + 1.9), 0.7, "#FFFFFF")}{kart(t, 590, "99", ",90₺", ramp(t, tDok, tDok + 0.4), 0.7)}</TCam>,
+        html: (t, a) => <VT t={t} at={a + 2.9} text="İLK RAKAM: 1 mi 9 mu?" y={1060} size={72} /> },
       { c: "Ve karar", sfx: "boing", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.4, 1.55]} c0={[960, 640]}><Raf t={t} /><TFig x={960} y={G} s={0.9} o={SEN} t={t} rim={0.4} pose={P.cheer} mouth="grin" eyes="happy" /></TCam>,
         html: (t, a) => <Damga t={t} at={a + 1} text="DAHA UCUZ! HEM DE ÇOK!" y={380} c="#F6C445" rot={-5} size={72} /> },
       // bilim
-      { c: "Bilim", sfx: "whoosh", tone: "cool", bg: "#14294A", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.1]} c0={[960, 560]}><Lab t={t} /></TCam>,
+      { c: "Bilim", sfx: "whoosh", tone: "cool", bg: "#14294A", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.1]} c0={[960, 560]}><Lab t={t} />{kart(t, 560, "99", ",90₺", ramp(t, a + 1.2, a + 1.8), 0.75)}</TCam>,
         html: (t, a) => <VT t={t} at={a + 1.2} text="SOL RAKAM ETKİSİ" y={360} c="#2EE6D0" /> },
       { c: "İki bin", sfx: "pop", tone: "cool", bg: "#14294A", r: (t, a) => {
           const k = ramp(t, a + 2, a + 3.4);
@@ -65,17 +65,17 @@ export const { SECONDS: SH2_04_SECONDS, Comp: Sh2Short04 } = makeShort2({
       { c: "Market bunu", sfx: "pop", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.1, 1.2]} c0={[960, 560]}><Raf t={t} hl={1} />{[0, 1, 2].map((i) => <g key={i} transform={`translate(${760 + i * 200},${RAF_Y[i] + 40})`}><rect x={-60} y={-22} width={120} height={44} rx={8} fill="#FFE24A" stroke="#141414" strokeWidth={3} /><text y={14} textAnchor="middle" fontFamily="Poppins" fontWeight={900} fontSize={30} fill="#141414">{["9,90", "49,90", "199,90"][i]}</text></g>)}</TCam> },
       { c: "mağaza", sfx: "pop", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[960, 560]}><Istiklal t={t} /></TCam>,
         html: (t, a) => <VT t={t} at={a + 0.1} text="MAĞAZA BİLİYOR" y={360} /> },
-      { c: "indirim", sfx: "pop", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.06]} c0={[960, 540]}><rect width={1920} height={1080} fill="#E0393E" /><text x={960} y={420} textAnchor="middle" fontFamily="Poppins" fontWeight={900} fontSize={120} fill="#FFFFFF">İNDİRİM</text>{kart(t, 660, "499", ",90₺", 0, 0.85)}</TCam> },
+      { c: "indirim", sfx: "pop", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.06]} c0={[960, 540]}><rect width={1920} height={1080} fill="#E0393E" /><text x={960} y={420} textAnchor="middle" fontFamily="Poppins" fontWeight={900} fontSize={120} fill="#FFFFFF">İNDİRİM</text>{kart(t, 640, "499", ",90₺", 0, 0.7)}</TCam> },
       // 10 kuruş nereye
       { c: "Peki o", sfx: "whoosh", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.08]} c0={[960, 540]}><rect width={1920} height={1080} fill="#F6EBD2" /><Lira x={960 + Math.sin(t * 3) * 40} y={560} s={2.6} spin={(t - a) * 8} /></TCam>,
         html: (t, a) => <VT t={t} at={a + 0.3} text="10 KURUŞ NEREYE?" y={330} /> },
       { c: "Kasada", sfx: "ding", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.35]} c0={[960, 620]}>{kasa(t, { not: t > a + 0.6 })}<TFig x={760} y={G + 40} s={0.85} o={SEN} t={t} pose={P.hand} mouth={t > tUst ? "grin" : "smile"} talk={t > tUst && t < tUst + 0.8} rim={0.4} /></TCam>,
         html: (t) => <Damga t={t} at={tUst} text="ÜSTÜ KALSIN" y={380} c="#F6C445" rot={-5} /> },
       // ders
-      { c: "Bir dahaki", sfx: "whoosh", tone: "cool", bg: "#14294A", r: (t, a, b) => { const k = ramp(t, a + 2, a + 3); return <TCam t={t} a={a} b={b} z={[1, 1.06]} c0={[960, 540]}><rect width={1920} height={1080} fill="#14294A" />{kart(t, 560, "99", ",90₺", 0, 1.05)}<path d={`M${lerp(1200, 720, k)},780 l40,-30 v60Z`} fill="#2EE6D0" /><path d={`M1200,780 H${lerp(1200, 720, k)}`} stroke="#2EE6D0" strokeWidth={10} strokeDasharray="16 12" /></TCam>; },
+      { c: "Bir dahaki", sfx: "whoosh", tone: "cool", bg: "#14294A", r: (t, a, b) => { const k = ramp(t, a + 2, a + 3); return <TCam t={t} a={a} b={b} z={[1, 1.06]} c0={[960, 540]}><rect width={1920} height={1080} fill="#14294A" />{kart(t, 520, "99", ",90₺", 0, 0.8)}<path d={`M${lerp(1200, 720, k)},780 l40,-30 v60Z`} fill="#2EE6D0" /><path d={`M1200,780 H${lerp(1200, 720, k)}`} stroke="#2EE6D0" strokeWidth={10} strokeDasharray="16 12" /></TCam>; },
         html: (t, a) => <VT t={t} at={a + 2} text="SAĞDAN BAK →" y={330} c="#2EE6D0" /> },
       // döngü
-      { c: "Sen en son", sfx: "whoosh", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.35]} c0={[960, 560]}><Raf t={t} />{kart(t, 620, "99", ",90₺", 0, 1.1)}</TCam>,
+      { c: "Sen en son", sfx: "whoosh", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.35]} c0={[960, 560]}><Raf t={t} />{kart(t, 560, "99", ",90₺", 0, 0.75)}</TCam>,
         html: (t, a) => <><VT t={t} at={a + 0.2} text="SEN NE ALDIN?" y={300} /><VT t={t} at={tYor} text="YORUMLARA YAZ ↓" y={1000} size={80} /></> },
     ];
     return S;
