@@ -65,7 +65,7 @@ export const { SECONDS: SH2_05_SECONDS, Comp: Sh2Short05 } = makeShort2({
       { c: "Bir protondan", sfx: "ding", tone: "cool", bg: "#0B1426", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[0.9, 1.1]} c0={[960, 560]}>{uzay(t)}<Atom t={t} s={1} /></TCam>,
         html: (t, a) => <VT t={t} at={a + 0.6} text="BİR PROTONDAN BİLE AZ" y={330} c="#2EE6D0" size={80} /> },
       // katrilyon
-      { c: "Çünkü Dünya", sfx: "boom", tone: "cool", bg: "#0B1426", r: (t, a, b) => { const k = ramp(t, a + 0.4, a + 2.5); return <TCam t={t} a={a} b={b} z={[1, 1.05]} c0={[960, 560]}>{uzay(t)}<Dunya x={960} y={lerp(1800, 760, k)} r={lerp(80, 520, k)} t={t} tr={0} /><circle cx={960} cy={240} r={8} fill="#F6C445" /><text x={990} y={250} fontFamily="Poppins" fontWeight={800} fontSize={34} fill="#F6C445">86 MİLYON KİŞİ</text></TCam>; },
+      { c: "Çünkü Dünya", sfx: "boom", tone: "cool", bg: "#0B1426", r: (t, a, b) => { const k = ramp(t, a + 0.4, a + 2.5); return <TCam t={t} a={a} b={b} z={[1, 1.05]} c0={[960, 560]}>{uzay(t)}<Dunya x={960} y={lerp(1150, 760, k)} r={lerp(120, 520, k)} t={t} tr={0} /><circle cx={960} cy={240} r={8} fill="#F6C445" /><text x={990} y={250} fontFamily="Poppins" fontWeight={800} fontSize={34} fill="#F6C445">86 MİLYON KİŞİ</text></TCam>; },
         html: (t, a) => <><VT t={t} at={a + 2.4} text="1 KATRİLYON KAT" y={500} c="#F6C445" /><VT t={t} at={a + 3.2} text="DAHA AĞIR" y={640} size={80} /></> },
       { c: "Yere", sfx: "boing", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[960, 700]}>{sky()}{yer}<Ziplayanlar t={t} k={1.2 * (1 - ramp(t, a, a + 0.9))} /></TCam>,
         html: (t, a) => <VT t={t} at={a + 1.3} text="DÜNYA DA GERİ GELİR" y={330} size={80} /> },

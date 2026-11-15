@@ -47,7 +47,7 @@ export const { SECONDS: SH2_06_SECONDS, Comp: Sh2Short06 } = makeShort2({
       { c: "İkinci kapı", sfx: "doorbell", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[1000, 680]}>{kapi(t, "5", TEYZE2, ramp(t, a, a + 0.6), { talk: true })}{kucuk(t, { mouth: "flat", pose: P.stand })}</TCam>,
         html: (t, a) => <><Damga t={t} at={a + 0.2} text="2. KAPI" y={330} c="#F6C445" rot={4} /><VT t={t} at={a + 1.2} text="AYNI CÜMLE" y={1040} size={80} /></> },
       { c: "Üçüncü kapı", sfx: "doorbell", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.35]} c0={[1000, 680]}>{kapi(t, "8", AMCA, ramp(t, a, a + 0.6), { pose: P.point, talk: true, mouth: "open" })}{kucuk(t, { mouth: "frown", brow: "worried", pose: P.stand, sweat: t > tKac })}</TCam>,
-        html: (t, a) => <><Damga t={t} at={a + 0.2} text="3. KAPI" y={330} c="#F6C445" rot={-4} /><VT t={t} at={a + 1} text="OKUL NASIL?" y={460} size={80} /><VT t={t} at={tKac} text="KAÇINCI OLDUN?" y={1040} size={80} c="#E0393E" /></> },
+        html: (t, a) => <><Damga t={t} at={a + 0.2} text="3. KAPI" y={330} c="#F6C445" rot={-4} /><VT t={t} at={a + 1} text="OKUL NASIL?" y={540} size={80} /><VT t={t} at={tKac} text="KAÇINCI OLDUN?" y={1040} size={80} c="#E0393E" /></> },
       // tatlı
       { c: "Masada", sfx: "ding", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.1, 1.25]} c0={[960, 760]}><BaklavaMasa t={t} /></TCam>,
         html: (t, a) => <Sayi t={t} at={a + 0.4} to={12} dur={0.8} unit="ÇEŞİT TATLI" y={330} c="#F6C445" /> },

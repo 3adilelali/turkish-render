@@ -35,7 +35,7 @@ export const { SECONDS: SH2_07_SECONDS, Comp: Sh2Short07 } = makeShort2({
         html: (t, a) => <VT t={t} at={a + 0.3} text="İSKELELER HAVADA" y={330} /> },
       // derinlik
       { c: "Sonra derinlik", sfx: "whoosh", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.4, 1.4]} c0={[960, 360]} c1={[960, 820]}><BogazKesit t={t} water={0} ruler={ramp(t, a + 0.6, a + 1.4)} /></TCam> },
-      { c: "En derin", sfx: "pop", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[960, 640]}><BogazKesit t={t} water={0} ruler={1} />{etiket(760, 200, "BEBEK", "#FFFFFF")}{etiket(1180, 200, "KANDİLLİ", "#FFFFFF")}</TCam>,
+      { c: "En derin", sfx: "pop", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[960, 640]}><BogazKesit t={t} water={0} ruler={1} />{etiket(800, 320, "BEBEK", "#FFFFFF")}{etiket(1110, 320, "KANDİLLİ", "#FFFFFF")}</TCam>,
         html: (t, a) => <VT t={t} at={a + 0.6} text="EN DERİN YER" y={330} c="#2EE6D0" /> },
       { c: "Yüz on", sfx: "boom", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.5, 1.6]} c0={[1100, 640]}><BogazKesit t={t} water={0} ruler={1} /></TCam>,
         html: (t, a) => <Sayi t={t} at={a} to={110} dur={0.9} unit="METRE" y={330} c="#F6C445" /> },
@@ -47,7 +47,7 @@ export const { SECONDS: SH2_07_SECONDS, Comp: Sh2Short07 } = makeShort2({
       { c: "Marmaray", sfx: "ding", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[2.2, 2.5]} c0={[960, 920]}><BogazKesit t={t} water={0} ship={0} tube={1} /></TCam>,
         html: (t, a) => <><VT t={t} at={a + 0.1} text="MARMARAY" y={330} c="#2EE6D0" size={110} /><Sayi t={t} at={a + 0.9} to={60} dur={0.8} unit="METRE ALTINDA" y={520} c="#F6C445" /></> },
       { c: "Dünyanın", sfx: "boom", tone: "gold", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.6, 1.8]} c0={[960, 860]}><BogazKesit t={t} water={0} ship={0} tube={1} /></TCam>,
-        html: (t, a) => <Damga t={t} at={a + 0.9} text="DÜNYA REKORU" y={400} c="#F6C445" rot={-5} /> },
+        html: (t, a) => <Damga t={t} at={a + 0.9} text="DÜNYA REKORU" y={400} c="#F6C445" rot={-5} size={80} /> },
       // iki nehir
       { c: "Ama en", sfx: "whoosh", tone: "cool", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[960, 520]}><BogazKesit t={t} water={ramp(t, a, a + 1.4)} ship={0} /></TCam>,
         html: (t, a) => <VT t={t} at={a + 0.7} text="AMA ASIL ŞAŞIRTICI..." y={330} size={80} /> },

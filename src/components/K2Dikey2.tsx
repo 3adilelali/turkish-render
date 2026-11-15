@@ -197,7 +197,7 @@ export const BogazKesit: React.FC<{ t: number; water?: number; flow?: number; ru
       {/* Marmaray tüpü */}
       {tube > 0 && <g opacity={tube} transform={`translate(960,${bot - 30})`}><rect x={-220} y={-36} width={440} height={60} rx={28} fill="#9AA3A8" stroke="#5E666A" strokeWidth={5} />{[-150, -50, 50, 150].map((x) => <path key={x} d={`M${x},-36 V24`} stroke="#5E666A" strokeWidth={4} />)}<rect x={-200} y={-22} width={400} height={20} fill="#F6E7B0" opacity={0.5 + 0.3 * Math.sin(t * 5)} /></g>}
       {/* cetvel */}
-      {ruler > 0 && <g opacity={ruler}><path d={`M1300,${top} V${bot}`} stroke="#FFFFFF" strokeWidth={6} />{Array.from({ length: 12 }, (_, i) => <path key={i} d={`M1286,${top + i * (bot - top) / 11} h28`} stroke="#FFFFFF" strokeWidth={4} />)}<path d={`M1270,${bot} h60`} stroke={T.red} strokeWidth={8} /></g>}
+      {ruler > 0 && <g opacity={ruler}><path d={`M1200,${top} V${bot}`} stroke="#FFFFFF" strokeWidth={6} />{Array.from({ length: 12 }, (_, i) => <path key={i} d={`M1186,${top + i * (bot - top) / 11} h28`} stroke="#FFFFFF" strokeWidth={4} />)}<path d={`M1170,${bot} h60`} stroke={T.red} strokeWidth={8} /></g>}
     </g>
   );
 };
