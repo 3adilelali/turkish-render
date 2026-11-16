@@ -26,9 +26,9 @@ const carpi = (x: number, y: number, k: number) => <g opacity={k} transform={`tr
 const Ikonlar = ({ t, a, x = 0 }: { t: number; a: number; x?: number }) => (
   <g>
     <rect width={1920} height={1080} fill="#1A2236" />
-    <g transform="translate(960,250)" opacity={ramp(t, a, a + 0.3)}><path d="M-110,90 H-60 V40 H-10 V-10 H40 V-60 H90 V-110" stroke="#FFFFFF" strokeWidth={16} fill="none" strokeLinejoin="round" />{carpi(0, 0, x)}</g>
-    <g transform="translate(960,540)" opacity={ramp(t, a + 0.5, a + 0.8)}><rect x={-80} y={-110} width={160} height={220} rx={10} fill="none" stroke="#FFFFFF" strokeWidth={14} /><path d="M0,-110 V110" stroke="#FFFFFF" strokeWidth={8} /><path d="M-40,-150 l20,-24 l20,24 M20,-174 l20,24 l20,-24" stroke="#FFFFFF" strokeWidth={8} fill="none" />{carpi(0, 0, x)}</g>
-    <g transform="translate(960,830)" opacity={ramp(t, a + 1, a + 1.3)}><path d="M-120,0 H120 M-120,0 V-90 M120,0 V-90 M-120,-90 H120" stroke="#FFFFFF" strokeWidth={14} />{[-80, -40, 0, 40, 80].map((xx) => <path key={xx} d={`M${xx},0 V-90`} stroke="#FFFFFF" strokeWidth={8} />)}{carpi(0, -40, x)}</g>
+    <g transform="translate(960,200)" opacity={ramp(t, a, a + 0.3)}><path d="M-110,90 H-60 V40 H-10 V-10 H40 V-60 H90 V-110" stroke="#FFFFFF" strokeWidth={16} fill="none" strokeLinejoin="round" />{carpi(0, 0, x)}</g>
+    <g transform="translate(960,420)" opacity={ramp(t, a + 0.5, a + 0.8)}><rect x={-80} y={-110} width={160} height={220} rx={10} fill="none" stroke="#FFFFFF" strokeWidth={14} /><path d="M0,-110 V110" stroke="#FFFFFF" strokeWidth={8} /><path d="M-40,-150 l20,-24 l20,24 M20,-174 l20,24 l20,-24" stroke="#FFFFFF" strokeWidth={8} fill="none" />{carpi(0, 0, x)}</g>
+    <g transform="translate(960,640)" opacity={ramp(t, a + 1, a + 1.3)}><path d="M-120,0 H120 M-120,0 V-90 M120,0 V-90 M-120,-90 H120" stroke="#FFFFFF" strokeWidth={14} />{[-80, -40, 0, 40, 80].map((xx) => <path key={xx} d={`M${xx},0 V-90`} stroke="#FFFFFF" strokeWidth={8} />)}{carpi(0, -40, x)}</g>
   </g>
 );
 const Pencere = ({ t, k }: { t: number; k: number }) => (
@@ -41,7 +41,7 @@ const Pencere = ({ t, k }: { t: number; k: number }) => (
   </g>
 );
 const Ucgen = ({ k }: { k: number }) => (
-  <g transform="translate(960,560)">
+  <g transform="translate(960,440) scale(0.8)">
     <path d="M-260,200 L0,-240 L260,200Z" fill="none" stroke="#F6C445" strokeWidth={18} strokeLinejoin="round" />
     <text y={150} textAnchor="middle" fontFamily="Poppins" fontWeight={900} fontSize={220} fill="#F6C445">?</text>
     {carpi(0, 0, k)}
@@ -54,7 +54,7 @@ const Ayakkabi = ({ t }: { t: number }) => (
     <g transform={`translate(960,${640 + Math.sin(t * 3) * 6})`}><path d="M-200,40 Q-210,-60 -120,-80 L0,-80 Q40,-20 160,-10 Q220,0 220,40Z" fill="#E0393E" stroke="#8A1A1E" strokeWidth={8} /><rect x={-210} y={40} width={440} height={36} rx={14} fill="#F4F4F2" /><path d="M-100,-60 L-40,-40 M-90,-40 L-30,-20" stroke="#FFFFFF" strokeWidth={8} /></g>
   </g>
 );
-const kart = (t: number, at: number, i: number, s: string) => <g opacity={ramp(t, at, at + 0.25)} transform={`translate(960,${300 + i * 240}) scale(${0.8 + 0.2 * ramp(t, at, at + 0.25)})`}><rect x={-260} y={-90} width={520} height={180} rx={30} fill={[RED, "#F6C445", TQ][i]} /><text y={36} textAnchor="middle" fontFamily="Poppins" fontWeight={900} fontSize={100} fill="#0B1426">{s}</text></g>;
+const kart = (t: number, at: number, i: number, s: string) => <g opacity={ramp(t, at, at + 0.25)} transform={`translate(960,${260 + i * 190}) scale(${0.8 + 0.2 * ramp(t, at, at + 0.25)})`}><rect x={-260} y={-80} width={520} height={160} rx={30} fill={[RED, "#F6C445", TQ][i]} /><text y={36} textAnchor="middle" fontFamily="Poppins" fontWeight={900} fontSize={100} fill="#0B1426">{s}</text></g>;
 
 export const { SECONDS: SH2_13_SECONDS, Comp: Sh2Short13 } = makeShort2({
   words: words as W[],
@@ -100,7 +100,7 @@ export const { SECONDS: SH2_13_SECONDS, Comp: Sh2Short13 } = makeShort2({
       { c: "Sonra sakin", sfx: "whoosh", tone: "warm", r: (t, a, b) => <TCam t={t} a={a} b={b} z={[1.2, 1.3]} c0={[960, 640]}><YatakOda t={t} masa={false} /><TFig x={lerp(760, 1100, ramp(t, a, b + 0.5))} y={1000} s={0.6} o={SEN} t={t} mouth="flat" /></TCam>,
         html: (t, a) => <VT t={t} at={a + 0.2} text="SAKİN ÇIK" y={330} c={TQ} size={110} /> },
       { c: "Bunu bir", sfx: "ding", tone: "gold", bg: "#0E1A2E", r: (t, a) => <g><rect width={1920} height={1080} fill="#0E1A2E" />{kart(t, a, 0, "ÇÖK")}{kart(t, a + 0.2, 1, "KAPAN")}{kart(t, a + 0.4, 2, "TUTUN")}</g>,
-        html: (t, a) => <>{t > tGon && <VT t={t} at={tGon} text="SEVDİKLERİNE GÖNDER ↗" y={1060} size={70} c="#F6C445" />}</> },
+        html: (t, a) => <>{t > tGon && <VT t={t} at={tGon} text="SEVDİKLERİNE GÖNDER ↗" y={1500} size={70} c="#F6C445" />}</> },
     ];
     return S;
   },
