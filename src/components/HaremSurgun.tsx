@@ -66,6 +66,38 @@ export const Tufek: React.FC<{ x: number; y: number; s?: number; tilt?: number }
   </g>
 );
 
+// ───────── el eşyaları (PFig trayItem olarak, tepsi yerine) ─────────
+export const Bohca: React.FC<{ c?: string }> = ({ c = "#A8323A" }) => (
+  <g>
+    <path d="M-80,4 Q-90,-50 -40,-62 Q0,-70 40,-62 Q90,-50 80,4 Q0,22 -80,4Z" fill={c} stroke={LN} strokeWidth={3} />
+    <path d="M-60,-30 q20,10 40,0 q20,-10 40,0 q20,10 40,0" stroke="#F2E6D0" strokeWidth={3} fill="none" opacity={0.8} />
+    <path d="M-14,-62 q-26,-30 -6,-38 q14,8 20,30 q6,-22 20,-30 q20,8 -6,38Z" fill={mix(c, "#000000", 0.2)} stroke={LN} strokeWidth={3} />
+    <circle cx={0} cy={-62} r={8} fill={mix(c, "#000000", 0.3)} stroke={LN} strokeWidth={2} />
+  </g>
+);
+export const Mum: React.FC<{ t?: number }> = ({ t = 0 }) => (
+  <g>
+    <ellipse cx={0} cy={4} rx={36} ry={9} fill="#B8892E" stroke={LN} strokeWidth={2} />
+    <rect x={-9} y={-56} width={18} height={56} fill="#F7F0DC" stroke={LN} strokeWidth={2} />
+    <path d={`M0,-58 q${Math.sin(t * 9) * 4},-16 0,-30 q-7,14 0,30Z`} fill="#FFC850" />
+    <circle cx={0} cy={-70} r={70} fill="url(#pBloom)" opacity={0.5} />
+  </g>
+);
+export const Kitap: React.FC = () => (
+  <g>
+    <path d="M-80,0 L0,8 L80,0 L80,-60 L0,-52 L-80,-60Z" fill="#F4EAD2" stroke={LN} strokeWidth={3} />
+    <path d="M0,8 v-60" stroke={LN} strokeWidth={2} />
+    {[0, 1, 2, 3].map((k) => <path key={k} d={`M-66,${-46 + k * 12} h54 M12,${-46 + k * 12} h54`} stroke="#6A5A4A" strokeWidth={2} opacity={0.6} />)}
+    <path d="M-84,4 L0,12 L84,4" stroke="#6E1F24" strokeWidth={6} fill="none" />
+  </g>
+);
+export const ElMektup: React.FC = () => (
+  <g transform="rotate(-6)">
+    <rect x={-60} y={-90} width={120} height={92} fill="#F4EAD2" stroke={LN} strokeWidth={3} />
+    {[0, 1, 2, 3, 4].map((k) => <path key={k} d={`M-48,${-74 + k * 15} h96`} stroke="#2A3A6A" strokeWidth={2.4} opacity={0.6} />)}
+  </g>
+);
+
 // ───────── Çerkez baba (papak + çerkeska + gazyr) — PFig ölçeğinde (s=1 ≈ 600 birim) ─────────
 export const CerkezBaba: React.FC<{ x: number; y: number; s?: number; t?: number; seed?: number; look?: number; coat?: string; beard?: string; sad?: number; walk?: number; reach?: number }> = ({ x, y, s = 1, t = 0, seed = 0, look = 0, coat = "#4A3A2E", beard = "#D8D0C0", sad = 0, walk = 0, reach = 0 }) => {
   const blink = blinkAt(t, seed + 40);
@@ -693,21 +725,19 @@ export const AbazaKoy: React.FC<{ t: number; pan?: number; spring?: number }> = 
   </g>
 );
 
+// iki raf, her rafta 8 kuş (s=0.42, 150 aralık). 16. kuş = 2. rafın sonu (x=1310,y=600), getirdiğin kuş yanına (x=1460).
+export const KUS_POS = (i: number) => ({ x: 260 + (i % 8) * 150, y: i < 8 ? 340 : 600 });
 export const KusRafi: React.FC<{ t: number; n?: number; extra?: boolean; light?: number }> = ({ t, n = 15, extra = false, light = 1 }) => (
   <g>
     <rect width={1920} height={1080} fill="#6E5034" />
     {Array.from({ length: 14 }, (_, i) => <path key={i} d={`M${i * 140},0 v1080`} stroke="#5E4028" strokeWidth={6} opacity={0.6} />)}
-    {/* pencereden gün ışığı */}
-    <path d="M1500,120 L1820,120 L1820,520 L1500,520Z" fill="#FFF4D0" opacity={0.85 * light} />
-    <path d="M1500,520 L1820,520 L1100,1080 L700,1080Z" fill="#FFF4D0" opacity={0.12 * light} />
-    {/* raf */}
-    <rect x={160} y={480} width={1300} height={26} fill="#4A2E1A" stroke={LN} strokeWidth={4} />
-    {[220, 1380].map((x) => <path key={x} d={`M${x},506 l0,60 l40,-60`} stroke="#4A2E1A" strokeWidth={10} fill="none" />)}
-    {Array.from({ length: Math.min(n, 16) }, (_, i) => <TahtaKus key={i} x={230 + i * 76} y={440} s={0.34} t={t} half={i === 15} rot={i % 2 ? -4 : 3} />)}
-    {extra && <TahtaKus x={230 + 16 * 76} y={440} s={0.34} t={t} rot={0} glow={0.6} />}
-    {/* tezgâh + talaş */}
-    <rect x={120} y={820} width={1500} height={60} fill="#8A5A34" stroke={LN} strokeWidth={4} />
-    {Array.from({ length: 12 }, (_, i) => <path key={i} d={`M${200 + i * 110},${940 + (i % 3) * 20} a20,12 0 1 1 16,10`} stroke="#E8C890" strokeWidth={6} fill="none" />)}
+    <path d="M1600,120 L1860,120 L1860,520 L1600,520Z" fill="#FFF4D0" opacity={0.85 * light} />
+    <path d="M1600,520 L1860,520 L1200,1080 L800,1080Z" fill="#FFF4D0" opacity={0.12 * light} />
+    {[340, 600].map((y) => <g key={y}><rect x={140} y={y + 40} width={1440} height={24} fill="#4A2E1A" stroke={LN} strokeWidth={4} />{[200, 1500].map((x) => <path key={x} d={`M${x},${y + 64} l0,50 l36,-50`} stroke="#4A2E1A" strokeWidth={9} fill="none" />)}</g>)}
+    {Array.from({ length: Math.min(n, 16) }, (_, i) => { const q = KUS_POS(i); return <TahtaKus key={i} x={q.x} y={q.y} s={0.42} t={t} half={i === 15} rot={i % 2 ? -4 : 3} />; })}
+    {extra && <TahtaKus x={1460} y={600} s={0.42} t={t} rot={0} glow={0.7} />}
+    <rect x={120} y={880} width={1500} height={60} fill="#8A5A34" stroke={LN} strokeWidth={4} />
+    {Array.from({ length: 12 }, (_, i) => <path key={i} d={`M${200 + i * 110},${980 + (i % 3) * 20} a20,12 0 1 1 16,10`} stroke="#E8C890" strokeWidth={6} fill="none" />)}
     <Motes t={t} n={30} />
   </g>
 );
@@ -729,15 +759,18 @@ export const ArabaIc: React.FC<{ t: number; rattle?: number; close?: number }> =
         {/* dışarıda geçen sokak lambaları */}
         {Array.from({ length: 3 }, (_, i) => { const x = ((i * 400 - t * 600) % 1200 + 1200) % 1200 - 300; return <circle key={i} cx={x - 300 + 300} cy={300} r={18} fill="#FFD089" opacity={0.8} />; })}
         <rect x={-300} y={120} width={600} height={360} fill="url(#pVeil)" opacity={0.08} />
-        {/* bakır halka */}
+        {/* bakır halka + içinden geçen işaret parmağı */}
         <g transform={`translate(240,${640 + Math.sin(t * 6) * 4})`}>
-          <circle r={70} fill="none" stroke="#C9A35A" strokeWidth={18} />
-          <circle r={70} fill="none" stroke="#7A5A28" strokeWidth={4} />
-          {/* parmak (kadın eli) */}
-          <path d="M-260,40 Q-150,10 -60,-6 L60,-14 Q86,-12 84,8 Q80,26 56,24 L-50,30 Q-150,70 -260,110Z" fill={P.skin} stroke={LN} strokeWidth={4} />
-          <path d="M40,-14 Q64,-10 66,6" stroke={mix(P.skin2, "#8A3A5A", 0.5 + 0.4 * close)} strokeWidth={10} fill="none" opacity={0.7} />
-          <path d="M-260,40 Q-150,10 -60,-6" stroke="#E9DCC2" strokeWidth={30} fill="none" opacity={0.0} />
-          <path d="M-400,30 L-260,40 L-260,110 L-400,140Z" fill="#E9E0D0" stroke={LN} strokeWidth={3} />
+          <circle r={70} fill="none" stroke="#7A5A28" strokeWidth={22} />
+          <circle r={70} fill="none" stroke="#C9A35A" strokeWidth={12} />
+          <path d="M-620,170 L-330,40 L-300,150 L-600,300Z" fill="#1E2230" stroke={LN} strokeWidth={4} />
+          <path d="M-340,36 Q-322,96 -300,152" stroke="#F4F0E6" strokeWidth={14} fill="none" />
+          <path d="M-300,40 Q-250,10 -180,14 Q-130,20 -110,50 Q-120,110 -170,130 Q-250,150 -300,150Z" fill={P.skin2} stroke={LN} strokeWidth={4} />
+          {[0, 1, 2].map((k) => <path key={k} d={`M-150,${66 + k * 24} q34,-4 34,14 q-2,14 -34,10`} fill={P.skin2} stroke={LN} strokeWidth={3} />)}
+          <path d="M-120,32 L40,-2 Q82,-6 84,20 Q84,44 56,40 L-110,62Z" fill={mix(P.skin2, "#9A5A7A", 0.25 + 0.55 * close)} stroke={LN} strokeWidth={4} />
+          <path d="M30,0 q12,8 10,32" stroke={LN} strokeWidth={2} opacity={0.5} fill="none" />
+          <ellipse cx={62} cy={12} rx={12} ry={8} fill="#FFF0E8" opacity={0.6} />
+          <path d="M0,-70 A70,70 0 0 1 0,70" fill="none" stroke="#C9A35A" strokeWidth={12} />
         </g>
         <rect x={-380} y={60} width={760} height={980} rx={20} fill="url(#pShadeR)" opacity={0.5} />
       </g>
