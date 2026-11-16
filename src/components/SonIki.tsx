@@ -141,6 +141,9 @@ export const KuleIci: React.FC<{ t: number; storm?: number; dawn?: number }> = (
     <rect y={860} width={1920} height={220} fill="#4A4540" /><rect y={860} width={1920} height={220} fill="url(#tStone)" />
     <rect x={300} y={830} width={760} height={70} rx={20} fill="#8A5A44" /><rect x={300} y={810} width={760} height={50} rx={18} fill="#C96A4A" />
     <rect x={380} y={790} width={140} height={46} rx={20} fill="#E9DCC6" />
+    <g transform="translate(160,300)"><rect width={360} height={16} fill="#6A4A32" /><rect y={140} width={360} height={16} fill="#6A4A32" />{[0, 1, 2, 3].map((i) => <g key={i}><rect x={20 + i * 84} y={-90} width={60} height={90} rx={6} fill="#C9CED4" /><rect x={20 + i * 84} y={-70} width={60} height={50} fill={["#E0393E", "#3FAE6A", "#F6C445", "#3A7BD5"][i]} /></g>)}{[0, 1, 2].map((i) => <rect key={i} x={30 + i * 110} y={70} width={90} height={70} rx={8} fill="#3A7BD5" opacity={0.85} />)}</g>
+    <g transform="translate(820,560)"><path d="M0,0 V-300" stroke="#2A2A2A" strokeWidth={4} /><rect x={-40} y={0} width={80} height={110} rx={14} fill="#3A3A3A" /><rect x={-28} y={14} width={56} height={80} rx={8} fill="#5A5040" /></g>
+    <rect x={1080} y={900} width={500} height={120} rx={18} fill="url(#tCarpet2)" opacity={0.8} />
     <g transform="translate(1180,860)"><rect x={-18} y={-80} width={36} height={80} rx={6} fill="#C9C2B4" /><rect x={-24} y={-96} width={48} height={18} rx={4} fill="#555" /><circle cy={-50} r={10} fill="#FFFFFF" opacity={0.2} /></g>
   </g>
 );
@@ -438,7 +441,8 @@ export const Kahvalti: React.FC<{ t: number; steam?: number; cold?: number; note
       <g transform="translate(10,-14)"><path d="M-46,0 Q-56,-80 0,-90 Q56,-80 46,0Z" fill="#C9473E" /><path d="M-30,-90 Q0,-150 30,-90" fill="#C9473E" /><path d="M46,-50 q40,-10 50,-40" stroke="#C9473E" strokeWidth={10} fill="none" />
         {steam > 0 && [0, 1, 2].map((i) => <path key={i} d={`M${-10 + i * 12},-150 q14,-30 0,-60 q-14,-30 0,-60`} stroke="#FFFFFF" strokeWidth={6} fill="none" opacity={steam * (0.4 + 0.3 * Math.sin(t * 3 + i))} transform={`translate(0,${-md(t * 30 + i * 20, 40)})`} />)}</g></g>
     <rect y={780} width={1920} height={300} fill="#D9C3A0" /><rect y={780} width={1920} height={300} fill="url(#tTile)" />
-    <g transform="translate(1060,820)"><ellipse cx={0} cy={0} rx={520} ry={70} fill="#F4F4F2" /><ellipse cx={0} cy={-8} rx={500} ry={60} fill="#FFFFFF" />
+    <rect x={480} y={800} width={1160} height={40} rx={10} fill="#B07A4A" /><rect x={520} y={840} width={30} height={220} fill="#8A5A32" /><rect x={1570} y={840} width={30} height={220} fill="#8A5A32" />
+    <g transform="translate(1060,800)"><ellipse cx={0} cy={0} rx={520} ry={70} fill="#F4F4F2" /><ellipse cx={0} cy={-8} rx={500} ry={60} fill="#FFFFFF" />
       <ellipse cx={-300} cy={-14} rx={90} ry={26} fill="#F4F0E0" /><rect x={-340} y={-40} width={80} height={36} rx={6} fill={cold ? "#E8E0C4" : "#FFFBEA"} />
       <ellipse cx={-120} cy={-14} rx={80} ry={24} fill="#F4F0E0" />{Array.from({ length: 7 }, (_, i) => <circle key={i} cx={-150 + (i % 4) * 20} cy={-22 - Math.floor(i / 4) * 12} r={10} fill="#3A3A2A" />)}
       <ellipse cx={80} cy={-14} rx={80} ry={24} fill="#F4F0E0" />{[0, 1, 2].map((i) => <circle key={i} cx={50 + i * 30} cy={-24} r={18} fill="#E0393E" />)}
@@ -484,7 +488,7 @@ export const Market: React.FC<{ t: number; spoiled?: number; dark?: number }> = 
     <rect width={1920} height={120} fill="#E0393E" /><text x={960} y={84} textAnchor="middle" fontFamily="Poppins" fontWeight={800} fontSize={60} fill="#FFFFFF">MAHALLE MARKET</text>
     {[0, 1, 2].map((r) => <g key={r}><rect x={60} y={200 + r * 200} width={900} height={20} fill="#9AA5AD" />
       {Array.from({ length: 12 }, (_, i) => <rect key={i} x={80 + i * 72} y={200 + r * 200 - 110} width={56} height={110} rx={6} fill={["#F6C445", "#3A7BD5", "#3FAE6A", "#E86A92", "#F28C28"][(i + r) % 5]} />)}</g>)}
-    <g transform="translate(1060,150)"><rect width={780} height={620} rx={14} fill="#C9D1D6" /><rect x={20} y={20} width={740} height={580} rx={8} fill={dark ? "#3A4048" : "#DFF2FA"} opacity={0.9} />
+    <g transform="translate(1060,200)"><rect width={780} height={600} rx={14} fill="#C9D1D6" /><rect x={20} y={20} width={740} height={580} rx={8} fill={dark ? "#3A4048" : "#DFF2FA"} opacity={0.9} />
       {[0, 1, 2].map((r) => <rect key={r} x={40} y={190 + r * 180} width={700} height={12} fill="#9AA5AD" />)}
       {Array.from({ length: 9 }, (_, i) => <rect key={i} x={70 + (i % 9) * 76} y={120} width={52} height={70} rx={8} fill="#F4F4F4" />)}
       <text x={390} y={-14} textAnchor="middle" fontFamily="Poppins" fontWeight={800} fontSize={36} fill={dark ? "#B23A3F" : "#2A5DA8"}>{dark ? "SOĞUTUCU · KAPALI" : "SÜT · YOĞURT"}</text></g>
@@ -523,9 +527,11 @@ export const Otel: React.FC<{ t: number }> = ({ t }) => (
     <rect width={1920} height={1080} fill="#2A1E2A" />
     <rect x={200} y={100} width={1520} height={700} fill="#4A2E3E" /><rect x={200} y={100} width={1520} height={700} fill="url(#tBrick)" opacity={0.3} />
     <rect x={1180} y={160} width={420} height={460} fill="#16284A" stroke="#C9A84A" strokeWidth={14} /><path d="M1390,160 V620 M1180,390 H1600" stroke="#C9A84A" strokeWidth={6} />
-    <Gok t={t} mode="night" stars={0.9} />
-    <rect x={0} y={0} width={1180} height={1080} fill="#2A1E2A" opacity={0} />
-    <g><rect x={1180} y={160} width={420} height={460} fill="#0B1426" opacity={0.6} /></g>
+    <svg x={1180} y={160} width={420} height={460} viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice"><Sehir t={t} mode="night" stars={0.9} lights={0} /></svg>
+    <path d="M1390,160 V620 M1180,390 H1600" stroke="#C9A84A" strokeWidth={6} />
+    <path d="M1150,140 q40,260 10,500 l60,0 q-20,-250 0,-500Z M1630,140 q-40,260 -10,500 l-60,0 q20,-250 0,-500Z" fill="#7A2A3A" />
+    <g transform="translate(400,180)"><rect width={300} height={200} fill="#C9A84A" /><rect x={14} y={14} width={272} height={172} fill="#E9D3A8" /><path d="M40,160 l80,-90 l60,60 l40,-40 l60,70Z" fill="#8A6A4A" /></g>
+    <g transform="translate(960,90)"><path d="M-120,0 h240 l-40,60 h-160Z" fill="#C9A84A" />{[-80, -30, 30, 80].map((xx) => <circle key={xx} cx={xx} cy={74} r={12} fill="#FFE7A0" opacity={0.3} />)}</g>
     <g transform="translate(560,820)"><rect x={-420} y={-180} width={840} height={180} rx={20} fill="#F4EDE2" /><rect x={-440} y={-380} width={60} height={380} rx={10} fill="#8A5A32" /><rect x={-420} y={-220} width={840} height={60} rx={20} fill="#C9A84A" />
       {[-260, -60].map((xx) => <rect key={xx} x={xx} y={-260} width={180} height={70} rx={30} fill="#FFFFFF" />)}</g>
     <g transform="translate(1250,880)"><rect x={-110} y={-140} width={220} height={140} fill="#6A3A2A" />

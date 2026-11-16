@@ -8,6 +8,7 @@ import { K6_05_SECONDS, K6Video05 } from "./videos/k6-05/K6Video";
 import { K6_07_SECONDS, K6Video07 } from "./videos/k6-07/K6Video";
 import { K6_08_SECONDS, K6Video08 } from "./videos/k6-08/K6Video";
 import { K3R_16_SECONDS, K3RVideo16 } from "./videos/k3r-16/K3Video";
+import { K3R_17_SECONDS, K3RVideo17 } from "./videos/k3r-17/K3Video";
 import { K2R_14_SECONDS, K2RVideo14 } from "./videos/k2r-14/K2Video";
 import { SiKitTest, SI_KIT_N } from "./videos/k2r-15/KitTest";
 import { SH1_01_SECONDS, Sh1Short01 } from "./videos/sh1-01/Short";
@@ -57,6 +58,7 @@ export const RemotionRoot: React.FC = () => (
     {video("K6Video07", K6Video07, K6_07_SECONDS)}
     {video("K6Video08", K6Video08, K6_08_SECONDS)}
     <Composition id="K3RVideo16" component={K3RVideo16} durationInFrames={Math.round(K3R_16_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
+    <Composition id="K3RVideo17" component={K3RVideo17} durationInFrames={Math.round(K3R_17_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K2RVideo14" component={K2RVideo14} durationInFrames={Math.round(K2R_14_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="SiKitTest" component={SiKitTest} durationInFrames={SI_KIT_N * 30} fps={30} width={1920} height={1080} />
     <Composition id="Sh1Short01" component={Sh1Short01} durationInFrames={Math.round(SH1_01_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />

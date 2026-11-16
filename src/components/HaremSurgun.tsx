@@ -309,7 +309,14 @@ export const IkiTren: React.FC<{ t: number; part?: number }> = ({ t, part = 0 })
 );
 
 // ───────── 5) Karanlık kır (diz boyu ot, yüksek basamak, el fenerleri) ─────────
-export const KirGece: React.FC<{ t: number; pan?: number; train?: boolean; lanterns?: number; grassFg?: boolean }> = ({ t, pan = 0, train = true, lanterns = 1, grassFg = true }) => (
+const KirOn: React.FC<{ t: number; pan: number }> = ({ t, pan }) => (
+  <g>{Array.from({ length: 40 }, (_, i) => {
+    const x = ((i * 55 - pan * 1.4) % 2200 + 2200) % 2200 - 140;
+    const h = 200 + rnd(i + 4) * 160, sw = Math.sin(t * 1.3 + i) * 18;
+    return <path key={`f${i}`} d={`M${x},1090 q${sw * 0.5},${-h * 0.5} ${sw},${-h}`} stroke="#0C140A" strokeWidth={9} fill="none" strokeLinecap="round" opacity={0.95} />;
+  })}</g>
+);
+export const KirGece: React.FC<{ t: number; pan?: number; train?: boolean; lanterns?: number; grassFg?: boolean; onlyFg?: boolean }> = ({ t, pan = 0, train = true, lanterns = 1, grassFg = true, onlyFg = false }) => onlyFg ? <KirOn t={t} pan={pan} /> : (
   <g>
     <rect width={1920} height={1080} fill="url(#pNightSky)" />
     <Stars t={t} n={90} y1={600} />
