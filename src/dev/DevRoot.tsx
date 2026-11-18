@@ -5,6 +5,8 @@ import { DogumSandalye, Saksi, SerbetTepsi, Nazarlik, Kurdele } from "../compone
 import { Ates, GulKutu, KafesIc, Gul } from "../components/HaremPrenses";
 import { Yayla } from "../components/Eras";
 import { Kuma } from "./Kuma";
+import { YolVanDev } from "./YolVanDev";
+import { fontsReady } from "../theme";
 
 // Yeni figür/nesne fikstürleri (her saniye bir sahne)
 const Figs: React.FC = () => {
@@ -28,5 +30,6 @@ export const DevRoot: React.FC = () => (
   <>
     <Composition id="DevKuma" component={Kuma} durationInFrames={300} fps={30} width={1920} height={1080} />
     <Composition id="DevFigs" component={Figs} durationInFrames={150} fps={30} width={1920} height={1080} />
+    <Composition id="DevYolVan" component={YolVanDev} durationInFrames={600} fps={30} width={1920} height={1080} calculateMetadata={async () => { await fontsReady; return {}; }} />
   </>
 );
