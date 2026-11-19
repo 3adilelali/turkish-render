@@ -98,7 +98,7 @@ const SHOTS: Sh[] = [
   { c: "Ve o ekran karardığında", r: ph((t, a) => <AppBal t={t} a={a} dim={rp(t, a + 0.5, a + 2)} />, { glow: RED }), html: B("Para nereye gitti?", { y: 880, c: RED }) },
   { c: "Sonunu şimdiden", r: sil((t) => <Corridor t={t} />, "#000", { z: [1.0, 1.12] }) },
   { c: "Çünkü bu hikâye", r: dos("THODEX DOSYASI", ["█", "█", "█", "█"], { stamp: "AÇIK", at: 0.8 }) },
-  { c: "Bu hikâyeyi duymuş", r: (t, a, b) => cam(t, a, b, <g><rect width={1920} height={1080} fill="#050608" />{T(960, 500, "Bu hikâyeyi duymuş olabilirsin.", 76, "#FFF", 700, "middle")}<g opacity={rp(t, a + 2.2, a + 2.8)}>{T(960, 620, "Ama bu dosyayı hiç böyle açmadın.", 76, AMB, 700, "middle")}</g></g>, {}, [1.0, 1.05]) },
+  { c: "Hikâyeler birbirine", r: (t, a, b) => cam(t, a, b, <g><rect width={1920} height={1080} fill="#050608" />{T(960, 500, "Hikâyeler birbirine benzeyebilir.", 70, "#FFF", 700, "middle")}<g opacity={rp(t, a + 2.2, a + 2.8)}>{T(960, 620, "Ama hiçbiri bizim anlattığımız gibi değil.", 70, AMB, 700, "middle")}</g></g>, {}, [1.0, 1.05]) },
   { c: "Dosya açılıyor", r: dos("PROTOKOL X", ["Dosya 01 · Thodex", "Kaynak: mahkeme kayıtları, iddianame, basın", "█"], { stamp: "AÇILDI", at: 0.6, no: "DOSYA 01" }), sfx: "boom" },
 
   // ───── Bölüm 1
