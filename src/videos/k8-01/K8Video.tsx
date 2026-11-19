@@ -88,7 +88,7 @@ const ters = (o: { lights?: number; flood?: number; crane?: number } = {}) => (t
 const avlu = (t: number) => <Hapis t={t} mode="avlu" />;
 const hucre = (t: number) => <Hapis t={t} mode="hucre" />;
 const ofis = (t: number) => <Ofis t={t} />;
-const merdanYatak = (f: Face = {}) => (t: number) => <g><DFig x={520} y={735} s={0.9} o={CAST.merdan} t={t} pose={{ l: [20, 60], r: [20, 60], ll: [90, 0], rl: [90, 0], lean: -70 }} seed={4} {...f} /><path d={`M440,${700 + Math.sin(t * 2.1) * 3} Q800,${640 + Math.sin(t * 2.1) * 4} 1130,700 L1130,760 L440,760Z`} fill="#A9C7D6" stroke="#1B1210" strokeWidth={5} /><path d="M520,705 Q800,660 1100,712" stroke="#86A9BA" strokeWidth={5} fill="none" /></g>;
+const merdanYatak = (f: Face = {}) => (t: number) => <g><g transform="translate(730,690) rotate(-90)"><DFig x={0} y={0} s={0.9} o={CAST.merdan} t={t} seed={4} {...f} /></g><path d={`M440,${700 + Math.sin(t * 2.1) * 3} Q800,${640 + Math.sin(t * 2.1) * 4} 1130,700 L1130,760 L440,760Z`} fill="#A9C7D6" stroke="#1B1210" strokeWidth={5} /><path d="M520,705 Q800,660 1100,712" stroke="#86A9BA" strokeWidth={5} fill="none" /></g>;
 const sultanAim = (x = 1180, f: Face = {}) => F("sultan", x, { dir: -1, pose: AIM, holdR: tab, brow: "worried", eyes: "wide", ...f });
 const telKart = (msgs: { who: string; text: string; me?: boolean }[], time = "00:14"): R => (t, a, b) => <TCam t={t} a={a} b={b} z={[1, 1.1]}><rect width={1920} height={1080} fill="#121520" /><g transform="translate(960,560) scale(1.15)"><foreignObject x={-260} y={-480} width={520} height={960}><div style={{ width: 520, height: 960 }}><Telefon msgs={msgs} time={time} /></div></foreignObject></g></TCam>;
 
@@ -112,7 +112,7 @@ const SHOTS: Sh[] = [
 
   // ── HATIRLATMA ──
   { c: "Önce kısaca hatırlayalım", sfx: "static", tone: "cool", r: cam([1, 1.06], [960, 560], undefined, sc(hastane, merdanYatak({ eyes: "closed" }))), html: tg("ÖNCEKİ BÖLÜMDE", "#1B4F9C") },
-  { c: "Rüzgar'ın kurşunları", tone: "cool", r: cam([2, 2.3], [600, 520], undefined, sc(hastane, merdanYatak({ eyes: "closed" }))), html: tg("MERDAN: HASTANELİK", "#E63946") },
+  { c: "Rüzgar'ın kurşunları", tone: "cool", r: cam([2, 2.3], [480, 600], undefined, sc(hastane, merdanYatak({ eyes: "closed" }))), html: tg("MERDAN: HASTANELİK", "#E63946") },
   { c: "Bozo, Rüzgar'ın karşısına geçti", tone: "night", r: cam([1, 1.1], [960, 600], undefined, sc(ters({ lights: 0 }), F("bozo", 700, { brow: "angry", talk: true }), F("ruzgar", 1220, { dir: -1, brow: "angry", eyes: "wide" }))) },
   { c: "Ada, onun kızı", sfx: "boom", tone: "warm", r: cam([1.5, 1.7], [700, 640], undefined, sc(bahce, (t) => <DFig x={700} y={900} s={0.66} o={CAST.ada} t={t} mouth="smile" eyes="happy" />)), html: big("ADA = BOZO'NUN KIZI", "#FFC800", 80) },
   { c: "Ve Sultan, tek bir telefonla", tone: "night", r: cam([2.6, 2.8], face(1160), undefined, sc(oda, F("sultan", 1160, { dir: -1, pose: P.phone, holdR: tel(), eyes: "wide", brow: "worried" }))), html: tg("HAYDAR ALİ = AJAN", "#E63946") },
@@ -219,23 +219,23 @@ const SHOTS: Sh[] = [
 
   // ── 3. BÖLÜM: HASTANE ──
   { c: "Üçüncü bölüm. Hastane", ...bolum("ÜÇÜNCÜ BÖLÜM", "HASTANE") },
-  { c: "Şafak sökerken Merdan", sfx: "tick", tone: "cool", r: cam([2.2, 2.4], [560, 500], undefined, sc(hastaneSabah, merdanYatak({ eyes: "squint" }))) },
+  { c: "Şafak sökerken Merdan", sfx: "tick", tone: "cool", r: cam([2.2, 2.4], [460, 610], undefined, sc(hastaneSabah, merdanYatak({ eyes: "squint" }))) },
   { c: "Odada tek kişi var", tone: "cool", r: cam([1, 1.08], [960, 600], undefined, sc(hastaneSabah, merdanYatak({ eyes: "open" }), F("haydar", 1400, { dir: -1, eyes: "down" }))) },
-  { c: "Merdan'ın sesi kısık", tone: "cool", r: cam([2.4, 2.6], [520, 440], undefined, sc(hastaneSabah, merdanYatak({ talk: true, mouth: "smirk" }))), html: q("“SEN DAHA YORGUN GÖRÜNÜYORSUN.”", 66) },
+  { c: "Merdan'ın sesi kısık", tone: "cool", r: cam([2.4, 2.6], [420, 600], undefined, sc(hastaneSabah, merdanYatak({ talk: true, mouth: "smirk" }))), html: q("“SEN DAHA YORGUN GÖRÜNÜYORSUN.”", 66) },
   { c: "Haydar Ali bir sandalye çekiyor", sfx: "knock", tone: "cool", r: cam([1.2, 1.3], [1000, 640], undefined, sc(hastaneSabah, merdanYatak(), Wk("haydar", 1400, 1180, { dir: -1 }, 0.1, 1.6))) },
   { c: "Uzun bir nefes alıyor", tone: "cool", r: cam([2.8, 3], face(1180), undefined, sc(hastaneSabah, F("haydar", 1180, { dir: -1, eyes: "closed", mouth: "flat" }))) },
   { c: "Merdan. Babanı ben öldürdüm", sfx: "boom", tone: "cool", r: cam([2.6, 2.8], face(1180), undefined, sc(hastaneSabah, F("haydar", 1180, { dir: -1, eyes: "sad", talk: true }))), html: q("“BABANI BEN ÖLDÜRDÜM.”", 80) },
   { c: "Ceylan'a evlenme teklif", tone: "cool", r: cam([1.6, 1.7], [960, 560], undefined, (t) => <><rect width={1920} height={1080} fill="#2A1A20" /><Yuzuk x={960} y={600} s={2.2} t={t} open={1} /></>), html: tg("O GECE · HİÇ VERİLMEYEN YÜZÜK", "#E63946") },
-  { c: "Merdan uzun süre konuşmuyor", sfx: "tick", tone: "cool", r: cam([2.2, 2.4], [380, 320], undefined, sc(hastaneSabah, merdanYatak({ eyes: "closed" }))) },
+  { c: "Merdan uzun süre konuşmuyor", sfx: "tick", tone: "cool", r: cam([2.2, 2.4], [400, 610], undefined, sc(hastaneSabah, merdanYatak({ eyes: "closed" }))) },
   { c: "Monitörün sesi odayı", tone: "cool", r: cam([3, 3.2], [380, 320], undefined, sc(hastaneSabah)) },
-  { c: "Biliyordum, diyor", sfx: "boom", tone: "cool", r: cam([2.4, 2.6], [520, 440], undefined, sc(hastaneSabah, merdanYatak({ talk: true, eyes: "sad" }))), html: q("“BİLİYORDUM.”", 100) },
+  { c: "Biliyordum, diyor", sfx: "boom", tone: "cool", r: cam([2.4, 2.6], [420, 600], undefined, sc(hastaneSabah, merdanYatak({ talk: true, eyes: "sad" }))), html: q("“BİLİYORDUM.”", 100) },
   { c: "Babam ölmeden önce bir isim", tone: "cool", r: cam([1.4, 1.5], [800, 560], undefined, sc(hastaneSabah, merdanYatak({ talk: true, eyes: "sad" }), F("haydar", 1180, { dir: -1, eyes: "wide" }))) },
   { c: "Konsey'in toplandığı yeri", sfx: "drone", tone: "night", r: cam([1, 1.12], [960, 560], undefined, (t) => <Konsey t={t} lamp={0.6} />), html: big("KONSEY'İN BULUŞMA YERİ", "#FFC800", 80) },
-  { c: "Yıllardır kimseye söylemedim", tone: "cool", r: cam([2.4, 2.6], [520, 440], undefined, sc(hastaneSabah, merdanYatak({ talk: true, eyes: "down" }))) },
+  { c: "Yıllardır kimseye söylemedim", tone: "cool", r: cam([2.4, 2.6], [420, 600], undefined, sc(hastaneSabah, merdanYatak({ talk: true, eyes: "down" }))) },
   { c: "Haydar Ali şaşkın", tone: "cool", r: cam([2.6, 2.8], face(1180), undefined, sc(hastaneSabah, F("haydar", 1180, { dir: -1, eyes: "wide", talk: true }))), html: q("“NEDEN BANA SÖYLÜYORSUN?”", 70) },
-  { c: "Merdan acıyla gülümsüyor", tone: "warm", r: cam([2.4, 2.6], [520, 440], undefined, sc(hastaneSabah, merdanYatak({ mouth: "smile", eyes: "sad" }))) },
+  { c: "Merdan acıyla gülümsüyor", tone: "warm", r: cam([2.4, 2.6], [420, 600], undefined, sc(hastaneSabah, merdanYatak({ mouth: "smile", eyes: "sad" }))) },
   { c: "Bu ailede bunu yapan", sfx: "ding", tone: "warm", r: cam([1.3, 1.4], [820, 560], undefined, sc(hastaneSabah, merdanYatak({ talk: true, mouth: "smile" }), F("haydar", 1180, { dir: -1, eyes: "sad" }))), html: q("“BU AİLEDE İLK ADAMSIN.”", 74) },
-  { c: "Ve o ismi fısıldıyor", sfx: "drone", tone: "night", r: cam([2.6, 2.8], [520, 440], undefined, sc(hastaneSabah, merdanYatak({ talk: true, eyes: "squint" }))) },
+  { c: "Ve o ismi fısıldıyor", sfx: "drone", tone: "night", r: cam([2.6, 2.8], [420, 610], undefined, sc(hastaneSabah, merdanYatak({ talk: true, eyes: "squint" }))) },
   { c: "Eski Tersane. Haliç'teki", sfx: "boom", tone: "night", r: cam([1.15, 1], [960, 540], undefined, ters({ lights: 0 })), html: (t, a) => <><Txt t={t} at={a + 0.2} text="ESKİ TERSANE" y={300} size={130} color="#FFC800" /><Txt t={t} at={a + 1} text="Haliç · Terk edilmiş havuz" y={480} size={60} color="#FFFFFF" /></> },
   { c: "Kapı açılıyor. İçeri Rüzgar", sfx: "knock", tone: "cool", r: cam([1, 1.1], [1100, 600], undefined, sc(hastaneSabah, merdanYatak({ eyes: "wide" }), F("haydar", 1180, { dir: -1 }), Wk("ruzgar", 1950, 1600, { dir: -1 }, 0.1, 1.8))) },
   { c: "Merdan'ı vuran adam", tone: "cool", r: cam([2.6, 2.8], face(1600), undefined, sc(hastaneSabah, F("ruzgar", 1600, { dir: -1, brow: "angry", mouth: "tight" }))), html: tg("MERDAN'I VURAN ADAM", "#E63946") },
@@ -281,6 +281,7 @@ const SHOTS: Sh[] = [
   // ── 5. BÖLÜM: PLAN ──
   { c: "Beşinci bölüm. Plan", ...bolum("BEŞİNCİ BÖLÜM", "PLAN") },
   { c: "Akşam, konağın büyük salonu", tone: "warm", r: cam([1, 1.06], [960, 560], undefined, sc(salon, F("bozo", 960, { s: 0.85, y: 900 }), F("haydar", 700, { s: 0.85, y: 920 }), F("ceylan", 520, { s: 0.85, y: 940 }), F("sultan", 1220, { s: 0.85, y: 920, dir: -1 }), F("ruzgar", 1400, { s: 0.85, y: 940, dir: -1 }), F("melek", 340, { s: 0.8, y: 960 }), F("efraim", 1580, { s: 0.85, y: 960, dir: -1 }))) },
+  { c: "Rüzgar, Melek ve Efraim", tone: "warm", r: cam([1.7, 1.8], [1300, 620], undefined, sc(salon, F("sultan", 1220, { s: 0.85, y: 920, dir: -1, mouth: "tight" }), F("ruzgar", 1400, { s: 0.85, y: 940, dir: -1, look: -1 }), F("efraim", 1580, { s: 0.85, y: 960, dir: -1, eyes: "squint" }), F("bozo", 960, { s: 0.85, y: 900 }))) },
   { c: "Gülsüm Ana herkese çay", sfx: "ding", tone: "warm", r: cam([1.6, 1.7], [700, 640], undefined, sc(salon, Wk("gulsum", 400, 860, { pose: P.hold, holdR: tepsi, mouth: "frown", brow: "worried" }, 0.1, 3))) },
   { c: "Bozo konuşuyor", tone: "warm", r: cam([2.6, 2.8], face(960), undefined, sc(salon, F("bozo", 960, { talk: true }))), html: q("“ONLARA BİR AJAN VERECEĞİZ.”", 72) },
   { c: "Herkes Haydar Ali'ye bakıyor", sfx: "drone", tone: "warm", r: cam([1.2, 1.3], [800, 600], undefined, sc(salon, F("haydar", 800, { eyes: "wide" }), F("ceylan", 560, { look: 1, eyes: "wide" }), F("sultan", 1060, { dir: -1, eyes: "wide" }))) },
@@ -305,6 +306,7 @@ const SHOTS: Sh[] = [
   { c: "Ama Yılmaz tilki gibi", sfx: "drone", tone: "night", r: cam([2.6, 2.8], face(960), undefined, sc(ofis, F("yilmaz", 960, { pose: P.phone, holdR: tel(), eyes: "squint", mouth: "smirk" }))) },
   { c: "Sana Halide adını", sfx: "boom", tone: "night", r: cam([2.8, 3], face(960), undefined, sc(ofis, F("yilmaz", 960, { pose: P.phone, holdR: tel(), talk: true, eyes: "squint" }))), html: q("“HALİDE ADINI KİM VERMİŞTİ?”", 72) },
   { c: "Bu bir test", sfx: "tick", tone: "night", r: kart("#0E1222"), html: (t, a) => <><Txt t={t} at={a + 0.1} text="TEST" y={300} size={150} color="#E63946" /><Txt t={t} at={a + 1.2} text="Bir yanlış kelime = plan çöker" y={520} size={60} color="#FFFFFF" /></> },
+  { c: "Bu soruyu sadece gerçek ajan", sfx: "drone", tone: "night", r: cam([2.6, 2.8], face(960), undefined, sc(ofis, F("yilmaz", 960, { pose: P.phone, holdR: tel(), mouth: "tight", eyes: "squint", talk: true }))) },
   { c: "Ceylan bir saniye duraksıyor", tone: "night", r: cam([2.8, 3], face(700), undefined, sc(oda, F("ceylan", 700, { pose: P.phone, holdR: tel(), eyes: "wide", brow: "worried" }))) },
   { c: "Haydar Ali, masanın karşısından", sfx: "tick", tone: "night", r: cam([2.4, 2.6], [1060, 700], undefined, sc(oda, F("haydar", 1100, { dir: -1, pose: P.reach, holdR: <g><rect x={-60} y={-40} width={120} height={80} fill="#FFFDF4" stroke="#1B1210" strokeWidth={3} /><text x={0} y={10} textAnchor="middle" fontFamily="Poppins" fontWeight={800} fontSize={22} fill="#1B1210">YILMAZ</text></g> }))) },
   { c: "Ceylan gözlerini kapatıyor", tone: "night", r: cam([2.8, 3], face(700), undefined, sc(oda, F("ceylan", 700, { pose: P.phone, holdR: tel(), eyes: "closed", talk: true }))) },
