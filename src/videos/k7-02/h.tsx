@@ -32,9 +32,14 @@ export const crd = (file: string): string | undefined => {
 
 type PO = { cap?: string; sub?: string; yr?: string; z?: [number, number]; f?: [number, number, number, number]; grade?: Grade; par?: Par; mode?: "auto" | "cover" | "card"; dim?: number };
 // صورة وحدة بحركة كاميرا
-export const ph = (file: string, o: PO = {}): R => (t, a, b) => <Ph t={t} a={a} b={b} file={file} credit={crd(file)} {...o} />;
+// تنويع الاقتصاص: نفس الصورة بتبيّن بزاوية وتقريب مختلفين كل مرة
+const FV: [number, number, number, number][] = [[0.5, 0.5, 0.56, 0.5], [0.32, 0.45, 0.46, 0.5], [0.68, 0.45, 0.54, 0.5], [0.5, 0.38, 0.5, 0.56], [0.42, 0.58, 0.6, 0.44], [0.6, 0.5, 0.38, 0.5]];
+const ZV: [number, number][] = [[1.04, 1.16], [1.14, 1.3], [1.08, 1.22], [1.2, 1.42]];
+let VC = 0;
+const vary = (o: PO): PO => { VC++; return { f: FV[VC % FV.length], z: ZV[(VC * 3 + 1) % ZV.length], ...o }; };
+export const ph = (file: string, o: PO = {}): R => { const v = vary(o); return (t, a, b) => <Ph t={t} a={a} b={b} file={file} credit={crd(file)} {...v} />; };
 // عدّة صور بالتتابع (كل واحدة تاخد حصة متساوية من اللقطة)
-export const seq = (items: (PO & { file: string })[]): R => (t, a, b) => <Seq t={t} a={a} b={b} items={items.map((i): SeqItem => ({ credit: crd(i.file), ...i }))} />;
+export const seq = (items: (PO & { file: string })[]): R => { const its = items.map((i): SeqItem => ({ credit: crd(i.file), ...vary(i), ...i })); return (t, a, b) => <Seq t={t} a={a} b={b} items={its} />; };
 // رشقة تأكيد: صور سريعة 0.25–0.4 ث (مرة أو مرتين بالدقيقة بس)
 export const burst = (files: string[], o: PO = {}): R => (t, a, b) => <Seq t={t} a={a} b={b} items={files.map((f, i): SeqItem => ({ file: f, credit: undefined, z: [1.02 + (i % 3) * 0.03, 1.1 + (i % 3) * 0.03], f: [0.35 + (i % 4) * 0.1, 0.45, 0.5 + (i % 3) * 0.05, 0.5], ...o }))} />;
 
@@ -75,3 +80,25 @@ export const title = (lines: { s: string; c?: string; size?: number }[], bg = "#
     {lines.map((l, i) => <g key={i} opacity={rp(t, a + 0.3 + i * 1.6, a + 0.9 + i * 1.6)}>{T(960, 520 + i * 110, l.s, l.size ?? 70, l.c ?? "#FFF", 700, "middle")}</g>)}
   </g>
 );
+
+// مجمّعات صور عامة: G("doc") بيرجّع التالية مع تجنّب آخر 5 مستعملة
+export const POOLS: Record<string, string[]> = {
+  doc: ["typewriter1", "dgpi32", "typewriter2", "radio51", "typewriter3", "tele53", "enigma3", "dgpi33", "enigma4", "foreign51", "enigma2", "radio52"],
+  ank: ["ankara1", "ankara2", "ankara3", "ankara403", "ankara404", "ankara405", "ankara406", "ankara407", "ankara408", "ankara4011", "ankara4012", "ankara4014", "ankbulv2", "ankbulv3", "ankbulv4", "ankbulv5", "ankbulv6", "dgpi31", "dgpi34", "dgpi35", "dgpi37", "dgpi38", "dgpi41", "dgpi43", "dgpi44", "dgpi46", "ankold51", "ankold52"],
+  ist: ["istanbul404", "istanbul406", "istanbul407", "istanbul408", "istanbul21", "istanbul22", "istanbul23"],
+  war: ["hitlerw5", "hitler22", "hitler24", "ww23", "ww25", "overlord2", "overlord3", "overlord5", "overlord7"],
+  ber: ["hitlerw5", "hitler22", "hitler24", "papenw5", "ribb1"],
+  hotel: ["hotel51", "hotel52", "hotel53"],
+  news: ["news53", "news52", "news54"],
+  money: ["bernhard1", "bernhard2", "bernhard20", "bank1"],
+  ally: ["ww52", "ww53", "ww54", "churchill1", "churchill2", "churchill3", "tehran2", "tehran3", "cairow2", "roosevelt1", "roosevelt2", "stalin1"],
+};
+const USED: Record<string, string[]> = {};
+export const G = (pool: string): string => {
+  const list = POOLS[pool];
+  const used = (USED[pool] ??= []);
+  const recent = used.slice(-Math.min(5, list.length - 1));
+  const pick = list.find((f) => !recent.includes(f) && !used.slice(-list.length).includes(f)) ?? list.find((f) => !recent.includes(f)) ?? list[0];
+  used.push(pick);
+  return pick;
+};

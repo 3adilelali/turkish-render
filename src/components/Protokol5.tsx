@@ -137,26 +137,39 @@ const Back: React.FC<{ t: number; a: number; b: number; file: string; dim?: numb
   <Ph t={t} a={a} b={b} file={file} grade={grade} dim={dim} blur={blur} f={f} z={z} mode="cover" fade={0.2} />
 );
 
+const wrapTxt = (l: string, n: number): string[] => {
+  if (l.length <= n) return [l];
+  const w = l.split(" "); const rows: string[] = []; let cur = "";
+  for (const x of w) { if ((cur + " " + x).trim().length > n && cur) { rows.push(cur); cur = x; } else cur = (cur + " " + x).trim(); }
+  if (cur) rows.push(cur);
+  return rows;
+};
+
 export const Panel: React.FC<{ t: number; a: number; b: number; bg: string; title: string; lines: string[]; stamp?: string; stampAt?: number; side?: "l" | "r"; tag?: string; c?: string; dim?: number; f?: PhP["f"] }> = ({ t, a, b, bg, title, lines, stamp, stampAt = 1.2, side = "r", tag, c = X.amber, dim, f }) => {
   const x0 = side === "r" ? 1000 : 110;
-  const pw = 810;
+  const pw = 860;
   const kk = rp(t, a + 0.1, a + 0.6);
-  const rowH = 112;
-  const ph = 150 + lines.length * rowH;
+  const head = tag ? 112 : 88;
+  const titleRows = wrapTxt(title, 26);
+  const items = lines.map((l) => wrapTxt(l, 33));
+  let acc = 0;
+  const ys = items.map((r) => { const y = acc; acc += r.length * 54 + 30; return y; });
+  const ph = head + (titleRows.length - 1) * 60 + 40 + acc + 24;
   const y0 = 540 - ph / 2;
+  const ty = head + (titleRows.length - 1) * 60 + 40;
   return (
     <g>
       <Back t={t} a={a} b={b} file={bg} dim={dim} f={f} />
       <g opacity={kk} transform={`translate(${(1 - kk) * (side === "r" ? 60 : -60)},0)`}>
         <rect x={x0} y={y0} width={pw} height={ph} rx={10} fill="#07090E" opacity={0.86} />
         <rect x={x0} y={y0} width={8} height={ph} fill={c} />
-        {tag && T(x0 + 44, y0 + 50, tag, 26, c, 700, "start", { letterSpacing: 5 } as React.SVGProps<SVGTextElement>)}
-        {T(x0 + 44, y0 + (tag ? 108 : 84), title, 50, "#FFF", 700)}
-        {lines.map((l, i) => {
+        {tag && T(x0 + 44, y0 + 54, tag, 28, c, 700, "start", { letterSpacing: 5 } as React.SVGProps<SVGTextElement>)}
+        {titleRows.map((tr, i) => <g key={i}>{T(x0 + 44, y0 + head + i * 60, tr, 56, "#FFF", 700)}</g>)}
+        {items.map((rows, i) => {
           const q = rp(t, a + 0.5 + i * 0.5, a + 0.95 + i * 0.5);
           return <g key={i} opacity={q} transform={`translate(${(1 - q) * 30},0)`}>
-            <circle cx={x0 + 56} cy={y0 + (tag ? 108 : 84) + 66 + i * rowH - 14} r={8} fill={c} />
-            {T(x0 + 84, y0 + (tag ? 108 : 84) + 66 + i * rowH, l, 36, "#E8EBF0", 600)}
+            <circle cx={x0 + 56} cy={y0 + ty + ys[i] + 34 - 15} r={9} fill={c} />
+            {rows.map((r, j) => <g key={j}>{T(x0 + 84, y0 + ty + ys[i] + 34 + j * 54, r, 41, "#E8EBF0", 600)}</g>)}
           </g>;
         })}
       </g>
