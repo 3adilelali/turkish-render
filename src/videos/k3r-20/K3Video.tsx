@@ -583,7 +583,7 @@ const SHOTS: Sh[] = [
   { c: "Sultan İbrahim'in hareminde anne olmak", sfx: "whoosh", tone: "gold", r: (t, a, b) => C(t, a, b, [1.1, 1.2], [960, 560], daire(t, <>{tur(t, 960, { face: "normal", hands: "baby", baby: bb(t) }, 1.2)}</>)),
     html: (t, a) => <Txt t={t} at={a + 0.5} text="DIŞARIDAN: ZAFER" y={70} size={100} accent={H.gold} /> },
   { c: "İlk oğlu doğuran", r: (t, a, b) => again("Sultan İbrahim'in hareminde anne olmak", t, a, b, 0) },
-  { c: "Ama içeriden bakınca", tone: "cool", r: (t, a, b) => C(t, a, b, [1, 1.04], [960, 540], <><Paper />{["1.300 vs 1.000", "SÜT ANNE", "HAVUZ", "SAMUR", "VALİDELİK"].map((l, i) => <Disc key={l} x={300 + i * 330} y={460} r={130} k={ramp(t, a + 0.6 + i * 1.6, a + 1 + i * 1.6)} c={[H.gold, "#8A6A3A", H.cobalt, "#5A3A26", "#4A2A5A"][i]} label={l} />)}</>),
+  { c: "Ama içeriden bakınca", tone: "cool", r: (t, a, b) => C(t, a, b, [1, 1.04], [960, 540], <><Paper />{["1.300 / 1.000", "SÜT ANNE", "HAVUZ", "SAMUR", "VALİDELİK"].map((l, i) => <Disc key={l} x={400 + i * 280} y={460} r={115} k={ramp(t, a + 0.6 + i * 1.6, a + 1 + i * 1.6)} c={[H.gold, "#8A6A3A", H.cobalt, "#5A3A26", "#4A2A5A"][i]} label={l} />)}</>),
     html: (t, a) => <Txt t={t} at={a + 0.3} text="İÇERİDEN: HER GÜN BİR SINAV" y={70} size={90} /> },
   { c: "Oğlunun süt annesi", r: (t, a, b) => again("Ama içeriden bakınca", t, a, b, 0) },
   { c: "Oğlun babasının öfkesiyle", r: (t, a, b) => again("Ama içeriden bakınca", t, a, b, 1) },
