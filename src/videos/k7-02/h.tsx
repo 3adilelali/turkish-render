@@ -90,7 +90,7 @@ export const POOLS: Record<string, string[]> = {
   ber: ["hitlerw5", "hitler22", "hitler24", "papenw5", "ribb1"],
   hotel: ["hotel51", "hotel52", "hotel53"],
   news: ["news53", "news52", "news54"],
-  money: ["bernhard1", "bernhard2", "bernhard20", "bank1"],
+  money: ["bernhard1", "bernhard2", "bernhard20"],
   ally: ["ww52", "ww53", "ww54", "churchill1", "churchill2", "churchill3", "tehran2", "tehran3", "cairow2", "roosevelt1", "roosevelt2", "stalin1"],
 };
 const USED: Record<string, string[]> = {};
