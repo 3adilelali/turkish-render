@@ -70,8 +70,11 @@ export type Brow = "none" | "worried" | "angry" | "up";
 export type Mouth = "smile" | "grin" | "open" | "flat" | "frown" | "o" | "none";
 export type Outfit = {
   top: string; top2?: string; shoes?: string; kind?: "hoodie" | "coat" | "jersey" | "sweater" | "vest" | "robe" | "suit";
-  hair?: "none" | "ponytail" | "scarf" | "white" | "cap" | "band" | "bun" | "fez" | "kalpak" | "turban" | "fedora"; hairColor?: string;
+  hair?: "none" | "ponytail" | "ponytail2" | "braids" | "scarf" | "white" | "cap" | "band" | "bun" | "fez" | "kalpak" | "turban" | "fedora"; hairColor?: string;
   glasses?: boolean; mustache?: boolean; gloves?: boolean; number?: string; inner?: string; beard?: string; sash?: string; mustacheColor?: string;
+  bulk?: number; // k2r-18: geniş omuz/kol (Bayram Dayı)
+  neck?: string; // k2r-18: boyun atkısı rengi (Defne)
+  tie?: string; // k2r-18: saç tokası rengi
 };
 export const HERO: Outfit = { top: T.hero, top2: T.hero2, shoes: "#FFFFFF" };
 export const KIDO: Outfit = { top: T.yellow, top2: T.yellow2, shoes: T.red };
@@ -139,6 +142,7 @@ export const TFig: React.FC<{
 }> = ({ x, y, s = 1, dir = 1, o = HERO, pose: pose0 = P.stand, t = 0, seed = 0, eyes = "open", brow = "none", mouth = "smile", look = 0, lookY = 0, talk = false, sweat = false, rim = 0, holdR, holdL, op = 1, bob, walk }) => {
   const kind = o.kind ?? "hoodie";
   const top2 = o.top2 ?? o.top;
+  const B = o.bulk ?? 1;
   const breathe = bob ?? Math.sin(t * 2.1 + seed) * 2.2;
   const blink = blinkAt(t, seed);
   // yürüme: bacaklar mesafeye bağlı, salınan bacak diz kırıp kalkar, kollar karşı yönde, kalça iki adım arasında iner
@@ -175,14 +179,14 @@ export const TFig: React.FC<{
   // gövde yukarı: kalça etrafında eğilme
   const SH = -350;
   const arm = (side: -1 | 1, ang: [number, number], back: boolean, hold?: React.ReactNode) => {
-    const sh = [side * 60, SH + 14] as const;
+    const sh = [side * 60 * B, SH + 14] as const;
     const e = pt(sh[0], sh[1], ang[0], 82);
     const h = pt(e[0], e[1], ang[1], 76);
     const c = back ? top2 : o.top;
     const sleeve = kind === "vest" ? (o.inner ?? "#E9E2D2") : c;
     return (
       <g key={`a${side}`}>
-        <polyline points={`${sh[0]},${sh[1]} ${e[0]},${e[1]} ${h[0]},${h[1]}`} fill="none" stroke={sleeve} strokeWidth={34} strokeLinecap="round" strokeLinejoin="round" />
+        <polyline points={`${sh[0]},${sh[1]} ${e[0]},${e[1]} ${h[0]},${h[1]}`} fill="none" stroke={sleeve} strokeWidth={34 * Math.sqrt(B)} strokeLinecap="round" strokeLinejoin="round" />
         {kind === "hoodie" && <circle cx={h[0] - Math.sin((ang[1] * Math.PI) / 180) * 18} cy={h[1] - Math.cos((ang[1] * Math.PI) / 180) * 18} r={17} fill={back ? shadeOf(c) : top2} />}
         <circle cx={h[0]} cy={h[1]} r={o.gloves ? 24 : 16} fill={o.gloves ? "#F4F4F4" : T.ink} stroke={o.gloves ? "#BDBDBD" : "none"} strokeWidth={3} />
         {hold && <g transform={`translate(${h[0]},${h[1]})`}>{hold}</g>}
@@ -192,7 +196,7 @@ export const TFig: React.FC<{
   const torso = () => {
     const bodyD = "M-74,-176 C-80,-250 -84,-320 -64,-352 Q0,-372 64,-352 C84,-320 80,-250 74,-176 Q0,-160 -74,-176Z";
     return (
-      <g>
+      <g transform={B !== 1 ? `scale(${B},1)` : undefined}>
         {kind === "coat" && <path d="M-80,-352 Q0,-372 80,-352 C92,-280 96,-180 100,-96 L-100,-96 C-96,-180 -92,-280 -80,-352Z" fill={o.top} />}
         {kind === "robe" && <path d="M-80,-352 Q0,-372 80,-352 C96,-260 104,-120 112,-14 Q0,4 -112,-14 C-104,-120 -96,-260 -80,-352Z" fill={o.top} />}
         <path d={bodyD} fill={kind === "coat" || kind === "vest" || kind === "robe" ? (o.inner ?? "#E9E2D2") : o.top} />
@@ -287,8 +291,20 @@ export const TFig: React.FC<{
     if (mouth === "flat") return <path d={`M${X - 12},${MY + 2} h24`} stroke="#FFFFFF" strokeWidth={5} strokeLinecap="round" />;
     return null;
   };
+  const HC = o.hairColor ?? T.ink;
   const back = (o.hair === "ponytail" && (
     <g><ellipse cx={-70} cy={HY + 20} rx={34} ry={60} fill={T.ink} transform={`rotate(${20 + Math.sin(t * 3 + seed) * 6},${-60},${HY - 30})`} /></g>
+  )) || (o.hair === "ponytail2" && (
+    <g transform={`rotate(${18 + Math.sin(t * 3 + seed) * 6},${-62},${HY - 40})`}>
+      <path d={`M-70,${HY - 40} C-120,${HY - 10} -126,${HY + 70} -96,${HY + 116} C-80,${HY + 90} -66,${HY + 40} -52,${HY - 20}Z`} fill={HC} />
+      <path d={`M-96,${HY + 20} q-6,40 6,80`} stroke={shadeOf(HC)} strokeWidth={5} fill="none" />
+    </g>
+  )) || (o.hair === "braids" && (
+    <g>{[-1, 1].map((sd) => <g key={sd} transform={`rotate(${sd * (4 + Math.sin(t * 3 + seed + sd) * 3)},${sd * 70},${HY})`}>
+      {[0, 1, 2, 3].map((i) => <ellipse key={i} cx={sd * 84} cy={HY + 20 + i * 30} rx={17 - i * 1.5} ry={20} fill={HC} stroke={shadeOf(HC)} strokeWidth={3} />)}
+      <rect x={sd * 84 - 12} y={HY + 124} width={24} height={12} rx={5} fill={o.tie ?? T.red} />
+      <path d={`M${sd * 84 - 8},${HY + 136} l-4,22 M${sd * 84 + 8},${HY + 136} l4,22 M${sd * 84},${HY + 136} v24`} stroke={HC} strokeWidth={6} strokeLinecap="round" />
+    </g>)}</g>
   )) || null;
   const hair = () => {
     switch (o.hair) {
@@ -307,6 +323,8 @@ export const TFig: React.FC<{
       case "cap": return <g><path d={`M-78,${HY - 40} C-70,${HY - 100} 70,${HY - 100} 78,${HY - 40}Z`} fill={o.hairColor ?? "#5A4A3A"} /><path d={`M30,${HY - 44} q50,-6 70,8 q-40,8 -70,4Z`} fill={shadeOf(o.hairColor ?? "#5A4A3A")} /></g>;
       case "band": return <path d={`M-80,${HY - 46} Q0,${HY - 96} 80,${HY - 46} L76,${HY - 30} Q0,${HY - 78} -76,${HY - 30}Z`} fill={o.hairColor ?? "#FFFFFF"} />;
       case "ponytail": return <circle cx={-56} cy={HY - 58} r={10} fill={T.yellow} />;
+      case "ponytail2": return <g><path d={`M-88,${HY - 2} C-96,${HY - 70} -50,${HY - 100} 0,${HY - 98} C50,${HY - 100} 92,${HY - 74} 88,${HY - 6} C70,${HY - 50} 30,${HY - 64} -6,${HY - 58} C-40,${HY - 60} -70,${HY - 44} -88,${HY - 2}Z`} fill={HC} /><path d={`M-20,${HY - 92} q20,24 56,26`} stroke={shadeOf(HC)} strokeWidth={5} fill="none" /><circle cx={-64} cy={HY - 52} r={13} fill={o.tie ?? T.yellow} stroke="#C99A1E" strokeWidth={3} /></g>;
+      case "braids": return <g><path d={`M-86,${HY + 6} C-96,${HY - 70} -50,${HY - 100} 0,${HY - 98} C50,${HY - 100} 96,${HY - 70} 86,${HY + 6} C74,${HY - 44} 40,${HY - 62} 0,${HY - 60} C-40,${HY - 62} -74,${HY - 44} -86,${HY + 6}Z`} fill={HC} /><path d={`M0,${HY - 98} v38`} stroke={shadeOf(HC)} strokeWidth={5} /></g>;
       case "fez": return <g><path d={`M-50,${HY - 66} L-40,${HY - 150} Q0,${HY - 160} 40,${HY - 150} L50,${HY - 66} Q0,${HY - 56} -50,${HY - 66}Z`} fill={o.hairColor ?? "#B3261E"} /><path d={`M0,${HY - 156} q-6,30 -40,50`} stroke="#1A1A1A" strokeWidth={6} fill="none" /><circle cx={-40} cy={HY - 104} r={7} fill="#1A1A1A" /></g>;
       case "kalpak": return <g><path d={`M-84,${HY - 40} C-90,${HY - 130} 90,${HY - 130} 84,${HY - 40} Q0,${HY - 60} -84,${HY - 40}Z`} fill={o.hairColor ?? "#6B4A2E"} />{[-60, -30, 0, 30, 60].map((xx) => <path key={xx} d={`M${xx},${HY - 50} q6,-30 0,-60`} stroke={shadeOf(o.hairColor ?? "#6B4A2E")} strokeWidth={6} fill="none" />)}<path d={`M-88,${HY - 44} Q0,${HY - 70} 88,${HY - 44} L90,${HY - 26} Q0,${HY - 52} -90,${HY - 26}Z`} fill="#E8D9B8" /></g>;
       case "turban": return <g><ellipse cx={0} cy={HY - 72} rx={92} ry={56} fill={o.hairColor ?? "#F2EBDD"} /><path d={`M-88,${HY - 64} Q0,${HY - 120} 88,${HY - 80} M-80,${HY - 46} Q0,${HY - 96} 86,${HY - 56}`} stroke={shadeOf(o.hairColor ?? "#F2EBDD")} strokeWidth={6} fill="none" /><circle cx={0} cy={HY - 126} r={14} fill={o.hairColor === undefined ? "#3E8E5A" : shadeOf(o.hairColor)} /></g>;
@@ -329,6 +347,12 @@ export const TFig: React.FC<{
         {back}
         {torso()}
         {hair()}
+        {o.neck && <g transform={B !== 1 ? `scale(${B},1)` : undefined}>
+          <path d={`M-66,-372 Q0,-344 66,-372 L68,-338 Q0,-306 -68,-338Z`} fill={o.neck} />
+          <path d={`M-60,-352 Q0,-326 60,-352`} stroke={shadeOf(o.neck)} strokeWidth={4} fill="none" />
+          <path d={`M14,-334 L6,-236 L36,-232 L44,-332Z`} fill={o.neck} /><path d={`M8,-236 l0,16 M18,-235 l0,16 M28,-234 l0,16 M36,-233 l0,16`} stroke={o.neck} strokeWidth={4} />
+          <path d={`M22,-320 L18,-250`} stroke={shadeOf(o.neck)} strokeWidth={3} />
+        </g>}
         <g transform={`translate(0,${breathe * 0.4})`}>
           <circle cx={0} cy={HY} r={86} fill="url(#tHead)" />
           {eye(-28)}{eye(28)}
