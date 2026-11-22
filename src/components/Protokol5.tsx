@@ -13,6 +13,9 @@ let DIMS: Dims = {};
 export const setDims = (d: Dims) => { DIMS = d; };
 let DEPTHS = new Set<string>();
 export const setDepths = (l: string[]) => { DEPTHS = new Set(l); };
+// مجلد الصور (الافتراضي k7-02 لحتى الفيديو القديم ما يتغيّر)
+let IMGDIR = "k7-02";
+export const setImgDir = (d: string) => { IMGDIR = d; };
 export type Par = "l" | "r" | "u" | "d" | "in" | "out";
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
@@ -44,7 +47,7 @@ export const Ph: React.FC<PhP> = ({ t, a, b, file, z = [1.04, 1.16], f = [0.5, 0
   const [w, h] = DIMS[file] ?? [1920, 1080];
   const ar = w / h;
   const card = mode === "card" || (mode === "auto" && ar < 1.32);
-  const src = staticFile(`img/k7-02/${file}.jpg`);
+  const src = staticFile(`img/${IMGDIR}/${file}.jpg`);
   const filter = FILT[grade] + (blur ? ` blur(${blur}px)` : "");
   const cx = clamp(fx * 1920, 960 / zz, 1920 - 960 / zz), cy = clamp(fy * 1080, 540 / zz, 1080 - 540 / zz);
   const inF = rp(t, a, a + fade);
@@ -303,7 +306,7 @@ export const People: React.FC<{ t: number; a: number; b: number; bg: string; peo
             <rect width={cw} height={chh + 110} fill="#F3EEE4" />
             <clipPath id={`pp${i}`}><rect x={15} y={15} width={iw} height={ih} /></clipPath>
             <g clipPath={`url(#pp${i})`}>
-              <image href={staticFile(`img/k7-02/${p.file}.jpg`)} x={15 + ox} y={15 + oy} width={w * sc} height={h * sc} style={{ filter: FILT.bw }} />
+              <image href={staticFile(`img/${IMGDIR}/${p.file}.jpg`)} x={15 + ox} y={15 + oy} width={w * sc} height={h * sc} style={{ filter: FILT.bw }} />
             </g>
             {T(cw / 2, chh + 40, p.name, n === 3 ? 38 : 44, "#1A1A1A", 700, "middle")}
             {T(cw / 2, chh + 88, p.role, n === 3 ? 25 : 28, "#7A5A12", 600, "middle")}

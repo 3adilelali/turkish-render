@@ -6,11 +6,14 @@ import { fontsReady } from "./theme";
 // للفيديو الطويل الجاي للقناة 1: انسخ src/videos/k3r-14/K3Video.tsx وغيّر ملف الكلمات والصوت.
 import { K6_05_SECONDS, K6Video05 } from "./videos/k6-05/K6Video";
 import { K8_01_SECONDS, K8Video01 } from "./videos/k8-01/K8Video";
+import { K8_03_SECONDS, K8Video03 } from "./videos/k8-03/K8Video03";
 import { K6_07_SECONDS, K6Video07 } from "./videos/k6-07/K6Video";
 import { K6_08_SECONDS, K6Video08 } from "./videos/k6-08/K6Video";
 import { K6_10_SECONDS, K6Video10 } from "./videos/k6-10/K6Video";
+import { K6_11_SECONDS, K6Video11 } from "./videos/k6-11/K6Video";
 import { K7_01_SECONDS, K7Video01 } from "./videos/k7-01/K7Video";
 import { K7_02_SECONDS, K7Video02 } from "./videos/k7-02/K7Video";
+import { K7_03_SECONDS, K7Video03 } from "./videos/k7-03/K7Video";
 import { K3R_16_SECONDS, K3RVideo16 } from "./videos/k3r-16/K3Video";
 import { K3R_17_SECONDS, K3RVideo17 } from "./videos/k3r-17/K3Video";
 import { K3R_20_SECONDS, K3RVideo20 } from "./videos/k3r-20/K3Video";
@@ -64,11 +67,14 @@ export const RemotionRoot: React.FC = () => (
   <>
     {video("K6Video05", K6Video05, K6_05_SECONDS)}
     {video("K8Video01", K8Video01, K8_01_SECONDS)}
+    {video("K8Video03", K8Video03, K8_03_SECONDS)}
     {video("K6Video07", K6Video07, K6_07_SECONDS)}
     {video("K6Video08", K6Video08, K6_08_SECONDS)}
     {video("K6Video10", K6Video10, K6_10_SECONDS)}
+    {video("K6Video11", K6Video11, K6_11_SECONDS)}
     {video("K7Video01", K7Video01, K7_01_SECONDS)}
     {video("K7Video02", K7Video02, K7_02_SECONDS)}
+    {video("K7Video03", K7Video03, K7_03_SECONDS)}
     <Composition id="K3RVideo16" component={K3RVideo16} durationInFrames={Math.round(K3R_16_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K3RVideo17" component={K3RVideo17} durationInFrames={Math.round(K3R_17_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K3RVideo20" component={K3RVideo20} durationInFrames={Math.round(K3R_20_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
