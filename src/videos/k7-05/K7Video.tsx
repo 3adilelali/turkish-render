@@ -1,7 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { Audio } from "@remotion/media";
-import { Loop } from "remotion";
 import words from "../../../public/data/k7-05-words.json";
 import { makeCue } from "../../lib/cues";
 import { rp } from "../../components/Hayat";
@@ -10,11 +9,14 @@ import { Sh } from "./h";
 import { SHOTS } from "./s";
 
 // Kanal 5 · Protokol X · k7-05 · "FBI'ın En Çok Aradığı Hacker" (2026-11-23)
-// المحرّك أساس (SilkRoad.tsx)، والصور الحرة للتعريف. عدّة الصوت الخاصة sfx/px + موسيقى القناة bed. الصوت: Gemini 3.8 (Gacrux).
+// المحرّك أساس (SilkRoad.tsx)، والصور الحرة للتعريف. عدّة الصوت الخاصة sfx/px + موسيقى مرخّصة music/k7-05-mix.mp3. الصوت: Gemini 3.8 (Gacrux).
 
 const W = words as { text: string; start: number; end: number }[];
 const cue = makeCue(W);
 const VOICE_END = W[W.length - 1].end;
+// المؤثرات: هادية وقليلة. انشالوا riser (صفير صاعد) وpulse وtick وclick (2026-11-23، شكوى عادل).
+const SFX_VOL: Record<string, number> = { "px/boom": 0.11, "px/boom3": 0.11, "px/hit_end": 0.13, "px/whoosh": 0.06, "px/keys": 0.09, "px/steps": 0.09 };
+
 export const K7_05_SECONDS = Math.ceil(VOICE_END + 4);
 
 type Timed = Sh & { from: number; to: number };
@@ -51,17 +53,11 @@ export const K7Video05: React.FC = () => {
         {s.html?.(t, s.from, s.to)}
       </AbsoluteFill>
       <Audio src={staticFile("audio/k7-05.wav")} />
-      {/* موسيقى القناة (px/bed، 65 ث بتلف) تحت الصوت */}
-      {/* مقدمة حماسية (px/intro، 120 دقة، 88 ث) وبعدين موسيقى القناة bed */}
-      <Audio src={staticFile("sfx/px/intro.wav")} volume={0.3} />
-      <Sequence from={Math.round(86 * fps)} layout="none">
-        <Loop durationInFrames={Math.round(65 * fps)}>
-          <Audio src={staticFile("sfx/px/bed.wav")} volume={(f) => 0.14 * Math.min(1, f / (3 * fps))} />
-        </Loop>
-      </Sequence>
-      {TIMED.map((x, i) => i > 0 && x.sfx && (x.to < K7_05_SECONDS - 15 || x.sfx === "px/hit_end") && (
+      {/* الموسيقى (2026-11-23): مكتبة Kevin MacLeod المرخّصة CC BY 4.0، مركّبة بـ أدوات/music_mix.py (مقدمة The Escalation وبعدين خلفيات غامضة، وبتوطى لحالها تحت الكلام) */}
+      <Audio src={staticFile("music/k7-05-mix.mp3")} />
+      {TIMED.map((x, i) => i > 0 && x.sfx && SFX_VOL[x.sfx] && (x.to < K7_05_SECONDS - 15 || x.sfx === "px/hit_end") && (
         <Sequence key={i} from={Math.max(0, Math.round((x.from - 0.06) * fps))} durationInFrames={Math.round(5 * fps)} layout="none">
-          <Audio src={staticFile(`sfx/${x.sfx}.wav`)} volume={x.sfx === "px/whoosh" ? 0.08 : x.sfx === "px/keys" || x.sfx === "px/steps" ? 0.12 : x.sfx === "px/click" || x.sfx === "px/tick" ? 0.1 : 0.14} />
+          <Audio src={staticFile(`sfx/${x.sfx}.wav`)} volume={SFX_VOL[x.sfx]} />
         </Sequence>
       ))}
     </AbsoluteFill>
