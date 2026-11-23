@@ -70,11 +70,12 @@ export type Brow = "none" | "worried" | "angry" | "up";
 export type Mouth = "smile" | "grin" | "open" | "flat" | "frown" | "o" | "none";
 export type Outfit = {
   top: string; top2?: string; shoes?: string; kind?: "hoodie" | "coat" | "jersey" | "sweater" | "vest" | "robe" | "suit";
-  hair?: "none" | "ponytail" | "ponytail2" | "braids" | "scarf" | "white" | "cap" | "band" | "bun" | "fez" | "kalpak" | "turban" | "fedora"; hairColor?: string;
+  hair?: "none" | "ponytail" | "ponytail2" | "braids" | "scarf" | "white" | "cap" | "band" | "bun" | "long" | "fez" | "kalpak" | "turban" | "fedora"; hairColor?: string;
   glasses?: boolean; mustache?: boolean; gloves?: boolean; number?: string; inner?: string; beard?: string; sash?: string; mustacheColor?: string;
   bulk?: number; // k2r-18: geniş omuz/kol (Bayram Dayı)
   neck?: string; // k2r-18: boyun atkısı rengi (Defne)
   tie?: string; // k2r-18: saç tokası rengi
+  glam?: boolean; skin?: string; lips?: string; earrings?: string; belt?: string; // k2r-19 (Asya): kirpik, allık, ruj, inci küpe, kemerli uzun kaban
 };
 export const HERO: Outfit = { top: T.hero, top2: T.hero2, shoes: "#FFFFFF" };
 export const KIDO: Outfit = { top: T.yellow, top2: T.yellow2, shoes: T.red };
@@ -188,7 +189,7 @@ export const TFig: React.FC<{
       <g key={`a${side}`}>
         <polyline points={`${sh[0]},${sh[1]} ${e[0]},${e[1]} ${h[0]},${h[1]}`} fill="none" stroke={sleeve} strokeWidth={34 * Math.sqrt(B)} strokeLinecap="round" strokeLinejoin="round" />
         {kind === "hoodie" && <circle cx={h[0] - Math.sin((ang[1] * Math.PI) / 180) * 18} cy={h[1] - Math.cos((ang[1] * Math.PI) / 180) * 18} r={17} fill={back ? shadeOf(c) : top2} />}
-        <circle cx={h[0]} cy={h[1]} r={o.gloves ? 24 : 16} fill={o.gloves ? "#F4F4F4" : T.ink} stroke={o.gloves ? "#BDBDBD" : "none"} strokeWidth={3} />
+        <circle cx={h[0]} cy={h[1]} r={o.gloves ? 24 : 16} fill={o.gloves ? "#F4F4F4" : (o.skin ?? T.ink)} stroke={o.gloves ? "#BDBDBD" : "none"} strokeWidth={3} />
         {hold && <g transform={`translate(${h[0]},${h[1]})`}>{hold}</g>}
       </g>
     );
@@ -197,7 +198,7 @@ export const TFig: React.FC<{
     const bodyD = "M-74,-176 C-80,-250 -84,-320 -64,-352 Q0,-372 64,-352 C84,-320 80,-250 74,-176 Q0,-160 -74,-176Z";
     return (
       <g transform={B !== 1 ? `scale(${B},1)` : undefined}>
-        {kind === "coat" && <path d="M-80,-352 Q0,-372 80,-352 C92,-280 96,-180 100,-96 L-100,-96 C-96,-180 -92,-280 -80,-352Z" fill={o.top} />}
+        {kind === "coat" && <path d={o.belt ? "M-80,-352 Q0,-372 80,-352 C88,-300 84,-236 82,-214 C100,-160 118,-90 126,-40 Q0,-24 -126,-40 C-118,-90 -100,-160 -82,-214 C-84,-236 -88,-300 -80,-352Z" : "M-80,-352 Q0,-372 80,-352 C92,-280 96,-180 100,-96 L-100,-96 C-96,-180 -92,-280 -80,-352Z"} fill={o.top} />}
         {kind === "robe" && <path d="M-80,-352 Q0,-372 80,-352 C96,-260 104,-120 112,-14 Q0,4 -112,-14 C-104,-120 -96,-260 -80,-352Z" fill={o.top} />}
         <path d={bodyD} fill={kind === "coat" || kind === "vest" || kind === "robe" ? (o.inner ?? "#E9E2D2") : o.top} />
         {kind === "robe" && (
@@ -238,7 +239,18 @@ export const TFig: React.FC<{
             <path d="M-30,-358 L0,-330 L30,-358" stroke="#FFFFFF" strokeWidth={8} fill="none" />
           </>
         )}
-        {kind === "coat" && (
+        {kind === "coat" && o.belt && (
+          <>
+            <path d="M-34,-356 L-10,-290 L-14,-40 M34,-356 L10,-290 L14,-40" stroke={top2} strokeWidth={5} fill="none" />
+            <path d="M-34,-356 L-60,-320 L-22,-300Z M34,-356 L60,-320 L22,-300Z" fill={top2} />
+            <path d="M-84,-226 Q0,-210 84,-226 L84,-202 Q0,-186 -84,-202Z" fill={o.belt} />
+            <rect x={-16} y={-224} width={32} height={26} rx={5} fill="none" stroke="#E2B65A" strokeWidth={5} />
+            <path d="M18,-202 q10,40 -2,74 M28,-204 q14,34 10,64" stroke={o.belt} strokeWidth={9} fill="none" strokeLinecap="round" />
+            {[-280, -250, -160, -120].map((yy) => <circle key={yy} cx={-24} cy={yy} r={6} fill="#E2B65A" />)}
+            <path d="M-110,-60 Q0,-46 110,-60" stroke={top2} strokeWidth={4} fill="none" opacity={0.6} />
+          </>
+        )}
+        {kind === "coat" && !o.belt && (
           <>
             <path d="M-30,-356 L-8,-290 L-8,-96 M30,-356 L8,-290 L8,-96" stroke={top2} strokeWidth={6} fill="none" />
             <path d="M-4,-340 L4,-340 L8,-270 L0,-256 L-8,-270Z" fill="#B23A3F" />
@@ -259,15 +271,17 @@ export const TFig: React.FC<{
   };
   const HY = -458;
   const ex = look * 12, ey = lookY * 10;
+  const FC = o.skin ? "#3A2418" : "#FFFFFF";
   const eye = (cx: number) => {
     const X = cx + ex * 0.6;
-    if (blink || eyes === "closed") return <path d={`M${X - 18},${HY + 4} q18,10 36,0`} stroke="#FFFFFF" strokeWidth={6} fill="none" strokeLinecap="round" />;
-    if (eyes === "happy") return <path d={`M${X - 18},${HY + 8} q18,-22 36,0`} stroke="#FFFFFF" strokeWidth={7} fill="none" strokeLinecap="round" />;
+    if (blink || eyes === "closed") return <path d={`M${X - 18},${HY + 4} q18,10 36,0`} stroke={FC} strokeWidth={6} fill="none" strokeLinecap="round" />;
+    if (eyes === "happy") return <path d={`M${X - 18},${HY + 8} q18,-22 36,0`} stroke={FC} strokeWidth={7} fill="none" strokeLinecap="round" />;
     const rx = eyes === "wide" ? 24 : 20, ry = eyes === "wide" ? 32 : eyes === "squint" ? 13 : 26;
     const pr = eyes === "wide" ? 7 : 10;
     return (
       <g>
-        <ellipse cx={X} cy={HY} rx={rx} ry={ry} fill="#FFFFFF" />
+        <ellipse cx={X} cy={HY} rx={rx} ry={ry} fill="#FFFFFF" stroke={o.skin ? "#3A2418" : "none"} strokeWidth={4} />
+        {o.skin && <circle cx={X + ex * 0.7} cy={HY + 4 + ey * 0.8} r={pr + 6} fill="#4E8FC9" />}
         <circle cx={X + ex * 0.7} cy={HY + 4 + ey * 0.8} r={pr} fill={T.ink} />
         <circle cx={X + ex * 0.7 + 3} cy={HY + ey * 0.8} r={2.6} fill="#FFFFFF" />
       </g>
@@ -275,14 +289,30 @@ export const TFig: React.FC<{
   };
   const lid = (cx: number, side: -1 | 1) => {
     const X = cx + ex * 0.6;
+    if (o.skin) {
+      const bc = shadeOf(o.hairColor ?? "#8A6A3A");
+      const tilt = brow === "worried" ? (side < 0 ? 8 : -8) : brow === "angry" ? (side < 0 ? -8 : 8) : 0;
+      const lift = brow === "up" ? -8 : 0;
+      return <path d={`M${X - 22},${HY - 40 + lift - tilt} Q${X},${HY - 52 + lift} ${X + 22},${HY - 40 + lift + tilt}`} stroke={bc} strokeWidth={6} fill="none" strokeLinecap="round" />;
+    }
     if (brow === "worried") return <path d={`M${X - 26},${HY - 22 - (side < 0 ? 0 : 12)} L${X + 26},${HY - 22 - (side < 0 ? 12 : 0)} L${X + 26},${HY - 40} L${X - 26},${HY - 40}Z`} fill={T.ink} />;
     if (brow === "angry") return <path d={`M${X - 26},${HY - 24 - (side < 0 ? 12 : 0)} L${X + 26},${HY - 24 - (side < 0 ? 0 : 12)} L${X + 26},${HY - 40} L${X - 26},${HY - 40}Z`} fill={T.ink} />;
-    if (brow === "up") return <path d={`M${X - 18},${HY - 40} q18,-12 36,0`} stroke="#FFFFFF" strokeWidth={5} fill="none" strokeLinecap="round" />;
+    if (brow === "up") return <path d={`M${X - 18},${HY - 40} q18,-12 36,0`} stroke={FC} strokeWidth={5} fill="none" strokeLinecap="round" />;
     return null;
   };
   const MY = HY + 50;
   const mouthEl = () => {
     const X = ex * 0.5;
+    if (o.lips) {
+      const L = o.lips;
+      if (open || mouth === "open") return <g><ellipse cx={X} cy={MY + 2} rx={15} ry={13} fill={L} /><ellipse cx={X} cy={MY + 4} rx={8} ry={6} fill="#5A1A2A" /></g>;
+      if (mouth === "o") return <ellipse cx={X} cy={MY} rx={9} ry={11} fill="none" stroke={L} strokeWidth={6} />;
+      if (mouth === "grin") return <g><path d={`M${X - 24},${MY - 6} Q${X},${MY + 24} ${X + 24},${MY - 6}Z`} fill={L} /><path d={`M${X - 18},${MY - 3} Q${X},${MY + 10} ${X + 18},${MY - 3}Z`} fill="#FFFFFF" /></g>;
+      if (mouth === "smile") return <path d={`M${X - 16},${MY - 3} q16,16 32,0 q-16,4 -32,0Z`} fill={L} stroke={L} strokeWidth={5} strokeLinejoin="round" />;
+      if (mouth === "frown") return <path d={`M${X - 14},${MY + 6} q14,-12 28,0`} stroke={L} strokeWidth={6} fill="none" strokeLinecap="round" />;
+      if (mouth === "flat") return <path d={`M${X - 13},${MY + 1} q13,6 26,0`} stroke={L} strokeWidth={7} fill="none" strokeLinecap="round" />;
+      return null;
+    }
     if (open || mouth === "open") return <ellipse cx={X} cy={MY + 2} rx={13} ry={12} fill="#FFFFFF" />;
     if (mouth === "o") return <ellipse cx={X} cy={MY} rx={8} ry={10} fill="none" stroke="#FFFFFF" strokeWidth={5} />;
     if (mouth === "grin") return <path d={`M${X - 22},${MY - 6} Q${X},${MY + 22} ${X + 22},${MY - 6}Z`} fill="#FFFFFF" />;
@@ -298,6 +328,12 @@ export const TFig: React.FC<{
     <g transform={`rotate(${18 + Math.sin(t * 3 + seed) * 6},${-62},${HY - 40})`}>
       <path d={`M-70,${HY - 40} C-120,${HY - 10} -126,${HY + 70} -96,${HY + 116} C-80,${HY + 90} -66,${HY + 40} -52,${HY - 20}Z`} fill={HC} />
       <path d={`M-96,${HY + 20} q-6,40 6,80`} stroke={shadeOf(HC)} strokeWidth={5} fill="none" />
+    </g>
+  )) || (o.hair === "long" && (
+    <g transform={`rotate(${Math.sin(t * 2.2 + seed) * 2},0,${HY - 60})`}>
+      <path d={`M-92,${HY - 40} C-118,${HY + 40} -120,${HY + 120} -112,${HY + 176} C-100,${HY + 200} -80,${HY + 196} -70,${HY + 214} C-50,${HY + 196} -30,${HY + 214} -10,${HY + 200} L10,${HY + 200} C30,${HY + 214} 50,${HY + 196} 70,${HY + 214} C80,${HY + 196} 100,${HY + 200} 112,${HY + 176} C120,${HY + 120} 118,${HY + 40} 92,${HY - 40} C70,${HY - 110} -70,${HY - 110} -92,${HY - 40}Z`} fill={HC} />
+      {[-96, -70, 70, 96].map((xx, i) => <path key={i} d={`M${xx},${HY + 10} q${xx < 0 ? -14 : 14},60 ${xx < 0 ? 4 : -4},120 q${xx < 0 ? 10 : -10},30 ${xx < 0 ? -4 : 4},60`} stroke={shadeOf(HC)} strokeWidth={6} fill="none" strokeLinecap="round" />)}
+      {[-84, 84].map((xx, i) => <path key={`h${i}`} d={`M${xx},${HY + 30} q${xx < 0 ? -10 : 10},50 0,110`} stroke="#F4DFA8" strokeWidth={5} fill="none" strokeLinecap="round" opacity={0.7} />)}
     </g>
   )) || (o.hair === "braids" && (
     <g>{[-1, 1].map((sd) => <g key={sd} transform={`rotate(${sd * (4 + Math.sin(t * 3 + seed + sd) * 3)},${sd * 70},${HY})`}>
@@ -325,6 +361,11 @@ export const TFig: React.FC<{
       case "ponytail": return <circle cx={-56} cy={HY - 58} r={10} fill={T.yellow} />;
       case "ponytail2": return <g><path d={`M-88,${HY - 2} C-96,${HY - 70} -50,${HY - 100} 0,${HY - 98} C50,${HY - 100} 92,${HY - 74} 88,${HY - 6} C70,${HY - 50} 30,${HY - 64} -6,${HY - 58} C-40,${HY - 60} -70,${HY - 44} -88,${HY - 2}Z`} fill={HC} /><path d={`M-20,${HY - 92} q20,24 56,26`} stroke={shadeOf(HC)} strokeWidth={5} fill="none" /><circle cx={-64} cy={HY - 52} r={13} fill={o.tie ?? T.yellow} stroke="#C99A1E" strokeWidth={3} /></g>;
       case "braids": return <g><path d={`M-86,${HY + 6} C-96,${HY - 70} -50,${HY - 100} 0,${HY - 98} C50,${HY - 100} 96,${HY - 70} 86,${HY + 6} C74,${HY - 44} 40,${HY - 62} 0,${HY - 60} C-40,${HY - 62} -74,${HY - 44} -86,${HY + 6}Z`} fill={HC} /><path d={`M0,${HY - 98} v38`} stroke={shadeOf(HC)} strokeWidth={5} /></g>;
+      case "long": return <g>
+        <path d={`M-90,${HY + 30} C-104,${HY - 60} -60,${HY - 104} 0,${HY - 102} C60,${HY - 104} 102,${HY - 64} 92,${HY + 34} C84,${HY - 20} 64,${HY - 50} 30,${HY - 56} C10,${HY - 40} -30,${HY - 26} -62,${HY - 24} C-76,${HY - 10} -84,${HY + 10} -90,${HY + 30}Z`} fill={HC} />
+        <path d={`M-20,${HY - 98} C10,${HY - 80} 40,${HY - 70} 80,${HY - 30}`} stroke="#FFF3C4" strokeWidth={6} fill="none" strokeLinecap="round" opacity={0.75} />
+        <path d={`M-50,${HY - 84} C-30,${HY - 60} 0,${HY - 50} 28,${HY - 54}`} stroke={shadeOf(HC)} strokeWidth={5} fill="none" strokeLinecap="round" />
+      </g>;
       case "fez": return <g><path d={`M-50,${HY - 66} L-40,${HY - 150} Q0,${HY - 160} 40,${HY - 150} L50,${HY - 66} Q0,${HY - 56} -50,${HY - 66}Z`} fill={o.hairColor ?? "#B3261E"} /><path d={`M0,${HY - 156} q-6,30 -40,50`} stroke="#1A1A1A" strokeWidth={6} fill="none" /><circle cx={-40} cy={HY - 104} r={7} fill="#1A1A1A" /></g>;
       case "kalpak": return <g><path d={`M-84,${HY - 40} C-90,${HY - 130} 90,${HY - 130} 84,${HY - 40} Q0,${HY - 60} -84,${HY - 40}Z`} fill={o.hairColor ?? "#6B4A2E"} />{[-60, -30, 0, 30, 60].map((xx) => <path key={xx} d={`M${xx},${HY - 50} q6,-30 0,-60`} stroke={shadeOf(o.hairColor ?? "#6B4A2E")} strokeWidth={6} fill="none" />)}<path d={`M-88,${HY - 44} Q0,${HY - 70} 88,${HY - 44} L90,${HY - 26} Q0,${HY - 52} -90,${HY - 26}Z`} fill="#E8D9B8" /></g>;
       case "turban": return <g><ellipse cx={0} cy={HY - 72} rx={92} ry={56} fill={o.hairColor ?? "#F2EBDD"} /><path d={`M-88,${HY - 64} Q0,${HY - 120} 88,${HY - 80} M-80,${HY - 46} Q0,${HY - 96} 86,${HY - 56}`} stroke={shadeOf(o.hairColor ?? "#F2EBDD")} strokeWidth={6} fill="none" /><circle cx={0} cy={HY - 126} r={14} fill={o.hairColor === undefined ? "#3E8E5A" : shadeOf(o.hairColor)} /></g>;
@@ -354,9 +395,15 @@ export const TFig: React.FC<{
           <path d={`M22,-320 L18,-250`} stroke={shadeOf(o.neck)} strokeWidth={3} />
         </g>}
         <g transform={`translate(0,${breathe * 0.4})`}>
-          <circle cx={0} cy={HY} r={86} fill="url(#tHead)" />
+          <circle cx={0} cy={HY} r={86} fill={o.skin ?? "url(#tHead)"} />
+          {o.skin && <><circle cx={0} cy={HY} r={86} fill="none" stroke={shadeOf(o.skin)} strokeWidth={4} /><ellipse cx={-30} cy={HY - 40} rx={30} ry={18} fill="#FFFFFF" opacity={0.25} /><path d={`M-6,${HY + 24} q6,6 12,0`} stroke={shadeOf(o.skin)} strokeWidth={4} fill="none" strokeLinecap="round" /></>}
           {eye(-28)}{eye(28)}
           {lid(-28, -1)}{lid(28, 1)}
+          {o.glam && <g>
+            {[-1, 1].map((sd) => { const X = sd * 28 + ex * 0.6; const shut = blink || eyes === "closed" || eyes === "happy"; const yy = shut ? HY + 4 : HY - (eyes === "squint" ? 12 : 24); return <path key={sd} d={`M${X + sd * 14},${yy} l${sd * 14},-10 M${X + sd * 6},${yy - 3} l${sd * 9},-12 M${X - sd * 2},${yy - 4} l${sd * 3},-12`} stroke={FC} strokeWidth={4} strokeLinecap="round" />; })}
+            <ellipse cx={-50} cy={HY + 30} rx={18} ry={9} fill="#F28AA0" opacity={0.55} /><ellipse cx={50} cy={HY + 30} rx={18} ry={9} fill="#F28AA0" opacity={0.55} />
+          </g>}
+          {o.earrings && [-1, 1].map((sd) => <g key={`e${sd}`}><path d={`M${sd * 84},${HY + 18} v12`} stroke="#E2B65A" strokeWidth={3} /><circle cx={sd * 84} cy={HY + 38} r={10} fill={o.earrings} stroke="#D8D0C0" strokeWidth={2} /><circle cx={sd * 84 - 3} cy={HY + 35} r={3} fill="#FFFFFF" /></g>)}
           {o.glasses && <g fill="none" stroke="#E8E8E8" strokeWidth={5}><circle cx={-28 + ex * 0.6} cy={HY} r={30} /><circle cx={28 + ex * 0.6} cy={HY} r={30} /><path d={`M${-2 + ex * 0.6},${HY} h4`} /></g>}
           {o.beard && <path d={`M-70,${HY + 20} C-70,${HY + 120} -20,${HY + 150} 0,${HY + 156} C20,${HY + 150} 70,${HY + 120} 70,${HY + 20} C50,${HY + 70} -50,${HY + 70} -70,${HY + 20}Z`} fill={o.beard} />}
           {o.mustache && <path d={`M${-30 + ex * 0.5},${MY - 14} q15,-14 30,-2 q15,-12 30,2 q-15,10 -30,2 q-15,8 -30,-2Z`} fill={o.mustacheColor ?? "#EDEDED"} />}

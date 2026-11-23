@@ -177,6 +177,7 @@ export const Avuc: React.FC<{ t: number; k?: number; code?: string; night?: numb
       <path d="M760,560 Q900,620 1100,560 M780,680 Q960,720 1140,660" stroke="#2C2C2C" strokeWidth={6} fill="none" />
       {parts.map((c, i) => {
         const vis = cl(k * n - i);
+        if (c === " ") { x += 60; return null; }
         const w = c === "." ? 40 : 150;
         const el = <g key={i}><rect x={x} y={600} width={w * vis} height={30} rx={15} fill="#2EE6D0" opacity={0.9 * vis} /><rect x={x - 8} y={590} width={w * vis + 16} height={50} rx={25} fill="#2EE6D0" opacity={0.25 * vis} /></g>;
         x += w + 40;
@@ -184,8 +185,9 @@ export const Avuc: React.FC<{ t: number; k?: number; code?: string; night?: numb
       })}
       {/* Defne'nin parmağı (mercan kazak kolu) */}
       {k > 0 && k < 1 && (() => {
-        let fx = 760; const idx = Math.floor(k * n); for (let i = 0; i < idx; i++) fx += (parts[i] === "." ? 40 : 150) + 40;
-        fx += (parts[idx] === "." ? 40 : 150) * (k * n - idx);
+        let fx = 760; const idx = Math.floor(k * n); const W = (c: string) => (c === " " ? 60 : (c === "." ? 40 : 150) + 40);
+        for (let i = 0; i < idx; i++) fx += W(parts[i]);
+        fx += (parts[idx] === " " ? 0 : parts[idx] === "." ? 40 : 150) * (k * n - idx);
         return <g transform={`translate(${fx},612)`}><path d="M0,0 L-60,-420 L60,-460 L30,0Z" fill="#141414" /><path d="M-70,-420 L70,-470 L120,-1100 L-140,-1100Z" fill="#E0566A" /><circle cx={6} cy={0} r={22} fill="#1A1A1A" /></g>;
       })()}
     </g>
