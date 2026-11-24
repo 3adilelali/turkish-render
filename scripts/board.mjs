@@ -21,4 +21,5 @@ for (const [i, s] of secs.entries()) {
 const cols = 4, rows = Math.ceil(files.length / cols);
 execFileSync("ffmpeg", ["-v", "error", "-y", "-framerate", "1", "-i", path.join(tmp, "%03d.png"), "-vf", `tile=${cols}x${rows}:padding=6:color=white`, "-frames:v", "1", out]);
 fs.rmSync(tmp, { recursive: true, force: true });
+fs.rmSync(serveUrl, { recursive: true, force: true }); // نسخة الـ bundle بالـ Temp (كانت عم تتراكم عشرات الغيغات)
 console.log("OK", out);

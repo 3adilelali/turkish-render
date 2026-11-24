@@ -16,6 +16,7 @@ import { K7_02_SECONDS, K7Video02 } from "./videos/k7-02/K7Video";
 import { K7_03_SECONDS, K7Video03 } from "./videos/k7-03/K7Video";
 import { K7_04_SECONDS, K7Video04 } from "./videos/k7-04/K7Video";
 import { K7_05_SECONDS, K7Video05 } from "./videos/k7-05/K7Video";
+import { K7_06_SECONDS, K7Video06 } from "./videos/k7-06/K7Video";
 import { K3R_16_SECONDS, K3RVideo16 } from "./videos/k3r-16/K3Video";
 import { K3R_17_SECONDS, K3RVideo17 } from "./videos/k3r-17/K3Video";
 import { K3R_20_SECONDS, K3RVideo20 } from "./videos/k3r-20/K3Video";
@@ -25,6 +26,7 @@ import { K2R_15_SECONDS, K2RVideo15 } from "./videos/k2r-15/K2Video";
 import { K2R_17_SECONDS, K2RVideo17 } from "./videos/k2r-17/K2Video";
 import { K2R_18_SECONDS, K2RVideo18 } from "./videos/k2r-18/K2Video";
 import { K2R_19_SECONDS, K2RVideo19 } from "./videos/k2r-19/K2Video";
+import { K2R_20_SECONDS, K2RVideo20 } from "./videos/k2r-20/K2Video";
 import { SH1_01_SECONDS, Sh1Short01 } from "./videos/sh1-01/Short";
 import { SH1_02_SECONDS, Sh1Short02 } from "./videos/sh1-02/Short";
 import { SH1_03_SECONDS, Sh1Short03 } from "./videos/sh1-03/Short";
@@ -80,6 +82,7 @@ export const RemotionRoot: React.FC = () => (
     {video("K7Video03", K7Video03, K7_03_SECONDS)}
     {video("K7Video04", K7Video04, K7_04_SECONDS)}
     {video("K7Video05", K7Video05, K7_05_SECONDS)}
+    {video("K7Video06", K7Video06, K7_06_SECONDS)}
     <Composition id="K3RVideo16" component={K3RVideo16} durationInFrames={Math.round(K3R_16_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K3RVideo17" component={K3RVideo17} durationInFrames={Math.round(K3R_17_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K3RVideo20" component={K3RVideo20} durationInFrames={Math.round(K3R_20_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
@@ -89,6 +92,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="K2RVideo17" component={K2RVideo17} durationInFrames={Math.round(K2R_17_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K2RVideo18" component={K2RVideo18} durationInFrames={Math.round(K2R_18_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K2RVideo19" component={K2RVideo19} durationInFrames={Math.round(K2R_19_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
+    <Composition id="K2RVideo20" component={K2RVideo20} durationInFrames={Math.round(K2R_20_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="Sh1Short01" component={Sh1Short01} durationInFrames={Math.round(SH1_01_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     <Composition id="Sh1Short02" component={Sh1Short02} durationInFrames={Math.round(SH1_02_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
     <Composition id="Sh1Short03" component={Sh1Short03} durationInFrames={Math.round(SH1_03_SECONDS * FPS)} fps={FPS} width={1080} height={1920} calculateMetadata={ready} />
