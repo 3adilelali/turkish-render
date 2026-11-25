@@ -109,7 +109,7 @@ export const SHOTS: Sh[] = [
   { c: "O sabah ekranlarda", ...S("23988", undefined, undefined, { ss: 3 }) },
   { c: "Dosyalarınız", r: K(Pipeline, { mode: "locked" }), sfx: "v3/static" },
   { c: "Tek bir bomba", ...S("31961", undefined, undefined, { ss: 4 }) },
-  { c: "Benzin", r: lab(ph("gaz1"), "Kilometrelerce kuyruk", "Mayıs 2021") },
+  { c: "Benzin", r: lab(ph("gasline1", undefined, undefined, { z: [1.2, 1.34] }), "Kilometrelerce kuyruk", "Mayıs 2021") },
   { c: "Şirket fidyeyi", ...S("47799", "75 Bitcoin", "≈ 4,4 milyon dolar", { c: MON }), sfx: "v3/hit" },
   { c: "Bir ülkeyi bir hafta", ...S("49247", "Birkaç bilgisayar.", "Birkaç kişi.", { ss: 6 }) },
   { c: "Ve bu kuralların", ...S("16109", undefined, undefined, { ss: 3 }) },
@@ -121,6 +121,7 @@ export const SHOTS: Sh[] = [
 
   // ══ Hamza ══
   { c: "Önce adamımızı", r: HAM("Hamza Turhan Ayberk", "aslen Gaziantepli"), sfx: "v3/whoosh" },
+  { c: "Gaziantep", r: lab(ph("gaz1"), "Gaziantep") },
   { c: "Uzun yıllar", ...S("17396", undefined, undefined, { ss: 6 }) },
   { c: "Son görev", r: lab(ph("gungoren1"), "Son görev yeri", "Güngören İlçe Emniyet Müdürlüğü") },
   { c: "Ama 2002", ...doc("Disiplin soruşturması", "2002") },
