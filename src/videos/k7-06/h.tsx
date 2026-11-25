@@ -12,7 +12,27 @@ export { VIO, TRR, MON } from "../../components/Victoria";
 setDims(dimsJson as unknown as Record<string, [number, number]>);
 setImgDir("k7-06");
 export type R = (t: number, a: number, b: number) => React.ReactNode;
-export type Sh = { c: string | string[]; r: R; html?: R; sfx?: string };
+export type Stock = { id: string; ss?: number; z?: [number, number]; fx?: [number, number] };
+export type Sh = { c: string | string[]; r: R; html?: R; sfx?: string; v?: Stock };
+
+// (v2، 2026-11-25) ستوك فيديو حقيقي (Mixkit) تحت الكتابة: الأساس مكان الكرتون
+export const NONE: R = () => null;
+export const V = (id: string, r: R = NONE, o: Omit<Stock, "id"> = {}): { v: Stock; r: R } => ({ v: { id, ...o }, r });
+// شريط كتابة فوق الصورة (مش على أسود فاضي)
+export const over = (a1: string, b1?: string, c?: string): R => (t, a) => {
+  const k = rp(t, a + 0.15, a + 0.6);
+  return (
+    <g>
+      <defs><linearGradient id="ovB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#000" stopOpacity="0" /><stop offset="1" stopColor="#000" stopOpacity="0.85" /></linearGradient></defs>
+      <rect x={0} y={560} width={1920} height={520} fill="url(#ovB)" opacity={k} />
+      <g opacity={k} transform={`translate(0,${(1 - k) * 16})`}>
+        {T(960, b1 ? 860 : 900, a1, 84, "#FFF", 800, "middle")}
+        {b1 && T(960, 950, b1, 52, c ?? AMB, 700, "middle")}
+      </g>
+    </g>
+  );
+};
+export const cap = (a1: string, b1?: string, c?: string): R => (t, a) => <Label x={80} y={960} k={rp(t, a + 0.3, a + 0.8)} a={a1} b={b1} c={c} />;
 export const AMB = X.amber, RED = X.red, GREEN = "#7BE495";
 
 export const crd = (file: string): string | undefined => {
