@@ -17,6 +17,7 @@ import { K7_03_SECONDS, K7Video03 } from "./videos/k7-03/K7Video";
 import { K7_04_SECONDS, K7Video04 } from "./videos/k7-04/K7Video";
 import { K7_05_SECONDS, K7Video05 } from "./videos/k7-05/K7Video";
 import { K7_06_SECONDS, K7Video06 } from "./videos/k7-06/K7Video";
+import { K7_07_SECONDS, K7Video07 } from "./videos/k7-07/K7Video";
 import { K3R_16_SECONDS, K3RVideo16 } from "./videos/k3r-16/K3Video";
 import { K3R_17_SECONDS, K3RVideo17 } from "./videos/k3r-17/K3Video";
 import { K3R_20_SECONDS, K3RVideo20 } from "./videos/k3r-20/K3Video";
@@ -83,6 +84,7 @@ export const RemotionRoot: React.FC = () => (
     {video("K7Video04", K7Video04, K7_04_SECONDS)}
     {video("K7Video05", K7Video05, K7_05_SECONDS)}
     {video("K7Video06", K7Video06, K7_06_SECONDS)}
+    {video("K7Video07", K7Video07, K7_07_SECONDS)}
     <Composition id="K3RVideo16" component={K3RVideo16} durationInFrames={Math.round(K3R_16_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K3RVideo17" component={K3RVideo17} durationInFrames={Math.round(K3R_17_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
     <Composition id="K3RVideo20" component={K3RVideo20} durationInFrames={Math.round(K3R_20_SECONDS * FPS)} fps={FPS} width={1920} height={1080} calculateMetadata={ready} />
