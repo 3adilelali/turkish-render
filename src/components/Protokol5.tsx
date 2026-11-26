@@ -11,6 +11,7 @@ import { Warp } from "./Protokol6";
 export type Dims = Record<string, [number, number]>;
 let DIMS: Dims = {};
 export const setDims = (d: Dims) => { DIMS = d; };
+export const getDims = () => DIMS;
 let DEPTHS = new Set<string>();
 export const setDepths = (l: string[]) => { DEPTHS = new Set(l); };
 // مجلد الصور (الافتراضي k7-02 لحتى الفيديو القديم ما يتغيّر)
